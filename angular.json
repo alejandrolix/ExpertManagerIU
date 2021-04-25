@@ -34,7 +34,9 @@
               "src/styles.scss",
               "node_modules/bootstrap-5.0.0-beta3-dist/css/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/bootstrap-5.0.0-beta3-dist/js\bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
