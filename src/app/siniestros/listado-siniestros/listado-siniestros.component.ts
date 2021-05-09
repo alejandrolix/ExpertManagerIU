@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 
@@ -10,7 +11,7 @@ import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 export class ListadoSiniestrosComponent implements OnInit {
   public siniestros: Siniestro[];
 
-  constructor(private siniestrosService: SiniestrosService) {
+  constructor(private siniestrosService: SiniestrosService, private router: Router) {
     this.siniestros = [];
   }
 
@@ -27,6 +28,6 @@ export class ListadoSiniestrosComponent implements OnInit {
   } 
 
   public crear(): void {
-    
+    this.router.navigateByUrl('/crearSiniestro');
   }
 }
