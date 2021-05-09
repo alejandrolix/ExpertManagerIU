@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Aseguradora } from 'src/app/interfaces/aseguradora';
 import { Danio } from 'src/app/interfaces/danio';
 import { Usuario } from 'src/app/interfaces/usuario';
@@ -7,6 +8,7 @@ import { AseguradorasService } from 'src/app/servicios/aseguradoras.service';
 import { DaniosService } from 'src/app/servicios/danios.service';
 import { PeritosService } from 'src/app/servicios/peritos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-crear-siniestro',
@@ -19,16 +21,17 @@ export class CrearSiniestroComponent implements OnInit {
   public peritos: Usuario[];
   public formCrearSiniestro: FormGroup;
 
-  constructor(private aseguradorasService: AseguradorasService, private daniosService: DaniosService, private peritosService: PeritosService, private siniestrosService: SiniestrosService) {
+  constructor(private aseguradorasService: AseguradorasService, private daniosService: DaniosService, private peritosService: PeritosService, private siniestrosService: SiniestrosService,
+              private router: Router) {
     this.aseguradoras = [];
     this.danios = [];
-    this.peritos = [];    
+    this.peritos = [];
   }
 
   async ngOnInit(): Promise<void> {
-    this.aseguradoras = await this.aseguradorasService.obtenerTodas().toPromise();    
-    this.danios = await this.daniosService.obtenerTodos().toPromise();    
-    this.peritos = await this.peritosService.obtenerTodos().toPromise();          
+    this.aseguradoras = await this.aseguradorasService.obtenerTodas().toPromise();
+    this.danios = await this.daniosService.obtenerTodos().toPromise();
+    this.peritos = await this.peritosService.obtenerTodos().toPromise();
 
     this.formCrearSiniestro = new FormGroup({
       aseguradora: new FormControl(this.aseguradoras[0].id),
@@ -59,10 +62,37 @@ export class CrearSiniestroComponent implements OnInit {
       idDanio: idDanio,
       idSujetoAfectado: idSujetoAfectado,
       idPerito: idPerito
-    };    
+    };
 
     let respuesta: boolean = await this.siniestrosService.crear(siniestro).toPromise();
-    
-    
+
+    if (respuesta) {
+      let accion = await Swal.fire({
+        title: 'Siniestro creado correctamente',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      });
+
+      if (accion.isConfirmed)
+        this.router.navigateByUrl('/siniestros');
+    }     
+    else
+      Swal.fire({
+        title: 'Ha habido un error al crear el siniestro',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
   }
 }
