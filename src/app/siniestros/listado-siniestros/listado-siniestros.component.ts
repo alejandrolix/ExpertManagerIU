@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Siniestro } from 'src/app/interfaces/siniestro';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 
 @Component({
@@ -7,11 +8,13 @@ import { SiniestrosService } from 'src/app/servicios/siniestros.service';
   styleUrls: ['./listado-siniestros.component.scss']
 })
 export class ListadoSiniestrosComponent implements OnInit {
+  public siniestros: Siniestro[];
 
-  constructor(private siniestrosService: SiniestrosService) { }
+  constructor(private siniestrosService: SiniestrosService) {
+    this.siniestros = [];
+  }
 
-  async ngOnInit(): Promise<any> {
-    let x = await this.siniestrosService.ObtenerTodos().toPromise(); 
-    console.log(x);   
+  async ngOnInit(): Promise<void> {
+    this.siniestros = await this.siniestrosService.ObtenerTodos().toPromise();     
   }
 }
