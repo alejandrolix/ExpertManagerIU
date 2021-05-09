@@ -10,9 +10,8 @@ export class ListadoSiniestrosComponent implements OnInit {
 
   constructor(private siniestrosService: SiniestrosService) { }
 
-  ngOnInit(): void {
-    this.siniestrosService.ObtenerTodos().subscribe(data => {
-      console.log(data);
-    });
+  async ngOnInit(): Promise<any> {
+    let x = await this.siniestrosService.ObtenerTodos().toPromise(); 
+    console.log(x);   
   }
 }
