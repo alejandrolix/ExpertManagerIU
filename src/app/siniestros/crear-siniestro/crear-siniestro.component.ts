@@ -61,7 +61,8 @@ export class CrearSiniestroComponent implements OnInit {
       idPerito: idPerito
     };    
 
-    let x = await this.siniestrosService.crear(siniestro).toPromise();
-    console.log(x);
+    let respuesta: boolean = await this.siniestrosService.crear(siniestro).toPromise();
+    
+    
   }
 }
