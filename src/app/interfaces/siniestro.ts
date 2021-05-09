@@ -6,5 +6,6 @@ export interface Siniestro {
     perito: string;
     fechaHoraAlta: Date;
     sujetoAfectado: string;
+    danio: string;
     impValoracionDanios: number;
 }
