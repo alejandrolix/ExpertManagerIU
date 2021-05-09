@@ -1,36 +1,38 @@
 <h2 class="mb-4">Crear siniestro</h2>
-<form>
+<form *ngIf="formCrearSiniestro != undefined" [formGroup]="formCrearSiniestro" (ngSubmit)="enviar()">
     <div class="row">
         <div class="col">
             <label class="form-label mt-4">Compañía Aseguradora</label>
-            <select class="form-select">
+            <select class="form-select" formControlName="aseguradora">
                 <option *ngFor="let aseguradora of aseguradoras" [value]="aseguradora.id">{{ aseguradora.nombre }}</option>
             </select>
 
             <label class="form-label mt-4">Dirección</label>
-            <input type="text" class="form-control anchuraMitad">
+            <input type="text" class="form-control anchuraMitad" formControlName="direccion">
+            <div class="invalid-feedback" *ngIf="formCrearSiniestro.get('direccion')?.touched && !formCrearSiniestro.get('direccion')?.valid">La dirección es obligatoria</div>
 
             <label class="form-label mt-4">Descripción</label>
-            <textarea class="form-control anchura60porCiento" rows="3"></textarea>
+            <textarea class="form-control anchura60porCiento" rows="3" formControlName="descripcion"></textarea>
+            <div class="invalid-feedback" *ngIf="formCrearSiniestro.get('descripcion')?.touched && !formCrearSiniestro.get('descripcion')?.valid">La descripción es obligatoria</div>
 
             <label class="form-label mt-4">Daño</label>
-            <select class="form-select">
+            <select class="form-select" formControlName="danio">
                 <option *ngFor="let danio of danios" [value]="danio.id">{{ danio.nombre }}</option>
             </select>
         </div>
         <div class="col">
             <label class="form-label">Sujeto afectado</label>
-            <select class="form-select">                
-                <option value="0" selected>Asegurado</option>
+            <select class="form-select" formControlName="sujetoAfectado">                
+                <option value="0">Asegurado</option>
                 <option value="1">Contrario</option>                
             </select>
 
             <label class="form-label mt-4">Perito</label>
-            <select class="form-select">
+            <select class="form-select" formControlName="perito">
                 <option *ngFor="let perito of peritos" [value]="perito.id">{{ perito.nombre }}</option>
             </select>
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-5">Crear</button>
+    <button type="submit" [disabled]="!formCrearSiniestro.valid" class="btn btn-primary mt-5">Crear</button>
 </form>
