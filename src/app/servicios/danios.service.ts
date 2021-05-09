@@ -11,7 +11,7 @@ export class DaniosService {
 
   constructor(private http: HttpClient) { }
 
-  public obtenerTodos(): Observable<Danio> {
-    return this.http.get<Danio>(`${environment.urlApi}/Danios`);
+  public obtenerTodos(): Observable<Danio[]> {
+    return this.http.get<Danio[]>(`${environment.urlApi}/Danios`);
   }
 }
