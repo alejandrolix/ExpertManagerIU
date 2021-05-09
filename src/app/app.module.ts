@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { ListadoSiniestrosComponent } from './siniestros/listado-siniestros/listado-siniestros.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CrearSiniestroComponent } from './siniestros/crear-siniestro/crear-siniestro.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { CrearSiniestroComponent } from './siniestros/crear-siniestro/crear-sini
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

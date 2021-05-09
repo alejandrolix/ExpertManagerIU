@@ -16,7 +16,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.siniestros = await this.siniestrosService.ObtenerTodos().toPromise();     
+    this.siniestros = await this.siniestrosService.obtenerTodos().toPromise();     
   }
 
   public editar(id: number): void {
