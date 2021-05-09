@@ -21,4 +21,8 @@ export class ListadoSiniestrosComponent implements OnInit {
   public editar(id: number): void {
     console.log(id);
   }
+
+  public eliminar(id: number): void {
+    console.log(id);
+  } 
 }
