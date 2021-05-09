@@ -10,6 +10,6 @@ export class CrearSiniestroComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    
   }
-
 }
