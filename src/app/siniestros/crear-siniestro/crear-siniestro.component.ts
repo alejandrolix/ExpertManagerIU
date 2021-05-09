@@ -4,6 +4,7 @@ import { Danio } from 'src/app/interfaces/danio';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AseguradorasService } from 'src/app/servicios/aseguradoras.service';
 import { DaniosService } from 'src/app/servicios/danios.service';
+import { PeritosService } from 'src/app/servicios/peritos.service';
 
 @Component({
   selector: 'app-crear-siniestro',
@@ -15,7 +16,7 @@ export class CrearSiniestroComponent implements OnInit {
   public danios: Danio[];
   public peritos: Usuario[];
 
-  constructor(private aseguradorasService: AseguradorasService, private daniosService: DaniosService) {
+  constructor(private aseguradorasService: AseguradorasService, private daniosService: DaniosService, private peritosService: PeritosService) {
     this.aseguradoras = [];
     this.danios = [];
     this.peritos = [];
@@ -24,5 +25,6 @@ export class CrearSiniestroComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.aseguradoras = await this.aseguradorasService.obtenerTodas().toPromise();    
     this.danios = await this.daniosService.obtenerTodos().toPromise();    
+    this.peritos = await this.peritosService.obtenerTodos().toPromise();    
   }
 }
