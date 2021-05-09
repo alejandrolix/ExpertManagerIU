@@ -20,18 +20,18 @@
         </thead>
         <tbody>
             <tr *ngFor="let siniestro of siniestros">
-                <td>{{ siniestro.id }}</td>
-                <td>{{ siniestro.estado }}</td>
-                <td>{{ siniestro.aseguradora }}</td>
-                <td>{{ siniestro.descripcion }}</td>
-                <td>{{ siniestro.perito }}</td>
-                <td>{{ siniestro.fechaHoraAlta }}</td>
-                <td>{{ siniestro.sujetoAfectado }}</td>
-                <td>{{ siniestro.impValoracionDanios }}</td>
-                <td>
+                <td class="align-middle">{{ siniestro.id }}</td>
+                <td class="align-middle">{{ siniestro.estado }}</td>
+                <td class="align-middle">{{ siniestro.aseguradora }}</td>
+                <td class="align-middle">{{ siniestro.descripcion }}</td>
+                <td class="align-middle">{{ siniestro.perito }}</td>
+                <td class="align-middle">{{ siniestro.fechaHoraAlta }}</td>
+                <td class="align-middle">{{ siniestro.sujetoAfectado }}</td>
+                <td class="align-middle">{{ siniestro.impValoracionDanios }}</td>
+                <td class="align-middle">
                     <i title="Editar" class="fas fa-pencil-alt"></i>                    
                 </td>
-                <td>
+                <td class="align-middle">
                     <i title="Eliminar" class="fas fa-trash-alt"></i>
                 </td>
             </tr>
