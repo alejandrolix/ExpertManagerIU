@@ -18,4 +18,8 @@ export class SiniestrosService {
   public crear(siniestro: any): Observable<any> {    
     return this.http.post<any>(`${environment.urlApi}/Siniestros`, siniestro);
   }
+
+  public eliminar(id: number): Observable<boolean> {    
+    return this.http.delete<boolean>(`${environment.urlApi}/Siniestros/${id}`);
+  }
 }

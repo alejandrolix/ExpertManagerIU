@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-listado-siniestros',
@@ -23,8 +24,30 @@ export class ListadoSiniestrosComponent implements OnInit {
     console.log(id);
   }
 
-  public eliminar(id: number): void {
-    console.log(id);
+  public async eliminar(id: number): Promise<void> {    
+    let accion: SweetAlertResult = await Swal.fire({
+      title: `¿Está seguro que desea eliminar el siniestro con id ${id}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (accion.isConfirmed) {      
+      let respuesta: boolean = await this.siniestrosService.eliminar(id).toPromise();
+
+      if (respuesta)
+        this.siniestros = await this.siniestrosService.obtenerTodos().toPromise();
+      else
+        Swal.fire({
+          title: `Ha habido un problema al eliminar el siniestro con id ${id}`,
+          icon: 'error',          
+          confirmButtonColor: '#3085d6',          
+          confirmButtonText: 'Aceptar',          
+        });
+    }
   } 
 
   public crear(): void {
