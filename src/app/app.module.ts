@@ -7,11 +7,12 @@ import { ListadoSiniestrosComponent } from './siniestros/listado-siniestros/list
 import { HttpClientModule } from '@angular/common/http';
 import { CrearSiniestroComponent } from './siniestros/crear-siniestro/crear-siniestro.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EditarSiniestroComponent } from './siniestros/editar-siniestro/editar-siniestro.component';
 
 @NgModule({
   declarations: [
     AppComponent,    
-    ListadoSiniestrosComponent, CrearSiniestroComponent
+    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent
   ],
   imports: [
     BrowserModule,
