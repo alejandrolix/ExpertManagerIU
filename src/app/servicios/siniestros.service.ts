@@ -19,8 +19,12 @@ export class SiniestrosService {
     return this.http.get<Siniestro>(`${environment.urlApi}/Siniestros/${id}`);
   }
 
-  public crear(siniestro: any): Observable<any> {    
-    return this.http.post<any>(`${environment.urlApi}/Siniestros`, siniestro);
+  public crear(siniestro: any): Observable<boolean> {    
+    return this.http.post<boolean>(`${environment.urlApi}/Siniestros`, siniestro);
+  }
+
+  public editar(siniestro: any, id: number): Observable<boolean> {    
+    return this.http.put<boolean>(`${environment.urlApi}/Siniestros/${id}`, siniestro);
   }
 
   public eliminar(id: number): Observable<boolean> {    

@@ -11,6 +11,7 @@ import { DaniosService } from 'src/app/servicios/danios.service';
 import { EstadosService } from 'src/app/servicios/estados.service';
 import { PeritosService } from 'src/app/servicios/peritos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-editar-siniestro',
@@ -75,7 +76,58 @@ export class EditarSiniestroComponent implements OnInit {
     });
   }
 
-  public enviar(): void {
+  public async enviar(): Promise<void> {
+    if (!this.formEditarSiniestro.valid)
+      return;
 
+    let idEstado: number = parseInt(this.formEditarSiniestro.get('estado')?.value);
+    let idAseguradora: number = parseInt(this.formEditarSiniestro.get('aseguradora')?.value);
+    let direccion: string = this.formEditarSiniestro.get('direccion')?.value;
+    let descripcion: string = this.formEditarSiniestro.get('descripcion')?.value;
+    let idDanio: number = parseInt(this.formEditarSiniestro.get('danio')?.value);
+    let idSujetoAfectado: number = parseInt(this.formEditarSiniestro.get('sujetoAfectado')?.value);
+    let idPerito: number = parseInt(this.formEditarSiniestro.get('perito')?.value);
+
+    let siniestro = {
+      idUsuarioAlta: 1,
+      idEstado: idEstado,
+      idAseguradora: idAseguradora,
+      direccion: direccion,
+      descripcion: descripcion,
+      idDanio: idDanio,
+      idSujetoAfectado: idSujetoAfectado,
+      idPerito: idPerito
+    };    
+
+    let respuesta: boolean = await this.siniestrosService.editar(siniestro, this.siniestro.id).toPromise();
+
+    if (respuesta) {
+      let accion: SweetAlertResult = await Swal.fire({
+        title: 'Siniestro editado correctamente',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      });
+
+      if (accion.isConfirmed)
+        this.router.navigateByUrl('/siniestros');
+    }     
+    else
+      Swal.fire({
+        title: 'Ha habido un error al editar el siniestro',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
   }
 }
