@@ -25,6 +25,7 @@ export class EditarSiniestroComponent implements OnInit {
   public peritos: Usuario[];
   public formEditarSiniestro: FormGroup;
   public siniestro: Siniestro;
+  public mostrarImpValoracionDanios: boolean;
 
   constructor(private aseguradorasService: AseguradorasService, private daniosService: DaniosService, private peritosService: PeritosService, private siniestrosService: SiniestrosService,
               private router: Router, private estadosService: EstadosService, private route: ActivatedRoute) {
@@ -32,6 +33,7 @@ export class EditarSiniestroComponent implements OnInit {
     this.aseguradoras = [];
     this.danios = [];
     this.peritos = [];
+    this.mostrarImpValoracionDanios = false;
   }
 
   async ngOnInit(): Promise<void> {
@@ -63,7 +65,7 @@ export class EditarSiniestroComponent implements OnInit {
     let idPeritoSeleccionado = this.peritos.find(p => p.id == this.siniestro.idPerito)?.id;
 
     if (idPeritoSeleccionado == undefined)
-      return;
+      return;    
 
     this.formEditarSiniestro = new FormGroup({
       estado: new FormControl(idEstadoSeleccionado),
@@ -73,7 +75,23 @@ export class EditarSiniestroComponent implements OnInit {
       danio: new FormControl(idDanioSeleccionado),
       sujetoAfectado: new FormControl(idSujetoAfecSeleccionado),
       perito: new FormControl(idPeritoSeleccionado)
-    });
+    });    
+
+    if (idEstadoSeleccionado == 3) {    // Estado Valorado
+      this.mostrarImpValoracionDanios = true;
+      let impValoracionDanios: string = this.siniestro.impValoracionDanios.replace('€', '').trim();
+
+      this.formEditarSiniestro.addControl('impValoracionDanios', new FormControl(impValoracionDanios, Validators.required));
+    }      
+  }
+
+  public comprobarIdEstado(e: any): void {
+    let idEstado = parseInt(e.target.value);
+
+    if (idEstado == 3)
+      this.mostrarImpValoracionDanios = true;
+    else
+      this.mostrarImpValoracionDanios = false;
   }
 
   public async enviar(): Promise<void> {

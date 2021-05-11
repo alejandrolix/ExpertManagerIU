@@ -13,5 +13,5 @@ export interface Siniestro {
     sujetoAfectado: string;
     idDanio: number;
     danio: string;
-    impValoracionDanios: number;
+    impValoracionDanios: string;
 }
