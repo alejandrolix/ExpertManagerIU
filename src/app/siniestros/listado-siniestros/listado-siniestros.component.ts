@@ -21,7 +21,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   public editar(id: number): void {
-    console.log(id);
+    this.router.navigate(['/editarSiniestro', id]);
   }
 
   public async eliminar(id: number): Promise<void> {    
