@@ -15,6 +15,10 @@ export class SiniestrosService {
     return this.http.get<Siniestro[]>(`${environment.urlApi}/Siniestros`);
   }
 
+  public obtenerPorId(id: number): Observable<Siniestro> {    
+    return this.http.get<Siniestro>(`${environment.urlApi}/Siniestros/${id}`);
+  }
+
   public crear(siniestro: any): Observable<any> {    
     return this.http.post<any>(`${environment.urlApi}/Siniestros`, siniestro);
   }

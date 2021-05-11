@@ -11,7 +11,7 @@ export class EstadosService {
 
   constructor(private http: HttpClient) { }
 
-  public obtenerTodos(): Observable<Estado> {
-    return this.http.get<Estado>(`${environment.urlApi}/Estados`);
+  public obtenerTodos(): Observable<Estado[]> {
+    return this.http.get<Estado[]>(`${environment.urlApi}/Estados`);
   }
 }
