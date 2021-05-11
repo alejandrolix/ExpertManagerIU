@@ -117,6 +117,15 @@ export class EditarSiniestroComponent implements OnInit {
       idPerito: idPerito
     };    
 
+    if (idEstado == 3) {
+      let nuevoSiniestro = {
+        ...siniestro,
+        impValoracionDanios: this.formEditarSiniestro.get('impValoracionDanios')?.value
+      };
+
+      siniestro = nuevoSiniestro;
+    }
+
     let respuesta: boolean = await this.siniestrosService.editar(siniestro, this.siniestro.id).toPromise();
 
     if (respuesta) {
