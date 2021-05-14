@@ -8,11 +8,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { CrearSiniestroComponent } from './siniestros/crear-siniestro/crear-siniestro.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditarSiniestroComponent } from './siniestros/editar-siniestro/editar-siniestro.component';
+import { DetallesSiniestroComponent } from './siniestros/detalles-siniestro/detalles-siniestro.component';
 
 @NgModule({
   declarations: [
     AppComponent,    
-    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent
+    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent, DetallesSiniestroComponent
   ],
   imports: [
     BrowserModule,
