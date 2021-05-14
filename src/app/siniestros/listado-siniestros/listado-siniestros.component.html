@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let siniestro of siniestros">
+            <tr *ngFor="let siniestro of siniestros" (click)="verDetalles(siniestro.id)">
                 <td class="align-middle">{{ siniestro.id }}</td>
                 <td class="align-middle">{{ siniestro.estado }}</td>
                 <td class="align-middle">{{ siniestro.aseguradora }}</td>

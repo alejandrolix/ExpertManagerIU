@@ -53,4 +53,8 @@ export class ListadoSiniestrosComponent implements OnInit {
   public crear(): void {
     this.router.navigateByUrl('/crearSiniestro');
   }
+
+  public verDetalles(id: number): void {
+    this.router.navigate(['/detallesSiniestro', id]);
+  }
 }
