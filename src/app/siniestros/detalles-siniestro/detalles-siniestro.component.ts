@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Documentacion } from 'src/app/interfaces/documentacion';
 import { Siniestro } from 'src/app/interfaces/siniestro';
+import { DocumentacionesService } from 'src/app/servicios/documentaciones.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 
 @Component({
@@ -10,11 +12,13 @@ import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 })
 export class DetallesSiniestroComponent implements OnInit {
   public siniestro: Siniestro;
+  public documentaciones: Documentacion[];
 
-  constructor(private route: ActivatedRoute, private siniestrosService: SiniestrosService) { }
+  constructor(private route: ActivatedRoute, private siniestrosService: SiniestrosService, private documentacionesService: DocumentacionesService) { }
 
   async ngOnInit(): Promise<void> {
     let idSiniestro: number = Number(this.route.snapshot.paramMap.get('id'));
     this.siniestro = await this.siniestrosService.obtenerPorId(idSiniestro).toPromise();
+    this.documentaciones = await this.documentacionesService.obtenerPorIdSiniestro(idSiniestro).toPromise();
   }
 }
