@@ -1,5 +1,5 @@
 <h2 class="mb-4">Subir documentación</h2>
-<form [formGroup]="formSubirDocumentacion" (ngSubmit)="enviar()">
+<form enctype="multipart/form-data" [formGroup]="formSubirDocumentacion" (ngSubmit)="enviar()">
     <div class="row">
         <div class="col">
             <label class="form-label mt-4">Descripción</label>

@@ -27,10 +27,12 @@ export class DocumentacionesService {
     );
   }
 
-  public subir(idSiniestro: number, archivo: any): Observable<boolean> {
-    const formData = new FormData();     
-    formData.append("archivo", archivo, archivo.name);
+  public subirDocumentacion(documentacion: any): Observable<boolean> {
+    const formData = new FormData();    
+    formData.append("Descripcion", documentacion.descripcion); 
+    formData.append("IdSiniestro", documentacion.idSiniestro); 
+    formData.append("Archivo", documentacion.archivo, documentacion.archivo.name);
       
-    return this.http.post<boolean>(`${environment.urlApi}/Documentaciones/${idSiniestro}`, formData);
+    return this.http.post<boolean>(`${environment.urlApi}/Documentaciones`, formData);
   }
 }
