@@ -25,7 +25,7 @@ export class DetallesSiniestroComponent implements OnInit {
   async verArchivo(id: number): Promise<void> {
     let pdf: Blob = await this.documentacionesService.obtener(id).toPromise();
     
-    const urlPdf = URL.createObjectURL(pdf);
+    let urlPdf = URL.createObjectURL(pdf);
     window.open(urlPdf, '_blank');
   }
 }
