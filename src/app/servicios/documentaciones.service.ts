@@ -26,4 +26,11 @@ export class DocumentacionesService {
       })
     );
   }
+
+  public subir(idSiniestro: number, archivo: any): Observable<boolean> {
+    const formData = new FormData();     
+    formData.append("archivo", archivo, archivo.name);
+      
+    return this.http.post<boolean>(`${environment.urlApi}/Documentaciones/${idSiniestro}`, formData);
+  }
 }

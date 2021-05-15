@@ -19,7 +19,7 @@ export class SubirDocumentacionComponent implements OnInit {
     this.formSubirDocumentacion = new FormGroup({
       descripcion: new FormControl('', Validators.required)
     });
-    
+
     this.hayArchivoSeleccionado = true;
   }
 
@@ -34,6 +34,10 @@ export class SubirDocumentacionComponent implements OnInit {
       this.hayArchivoSeleccionado = false;
     else
       this.hayArchivoSeleccionado = true;
+
+    if (this.formSubirDocumentacion.valid) {
+      let archivo: any = this.archivo.nativeElement.files[0];
+    }
   }
 
   public comprobarArchivo(): void {
