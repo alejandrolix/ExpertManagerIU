@@ -28,4 +28,8 @@ export class DetallesSiniestroComponent implements OnInit {
     let urlPdf = URL.createObjectURL(pdf);
     window.open(urlPdf, '_blank');
   }
+
+  public subirDocumentacion(): void {
+
+  }
 }
