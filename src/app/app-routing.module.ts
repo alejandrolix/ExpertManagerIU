@@ -4,6 +4,7 @@ import { CrearSiniestroComponent } from './siniestros/crear-siniestro/crear-sini
 import { DetallesSiniestroComponent } from './siniestros/detalles-siniestro/detalles-siniestro.component';
 import { EditarSiniestroComponent } from './siniestros/editar-siniestro/editar-siniestro.component';
 import { ListadoSiniestrosComponent } from './siniestros/listado-siniestros/listado-siniestros.component';
+import { SubirDocumentacionComponent } from './siniestros/subir-documentacion/subir-documentacion.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
     path: 'detallesSiniestro/:id',
     component: DetallesSiniestroComponent
   },
+  {
+    path: 'subirDocumentacion/:id',
+    component: SubirDocumentacionComponent
+  }
 ];
 
 @NgModule({

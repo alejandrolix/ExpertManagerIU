@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Documentacion } from 'src/app/interfaces/documentacion';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { DocumentacionesService } from 'src/app/servicios/documentaciones.service';
@@ -14,7 +14,8 @@ export class DetallesSiniestroComponent implements OnInit {
   public siniestro: Siniestro;
   public documentaciones: Documentacion[];
 
-  constructor(private route: ActivatedRoute, private siniestrosService: SiniestrosService, private documentacionesService: DocumentacionesService) { }
+  constructor(private route: ActivatedRoute, private siniestrosService: SiniestrosService, private documentacionesService: DocumentacionesService,
+              private router: Router) { }
 
   async ngOnInit(): Promise<void> {
     let idSiniestro: number = Number(this.route.snapshot.paramMap.get('id'));
@@ -29,7 +30,7 @@ export class DetallesSiniestroComponent implements OnInit {
     window.open(urlPdf, '_blank');
   }
 
-  public subirDocumentacion(): void {
-
+  public subirDocumentacion(idSiniestro: number): void {
+    this.router.navigate(['/subirDocumentacion', idSiniestro]);
   }
 }
