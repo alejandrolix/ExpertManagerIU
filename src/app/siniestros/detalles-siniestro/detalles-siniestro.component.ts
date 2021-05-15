@@ -21,4 +21,11 @@ export class DetallesSiniestroComponent implements OnInit {
     this.siniestro = await this.siniestrosService.obtenerPorId(idSiniestro).toPromise();
     this.documentaciones = await this.documentacionesService.obtenerPorIdSiniestro(idSiniestro).toPromise();
   }
+
+  async verArchivo(id: number): Promise<void> {
+    let pdf: Blob = await this.documentacionesService.obtener(id).toPromise();
+    
+    const urlPdf = URL.createObjectURL(pdf);
+    window.open(urlPdf, '_blank');
+  }
 }

@@ -63,7 +63,7 @@
             <tbody>
                 <tr *ngFor="let documentacion of documentaciones">
                     <td>{{ documentacion.descripcion }}</td>
-                    <td class="align-middle">
+                    <td class="align-middle" (click)="verArchivo(documentacion.id)">
                         <i title="Ver documentación" class="fas fa-search"></i>              
                     </td>
                 </tr>
