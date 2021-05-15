@@ -9,11 +9,12 @@ import { CrearSiniestroComponent } from './siniestros/crear-siniestro/crear-sini
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditarSiniestroComponent } from './siniestros/editar-siniestro/editar-siniestro.component';
 import { DetallesSiniestroComponent } from './siniestros/detalles-siniestro/detalles-siniestro.component';
+import { SubirDocumentacionComponent } from './siniestros/subir-documentacion/subir-documentacion.component';
 
 @NgModule({
   declarations: [
     AppComponent,    
-    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent, DetallesSiniestroComponent
+    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent, DetallesSiniestroComponent, SubirDocumentacionComponent
   ],
   imports: [
     BrowserModule,
