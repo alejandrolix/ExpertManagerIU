@@ -1,1 +1,17 @@
-<p>subir-documentacion works!</p>
+<h2 class="mb-4">Subir documentación</h2>
+<form [formGroup]="formSubirDocumentacion" (ngSubmit)="enviar()">
+    <div class="row">
+        <div class="col">
+            <label class="form-label mt-4">Descripción</label>
+            <input type="text" class="form-control anchuraMitad" formControlName="descripcion">
+            <div class="invalid-feedback" *ngIf="formSubirDocumentacion.get('descripcion')?.touched &&
+                                                !formSubirDocumentacion.get('descripcion')?.valid">La descripción es obligatoria</div>
+
+            <label class="form-label mt-4">Archivo</label>
+            <input class="form-control" type="file">
+        </div>
+    </div>
+
+    <button type="submit" [disabled]="!formSubirDocumentacion.valid" class="btn btn-primary mt-5 me-3">Subir</button>
+    <button type="button" class="btn btn-secondary mt-5" (click)="irAtras()">Atrás</button>
+</form>
