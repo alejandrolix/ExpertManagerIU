@@ -61,6 +61,7 @@
                 <tr>
                     <th scope="col">Descripción</th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -68,6 +69,9 @@
                     <td>{{ documentacion.descripcion }}</td>
                     <td class="align-middle" (click)="verArchivo(documentacion.id)">
                         <i title="Ver documentación" class="fas fa-search"></i>              
+                    </td>
+                    <td class="align-middle" (click)="eliminarDocumentacion(documentacion.id)">
+                        <i title="Eliminar" class="fas fa-trash-alt"></i>
                     </td>
                 </tr>
             </tbody>

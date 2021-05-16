@@ -35,4 +35,8 @@ export class DocumentacionesService {
       
     return this.http.post<boolean>(`${environment.urlApi}/Documentaciones`, formData);
   }
+
+  public eliminar(idDocumentacion: number): Observable<boolean> {
+    return this.http.delete<boolean>(`${environment.urlApi}/Documentaciones/${idDocumentacion}`);
+  }
 }

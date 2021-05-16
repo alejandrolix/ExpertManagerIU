@@ -4,6 +4,7 @@ import { Documentacion } from 'src/app/interfaces/documentacion';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { DocumentacionesService } from 'src/app/servicios/documentaciones.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-detalles-siniestro',
@@ -32,5 +33,42 @@ export class DetallesSiniestroComponent implements OnInit {
 
   public subirDocumentacion(idSiniestro: number): void {
     this.router.navigate(['/subirDocumentacion', idSiniestro]);
+  }
+
+  public async eliminarDocumentacion(idDocumentacion: number): Promise<void> {
+    let accion: SweetAlertResult = await Swal.fire({
+      title: `¿Está seguro que desea eliminar la documentación con id ${idDocumentacion}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (accion.isConfirmed) {      
+      let respuesta: boolean = await this.documentacionesService.eliminar(idDocumentacion).toPromise();
+
+      if (respuesta) {
+        Swal.fire({
+          title: 'Documentación eliminada',
+          icon: 'success',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Aceptar',
+          cancelButtonText: 'Cancelar'
+        });
+
+        this.documentaciones = await this.documentacionesService.obtenerPorIdSiniestro(this.siniestro.id).toPromise();
+      }        
+      else
+        Swal.fire({
+          title: `Ha habido un problema al eliminar la documentación con id ${idDocumentacion}`,
+          icon: 'error',          
+          confirmButtonColor: '#3085d6',          
+          confirmButtonText: 'Aceptar',          
+        });
+    }
   }
 }
