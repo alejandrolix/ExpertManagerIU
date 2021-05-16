@@ -94,7 +94,7 @@
             <tbody>
                 <tr *ngFor="let imagen of imagenes">
                     <td>{{ imagen.descripcion }}</td>
-                    <td class="align-middle" (click)="verArchivo(imagen.id)">
+                    <td class="align-middle" (click)="verImagen(imagen.id)">
                         <i title="Ver imagen" class="fas fa-search"></i>              
                     </td>
                     <td class="align-middle" (click)="eliminarImagen(imagen.id)">

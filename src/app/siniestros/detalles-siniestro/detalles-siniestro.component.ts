@@ -35,6 +35,13 @@ export class DetallesSiniestroComponent implements OnInit {
     window.open(urlPdf, '_blank');
   }
 
+  async verImagen(id: number): Promise<void> {
+    let pdf: Blob = await (await this.imagenesService.obtener(id)).toPromise();
+    
+    let urlPdf = URL.createObjectURL(pdf);
+    window.open(urlPdf, '_blank');
+  }
+
   public subirDocumentacion(idSiniestro: number): void {
     this.router.navigate(['/subirDocumentacion', idSiniestro]);
   }
