@@ -8,7 +8,7 @@
                                       !formSubirDocumentacion.get('descripcion')?.valid">La descripción es obligatoria</div>
 
             <label class="form-label mt-4">Archivo</label>
-            <input #archivo class="form-control anchuraMitad" type="file" (change)="comprobarArchivo()">
+            <input #archivo class="form-control anchuraMitad" type="file" accept="application/pdf" (change)="comprobarArchivo()">
             <div class="error" *ngIf="!hayArchivoSeleccionado">El archivo es obligatorio</div>            
         </div>
     </div>
