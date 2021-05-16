@@ -50,7 +50,7 @@ export class DetallesSiniestroComponent implements OnInit {
       let respuesta: boolean = await this.documentacionesService.eliminar(idDocumentacion).toPromise();
 
       if (respuesta) {
-        Swal.fire({
+        await Swal.fire({
           title: 'Documentación eliminada',
           icon: 'success',
           showCancelButton: true,
