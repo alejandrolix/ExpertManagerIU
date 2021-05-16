@@ -1,1 +1,18 @@
-<p>subir-imagen works!</p>
+<h2 class="mb-4">Subir imagen</h2>
+<form enctype="multipart/form-data" [formGroup]="formSubirImagen" (ngSubmit)="enviar()">
+    <div class="row">
+        <div class="col">
+            <label class="form-label mt-4">Descripción</label>
+            <input type="text" class="form-control anchuraMitad" formControlName="descripcion">
+            <div class="error" *ngIf="formSubirImagen.get('descripcion')?.touched &&
+                                      !formSubirImagen.get('descripcion')?.valid">La descripción es obligatoria</div>
+
+            <label class="form-label mt-4">Imagen</label>
+            <input #imagen class="form-control anchuraMitad" type="file" accept="image/png, image/jpeg, image/jpg" (change)="comprobarImagen()">
+            <div class="error" *ngIf="!hayImagenSeleccionada">La imagen es obligatoria</div>            
+        </div>
+    </div>
+
+    <button type="submit" [disabled]="!formSubirImagen.valid" class="btn btn-primary mt-5 me-3">Subir</button>
+    <button type="button" class="btn btn-secondary mt-5" (click)="irAtras()">Atrás</button>
+</form>
