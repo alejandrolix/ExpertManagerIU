@@ -71,4 +71,8 @@ export class DetallesSiniestroComponent implements OnInit {
         });
     }
   }
+
+  public subirImagen(idSiniestro: number): void {
+    this.router.navigate(['/subirImagen', idSiniestro]);
+  }
 }

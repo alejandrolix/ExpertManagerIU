@@ -5,6 +5,7 @@ import { DetallesSiniestroComponent } from './siniestros/detalles-siniestro/deta
 import { EditarSiniestroComponent } from './siniestros/editar-siniestro/editar-siniestro.component';
 import { ListadoSiniestrosComponent } from './siniestros/listado-siniestros/listado-siniestros.component';
 import { SubirDocumentacionComponent } from './siniestros/subir-documentacion/subir-documentacion.component';
+import { SubirImagenComponent } from './siniestros/subir-imagen/subir-imagen.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'subirDocumentacion/:id',
     component: SubirDocumentacionComponent
+  },
+  {
+    path: 'subirImagen/:id',
+    component: SubirImagenComponent
   }
 ];
 
