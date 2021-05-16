@@ -23,4 +23,8 @@ export class ImagenesService {
       
     return this.http.post<boolean>(`${environment.urlApi}/Imagenes`, formData);
   }
+
+  public eliminar(idImagen: number): Observable<boolean> {
+    return this.http.delete<boolean>(`${environment.urlApi}/Imagenes/${idImagen}`);
+  }
 }
