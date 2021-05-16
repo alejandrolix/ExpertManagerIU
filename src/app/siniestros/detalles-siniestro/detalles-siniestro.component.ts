@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Documentacion } from 'src/app/interfaces/documentacion';
+import { Imagen } from 'src/app/interfaces/imagen';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { DocumentacionesService } from 'src/app/servicios/documentaciones.service';
+import { ImagenesService } from 'src/app/servicios/imagenes.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
@@ -14,14 +16,16 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
 export class DetallesSiniestroComponent implements OnInit {
   public siniestro: Siniestro;
   public documentaciones: Documentacion[];
+  public imagenes: Imagen[];
 
   constructor(private route: ActivatedRoute, private siniestrosService: SiniestrosService, private documentacionesService: DocumentacionesService,
-              private router: Router) { }
+              private router: Router, private imagenesService: ImagenesService) { }
 
   async ngOnInit(): Promise<void> {
     let idSiniestro: number = Number(this.route.snapshot.paramMap.get('id'));
     this.siniestro = await this.siniestrosService.obtenerPorId(idSiniestro).toPromise();
     this.documentaciones = await this.documentacionesService.obtenerPorIdSiniestro(idSiniestro).toPromise();
+    this.imagenes = await this.imagenesService.obtenerPorIdSiniestro(idSiniestro).toPromise();
   }
 
   async verArchivo(id: number): Promise<void> {

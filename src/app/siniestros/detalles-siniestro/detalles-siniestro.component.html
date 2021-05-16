@@ -92,12 +92,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let documentacion of documentaciones">
-                    <td>{{ documentacion.descripcion }}</td>
-                    <td class="align-middle" (click)="verArchivo(documentacion.id)">
+                <tr *ngFor="let imagen of imagenes">
+                    <td>{{ imagen.descripcion }}</td>
+                    <td class="align-middle" (click)="verArchivo(imagen.id)">
                         <i title="Ver imagen" class="fas fa-search"></i>              
                     </td>
-                    <td class="align-middle" (click)="eliminarDocumentacion(documentacion.id)">
+                    <td class="align-middle">
                         <i title="Eliminar" class="fas fa-trash-alt"></i>
                     </td>
                 </tr>
