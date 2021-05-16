@@ -39,7 +39,8 @@ export class ImagenesService {
   }
 
   public obtenerContentType(idImagen: number): Observable<any> {
-    const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+    const headers = new HttpHeaders()
+    headers.set('Content-Type', 'text/plain; charset=utf-8');
 
     return this.http.get(`${environment.urlApi}/Imagenes/ObtenerContentType/${idImagen}`, { headers: headers, responseType: 'text' });
   }
