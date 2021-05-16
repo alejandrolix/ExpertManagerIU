@@ -1,7 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentacionesService } from 'src/app/servicios/documentaciones.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-subir-documentacion',
@@ -14,7 +15,7 @@ export class SubirDocumentacionComponent implements OnInit {
   @ViewChild("archivo") archivo: ElementRef;
   private idSiniestro: number;
 
-  constructor(private route: ActivatedRoute, private documentacionesService: DocumentacionesService) { }
+  constructor(private route: ActivatedRoute, private documentacionesService: DocumentacionesService, private router: Router) { }
 
   ngOnInit(): void {
     this.idSiniestro = Number(this.route.snapshot.paramMap.get('id'));
@@ -47,6 +48,35 @@ export class SubirDocumentacionComponent implements OnInit {
       };
 
       let respuesta: boolean = await this.documentacionesService.subirDocumentacion(documentacion).toPromise();
+
+      if (respuesta) {
+        let accion = await Swal.fire({
+          title: 'Archivo subido correctamente',
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          },
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });        
+  
+        if (accion.isConfirmed)
+          this.router.navigate(['/detallesSiniestro', this.idSiniestro]);
+      }     
+      else
+        Swal.fire({
+          title: 'Ha habido un error al subir el archivo',
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          },
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
     }
   }
 
