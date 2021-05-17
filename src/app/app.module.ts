@@ -11,11 +11,12 @@ import { EditarSiniestroComponent } from './siniestros/editar-siniestro/editar-s
 import { DetallesSiniestroComponent } from './siniestros/detalles-siniestro/detalles-siniestro.component';
 import { SubirDocumentacionComponent } from './siniestros/subir-documentacion/subir-documentacion.component';
 import { SubirImagenComponent } from './siniestros/subir-imagen/subir-imagen.component';
+import { ListadoUsuariosComponent } from './usuarios/listado-usuarios/listado-usuarios.component';
 
 @NgModule({
   declarations: [
     AppComponent,    
-    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent, DetallesSiniestroComponent, SubirDocumentacionComponent, SubirImagenComponent
+    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent, DetallesSiniestroComponent, SubirDocumentacionComponent, SubirImagenComponent, ListadoUsuariosComponent
   ],
   imports: [
     BrowserModule,

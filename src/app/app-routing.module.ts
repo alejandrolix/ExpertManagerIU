@@ -6,6 +6,7 @@ import { EditarSiniestroComponent } from './siniestros/editar-siniestro/editar-s
 import { ListadoSiniestrosComponent } from './siniestros/listado-siniestros/listado-siniestros.component';
 import { SubirDocumentacionComponent } from './siniestros/subir-documentacion/subir-documentacion.component';
 import { SubirImagenComponent } from './siniestros/subir-imagen/subir-imagen.component';
+import { ListadoUsuariosComponent } from './usuarios/listado-usuarios/listado-usuarios.component';
 
 const routes: Routes = [
   {
@@ -31,7 +32,11 @@ const routes: Routes = [
   {
     path: 'subirImagen/:id',
     component: SubirImagenComponent
-  }
+  },
+  {
+    path: 'usuarios',
+    component: ListadoUsuariosComponent
+  },
 ];
 
 @NgModule({
