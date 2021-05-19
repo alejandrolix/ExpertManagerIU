@@ -6,6 +6,7 @@ import { EditarSiniestroComponent } from './siniestros/editar-siniestro/editar-s
 import { ListadoSiniestrosComponent } from './siniestros/listado-siniestros/listado-siniestros.component';
 import { SubirDocumentacionComponent } from './siniestros/subir-documentacion/subir-documentacion.component';
 import { SubirImagenComponent } from './siniestros/subir-imagen/subir-imagen.component';
+import { CrearUsuarioComponent } from './usuarios/crear-usuario/crear-usuario.component';
 import { ListadoUsuariosComponent } from './usuarios/listado-usuarios/listado-usuarios.component';
 
 const routes: Routes = [
@@ -37,6 +38,10 @@ const routes: Routes = [
     path: 'usuarios',
     component: ListadoUsuariosComponent
   },
+  {
+    path: 'crearUsuario',
+    component: CrearUsuarioComponent
+  }
 ];
 
 @NgModule({

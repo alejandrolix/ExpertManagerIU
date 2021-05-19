@@ -27,6 +27,6 @@ export class ListadoUsuariosComponent implements OnInit {
   } 
 
   public crear(): void {
-    
+    this.router.navigateByUrl('/crearUsuario');
   }
 }
