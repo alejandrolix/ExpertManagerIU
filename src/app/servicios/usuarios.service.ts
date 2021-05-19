@@ -14,4 +14,8 @@ export class UsuariosService {
   public obtenerTodos(): Observable<Usuario[]> {    
     return this.http.get<Usuario[]>(`${environment.urlApi}/Usuarios`);
   }
+
+  public crear(usuario: any): Observable<boolean> {    
+    return this.http.post<boolean>(`${environment.urlApi}/Usuarios`, usuario);
+  }
 }
