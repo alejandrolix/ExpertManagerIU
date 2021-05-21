@@ -17,8 +17,8 @@ export class ListadoSiniestrosComponent implements OnInit {
   public siniestros: Siniestro[];
   public peritos: Usuario[];
   public aseguradoras: Aseguradora[];
-  private idPeritoSeleccionado: number;
-  private idAseguradoraSeleccionada: number;
+  public idPeritoSeleccionado: number;
+  public idAseguradoraSeleccionada: number;
 
   constructor(private siniestrosService: SiniestrosService, private router: Router, private peritosService: PeritosService,
               private aseguradorasService: AseguradorasService) {
@@ -34,18 +34,15 @@ export class ListadoSiniestrosComponent implements OnInit {
     this.aseguradoras = await this.aseguradorasService.obtenerTodas().toPromise();
   }
 
-  public async filtrarPorPerito(e: Event): Promise<void> {
-    let select = e.target as HTMLSelectElement;
-    this.idPeritoSeleccionado = parseInt(select.value);    
-
+  public async filtrarSiniestros(): Promise<void> {
     this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();
   }
 
-  public async filtrarPorAseguradora(e: Event): Promise<void> {
-    let select = e.target as HTMLSelectElement;
-    this.idAseguradoraSeleccionada = parseInt(select.value);    
+  public async eliminarFiltros(): Promise<void> {
+    this.idPeritoSeleccionado = 0;
+    this.idAseguradoraSeleccionada = 0;
     
-    this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();
+    this.filtrarSiniestros();
   }
 
   public editar(id: number): void {
