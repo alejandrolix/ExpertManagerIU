@@ -19,7 +19,7 @@ export class ListadoUsuariosComponent implements OnInit {
   }
 
   public editar(id: number): void {
-    
+    this.router.navigate(['editarUsuario', id]);
   }
 
   public async eliminar(id: number): Promise<void> {    
