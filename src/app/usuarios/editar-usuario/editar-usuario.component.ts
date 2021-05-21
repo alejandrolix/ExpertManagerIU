@@ -117,4 +117,12 @@ export class EditarUsuarioComponent implements OnInit {
         confirmButtonText: 'Aceptar'
       });
   }
+
+  public comprobarLetraPulsada(e: any): void {
+    let caracteresPermitidos: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '.'];
+    let teclaPulsada: string = e.key;
+
+    if (caracteresPermitidos.indexOf(teclaPulsada) == -1)
+      e.preventDefault();
+  }
 }
