@@ -6,4 +6,5 @@ export interface Usuario {
     idPermiso: number;
     permiso: string;
     hashContrasenia: string;
+    impReparacionDanios: number;
 }

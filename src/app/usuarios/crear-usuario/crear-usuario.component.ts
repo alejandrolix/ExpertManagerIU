@@ -62,7 +62,20 @@ export class CrearUsuarioComponent implements OnInit {
       hashContrasenia: hashContrasenia
     };
 
-    let respuesta: boolean = await this.usuariosService.crear(usuario).toPromise();
+    let respuesta: boolean;
+
+    if (idPermiso == 3) {
+      let impReparacionDanios: number = parseFloat(this.formCrearUsuario.get('impReparacionDanios')?.value);
+
+      let nuevoUsuario = {
+        ...usuario,
+        impReparacionDanios: impReparacionDanios
+      };
+
+      respuesta = await this.usuariosService.crear(nuevoUsuario).toPromise();
+    }
+    else
+      respuesta = await this.usuariosService.crear(usuario).toPromise();
 
     if (respuesta) {
       let accion = await Swal.fire({
