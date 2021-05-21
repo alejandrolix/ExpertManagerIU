@@ -11,12 +11,8 @@ export class SiniestrosService {
 
   constructor(private http: HttpClient) { }
 
-  public obtenerTodos(): Observable<Siniestro[]> {    
-    return this.http.get<Siniestro[]>(`${environment.urlApi}/Siniestros`);
-  }
-
-  public obtenerPorIdPerito(idPerito: number): Observable<Siniestro[]> {    
-    return this.http.get<Siniestro[]>(`${environment.urlApi}/Siniestros?idPerito=${idPerito}`);
+  public obtenerTodos(idPerito: number, idAseguradora: number): Observable<Siniestro[]> {    
+    return this.http.get<Siniestro[]>(`${environment.urlApi}/Siniestros?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
   }
 
   public obtenerPorId(id: number): Observable<Siniestro> {    
