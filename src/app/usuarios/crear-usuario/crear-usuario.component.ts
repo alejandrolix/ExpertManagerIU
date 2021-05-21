@@ -15,16 +15,6 @@ import { Router } from '@angular/router';
 export class CrearUsuarioComponent implements OnInit {
   public formCrearUsuario: FormGroup;
   public permisos: Permiso[];
-  public esPeritoA: any = [
-    {
-      id: 0,
-      value: 'Sí'
-    },
-    {
-      id: 1,
-      value: 'No'
-    }
-  ];
 
   constructor(private permisosService: PermisosService, private usuariosService: UsuariosService, private router: Router) { }
 
@@ -35,7 +25,6 @@ export class CrearUsuarioComponent implements OnInit {
       nombre: new FormControl('', Validators.required),
       contrasenia: new FormControl('', Validators.required),
       repetirContrasenia: new FormControl('', [Validators.required, this.comprobarContrasenias]),
-      esPerito: new FormControl(this.esPeritoA[0].id),
       permiso: new FormControl(this.permisos[0].id)
     });
   }
@@ -52,13 +41,11 @@ export class CrearUsuarioComponent implements OnInit {
       return;    
 
     let nombre: string = this.formCrearUsuario.get('nombre')?.value;
-    let idEsPerito: number = Number(this.formCrearUsuario.get('esPerito')?.value);
     let idPermiso: number = Number(this.formCrearUsuario.get('permiso')?.value);
-    let hashContrasenia: string = sha256(this.formCrearUsuario.get('contrasenia')?.value)
+    let hashContrasenia: string = sha256(this.formCrearUsuario.get('contrasenia')?.value);
 
     let usuario = {
       nombre: nombre,
-      idEsPerito: idEsPerito,
       idPermiso: idPermiso,
       hashContrasenia: hashContrasenia
     };
