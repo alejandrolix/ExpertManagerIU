@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Permiso } from 'src/app/interfaces/permiso';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
@@ -34,10 +34,17 @@ export class CrearUsuarioComponent implements OnInit {
     this.formCrearUsuario = new FormGroup({
       nombre: new FormControl('', Validators.required),
       contrasenia: new FormControl('', Validators.required),
-      repetirContrasenia: new FormControl('', Validators.required),
+      repetirContrasenia: new FormControl('', [Validators.required, this.comprobarContrasenias]),
       esPerito: new FormControl(this.esPeritoA[0].id),
       permiso: new FormControl(this.permisos[0].id)
     });
+  }
+
+  comprobarContrasenias(control: AbstractControl): {[key: string]: any} | null  {
+    if (control.value !== control.parent?.get('contrasenia')?.value)
+      return { contraseniasNoIguales: true };    
+
+    return null;
   }
 
   public async enviar(): Promise<void> {

@@ -11,8 +11,9 @@
             <div class="invalid-feedback" *ngIf="formCrearUsuario.get('contrasenia')?.touched && !formCrearUsuario.get('contrasenia')?.valid">La contraseña es obligatoria</div>
 
             <label class="form-label mt-4">Repetir Contraseña</label>
-            <input type="password" class="form-control anchuraMitad" formControlName="repetirContrasenia">
-            <div class="invalid-feedback" *ngIf="formCrearUsuario.get('repetirContrasenia')?.touched && !formCrearUsuario.get('repetirContrasenia')?.valid">Las contraseñas no coinciden</div>
+            <input type="password" class="form-control anchuraMitad" formControlName="repetirContrasenia">            
+            <div class="invalid-feedback" *ngIf="formCrearUsuario.get('repetirContrasenia')?.errors?.contraseniasNoIguales || (formCrearUsuario.get('repetirContrasenia')?.touched &&
+                                                 !formCrearUsuario.get('repetirContrasenia')?.valid)">Las contraseñas no coinciden</div>               
 
             <label class="form-label mt-4">Es Perito</label>
             <select class="form-select" formControlName="esPerito">
