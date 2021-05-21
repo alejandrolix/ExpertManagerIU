@@ -17,12 +17,13 @@ export class EditarUsuarioComponent implements OnInit {
   public formEditarUsuario: FormGroup;
   public permisos: Permiso[];
   private idUsuario: number;
+  public esPeritoNoResponsable: boolean;
 
   constructor(private permisosService: PermisosService, private usuariosService: UsuariosService, private router: Router, private route: ActivatedRoute) { }
 
   async ngOnInit(): Promise<void> {
     this.idUsuario = Number(this.route.snapshot.paramMap.get('id'));    
-    let usuario: Usuario = await this.usuariosService.obtenerPorId(this.idUsuario).toPromise(); 
+    let usuario: Usuario = await this.usuariosService.obtenerPorId(this.idUsuario).toPromise();     
     this.permisos = await this.permisosService.obtenerTodos().toPromise();
 
     this.formEditarUsuario = new FormGroup({
@@ -31,6 +32,24 @@ export class EditarUsuarioComponent implements OnInit {
       repetirContrasenia: new FormControl(usuario.hashContrasenia, [Validators.required, this.comprobarContrasenias]),
       permiso: new FormControl(usuario.idPermiso)
     });
+
+    if (usuario.idPermiso == 3) {    // Permiso Perito no responsable
+      this.esPeritoNoResponsable = true;
+      this.formEditarUsuario.addControl('impReparacionDanios', new FormControl(usuario.impReparacionDanios, Validators.required));
+    }      
+    else
+      this.esPeritoNoResponsable = false;
+  }
+
+  public permisoSeleccionado(e: any): void {
+    this.formEditarUsuario.removeControl('impReparacionDanios');
+
+    if (e.target.value == 3) {    // Permiso Perito no responsable
+      this.esPeritoNoResponsable = true;
+      this.formEditarUsuario.addControl('impReparacionDanios', new FormControl('', Validators.required));
+    }      
+    else
+      this.esPeritoNoResponsable = false;
   }
 
   comprobarContrasenias(control: AbstractControl): {[key: string]: any} | null  {
@@ -54,7 +73,20 @@ export class EditarUsuarioComponent implements OnInit {
       hashContrasenia: hashContrasenia
     };
 
-    let respuesta: boolean = await this.usuariosService.editar(usuario, this.idUsuario).toPromise();
+    let respuesta: boolean;
+
+    if (idPermiso == 3) {
+      let impReparacionDanios: number = parseFloat(this.formEditarUsuario.get('impReparacionDanios')?.value);
+
+      let nuevoUsuario = {
+        ...usuario,
+        impReparacionDanios: impReparacionDanios
+      };
+
+      respuesta = await this.usuariosService.editar(nuevoUsuario, this.idUsuario).toPromise();
+    }
+    else
+      respuesta = await this.usuariosService.editar(usuario, this.idUsuario).toPromise();
 
     if (respuesta) {
       let accion = await Swal.fire({

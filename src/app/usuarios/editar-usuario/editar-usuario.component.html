@@ -16,9 +16,15 @@
                                                  !formEditarUsuario.get('repetirContrasenia')?.valid)">Las contraseñas no coinciden</div>               
 
             <label class="form-label mt-4">Permiso</label>
-            <select class="form-select" formControlName="permiso">
+            <select class="form-select" formControlName="permiso" (change)="permisoSeleccionado($event)">
                 <option *ngFor="let permiso of permisos" [value]="permiso.id">{{ permiso.nombre }}</option>
             </select>
+
+            <div *ngIf="esPeritoNoResponsable">
+                <label class="form-label mt-4">Importe Reparación Daños</label>
+                <input type="number" class="form-control anchuraMitad" formControlName="impReparacionDanios">
+                <div class="invalid-feedback" *ngIf="formEditarUsuario.get('impReparacionDanios')?.touched && !formEditarUsuario.get('impReparacionDanios')?.valid">El importe de reparación de daños es obligatorio</div>
+            </div>   
         </div>
         <div class="col">
         </div>
