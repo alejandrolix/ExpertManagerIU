@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 export class CrearUsuarioComponent implements OnInit {
   public formCrearUsuario: FormGroup;
   public permisos: Permiso[];
+  public esPeritoNoResponsable: boolean;
 
   constructor(private permisosService: PermisosService, private usuariosService: UsuariosService, private router: Router) { }
 
@@ -29,8 +30,19 @@ export class CrearUsuarioComponent implements OnInit {
     });
   }
 
+  public permisoSeleccionado(e: any): void {
+    this.formCrearUsuario.removeControl('impReparacionDanios');
+
+    if (e.target.value == 3) {    // Permiso Perito no responsable
+      this.esPeritoNoResponsable = true;
+      this.formCrearUsuario.addControl('impReparacionDanios', new FormControl('', Validators.required));
+    }      
+    else
+      this.esPeritoNoResponsable = false;
+  }
+
   comprobarContrasenias(control: AbstractControl): {[key: string]: any} | null  {
-    if (control.value !== control.parent?.get('contrasenia')?.value)
+    if (control.value != '' && (control.value !== control.parent?.get('contrasenia')?.value))
       return { contraseniasNoIguales: true };    
 
     return null;
