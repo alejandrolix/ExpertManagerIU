@@ -7,6 +7,7 @@ import { ListadoSiniestrosComponent } from './siniestros/listado-siniestros/list
 import { SubirDocumentacionComponent } from './siniestros/subir-documentacion/subir-documentacion.component';
 import { SubirImagenComponent } from './siniestros/subir-imagen/subir-imagen.component';
 import { CrearUsuarioComponent } from './usuarios/crear-usuario/crear-usuario.component';
+import { EditarUsuarioComponent } from './usuarios/editar-usuario/editar-usuario.component';
 import { ListadoUsuariosComponent } from './usuarios/listado-usuarios/listado-usuarios.component';
 
 const routes: Routes = [
@@ -41,6 +42,10 @@ const routes: Routes = [
   {
     path: 'crearUsuario',
     component: CrearUsuarioComponent
+  },
+  {
+    path: 'editarUsuario/:id',
+    component: EditarUsuarioComponent
   }
 ];
 
