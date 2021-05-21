@@ -1,4 +1,14 @@
-<h2 class="mb-4">Listado siniestros</h2>
+<h2 class="mb-5">Listado siniestros</h2>
+<div class="row">
+    <div class="col-6">
+        <label class="form-label">Perito</label>
+        <select class="form-select anchuraMitad" (change)="filtrarPorPerito($event)">
+            <option value="0" selected>Todos</option>
+            <option *ngFor="let perito of peritos" [value]="perito.id">{{ perito.nombre }}</option>
+        </select>
+    </div>
+    <div class="col-6"></div>
+</div>
 <div class="d-flex justify-content-end mb-3">
     <i title="Crear" (click)="crear()" class="fas fa-plus"></i>
 </div>
@@ -32,10 +42,10 @@
                 <td class="align-middle">{{ siniestro.danio }}</td>
                 <td class="align-middle">{{ siniestro.impValoracionDanios }}</td>
                 <td class="align-middle" (click)="verDetalles(siniestro.id)">
-                    <i title="Ver detalles" class="fas fa-info me-3"></i>                   
+                    <i title="Ver detalles" class="fas fa-info me-3"></i>
                 </td>
                 <td class="align-middle" (click)="editar(siniestro.id)">
-                    <i title="Editar" class="fas fa-pencil-alt me-3"></i>                    
+                    <i title="Editar" class="fas fa-pencil-alt me-3"></i>
                 </td>
                 <td class="align-middle" (click)="eliminar(siniestro.id)">
                     <i title="Eliminar" class="fas fa-trash-alt"></i>

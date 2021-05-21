@@ -15,6 +15,10 @@ export class SiniestrosService {
     return this.http.get<Siniestro[]>(`${environment.urlApi}/Siniestros`);
   }
 
+  public obtenerPorIdPerito(idPerito: number): Observable<Siniestro[]> {    
+    return this.http.get<Siniestro[]>(`${environment.urlApi}/Siniestros?idPerito=${idPerito}`);
+  }
+
   public obtenerPorId(id: number): Observable<Siniestro> {    
     return this.http.get<Siniestro>(`${environment.urlApi}/Siniestros/${id}`);
   }
