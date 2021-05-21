@@ -16,16 +16,6 @@ import Swal from 'sweetalert2';
 export class EditarUsuarioComponent implements OnInit {
   public formEditarUsuario: FormGroup;
   public permisos: Permiso[];
-  public esPeritoA: any = [
-    {
-      id: 0,
-      value: 'Sí'
-    },
-    {
-      id: 1,
-      value: 'No'
-    }
-  ];
   private idUsuario: number;
 
   constructor(private permisosService: PermisosService, private usuariosService: UsuariosService, private router: Router, private route: ActivatedRoute) { }
@@ -39,7 +29,6 @@ export class EditarUsuarioComponent implements OnInit {
       nombre: new FormControl(usuario.nombre, Validators.required),
       contrasenia: new FormControl(usuario.hashContrasenia, Validators.required),
       repetirContrasenia: new FormControl(usuario.hashContrasenia, [Validators.required, this.comprobarContrasenias]),
-      esPerito: new FormControl(usuario.idEsPerito),
       permiso: new FormControl(usuario.idPermiso)
     });
   }
@@ -56,13 +45,11 @@ export class EditarUsuarioComponent implements OnInit {
       return;    
 
     let nombre: string = this.formEditarUsuario.get('nombre')?.value;
-    let idEsPerito: number = Number(this.formEditarUsuario.get('esPerito')?.value);
     let idPermiso: number = Number(this.formEditarUsuario.get('permiso')?.value);
     let hashContrasenia: string = sha256(this.formEditarUsuario.get('contrasenia')?.value);
 
     let usuario = {
       nombre: nombre,
-      idEsPerito: idEsPerito,
       idPermiso: idPermiso,
       hashContrasenia: hashContrasenia
     };

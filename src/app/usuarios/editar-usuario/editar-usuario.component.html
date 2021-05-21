@@ -15,12 +15,6 @@
             <div class="invalid-feedback" *ngIf="formEditarUsuario.get('repetirContrasenia')?.errors?.contraseniasNoIguales || (formEditarUsuario.get('repetirContrasenia')?.touched &&
                                                  !formEditarUsuario.get('repetirContrasenia')?.valid)">Las contraseñas no coinciden</div>               
 
-            <label class="form-label mt-4">Es Perito</label>
-            <select class="form-select" formControlName="esPerito">
-                <option value="0">Sí</option>
-                <option value="1">No</option>
-            </select>
-
             <label class="form-label mt-4">Permiso</label>
             <select class="form-select" formControlName="permiso">
                 <option *ngFor="let permiso of permisos" [value]="permiso.id">{{ permiso.nombre }}</option>
