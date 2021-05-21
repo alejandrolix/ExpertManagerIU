@@ -15,7 +15,15 @@ export class UsuariosService {
     return this.http.get<Usuario[]>(`${environment.urlApi}/Usuarios`);
   }
 
+  public obtenerPorId(id: number): Observable<Usuario> {    
+    return this.http.get<Usuario>(`${environment.urlApi}/Usuarios/${id}`);
+  }
+
   public crear(usuario: any): Observable<boolean> {    
     return this.http.post<boolean>(`${environment.urlApi}/Usuarios`, usuario);
+  }
+
+  public editar(usuario: any, id: number): Observable<boolean> {    
+    return this.http.put<boolean>(`${environment.urlApi}/Usuarios/${id}`, usuario);
   }
 }

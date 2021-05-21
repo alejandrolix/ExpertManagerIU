@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
-import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-listado-usuarios',
