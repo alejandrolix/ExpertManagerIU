@@ -26,4 +26,8 @@ export class UsuariosService {
   public editar(usuario: any, id: number): Observable<boolean> {    
     return this.http.put<boolean>(`${environment.urlApi}/Usuarios/${id}`, usuario);
   }
+
+  public eliminar(id: number): Observable<boolean> {    
+    return this.http.delete<boolean>(`${environment.urlApi}/Usuarios/${id}`);
+  }
 }
