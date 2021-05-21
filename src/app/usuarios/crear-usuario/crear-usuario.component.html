@@ -22,7 +22,7 @@
 
             <div *ngIf="esPeritoNoResponsable">
                 <label class="form-label mt-4">Importe Reparación Daños</label>
-                <input type="number" class="form-control anchuraMitad" formControlName="impReparacionDanios">
+                <input type="text" class="form-control anchuraMitad" (keydown)="comprobarLetraPulsada($event)" formControlName="impReparacionDanios">
                 <div class="invalid-feedback" *ngIf="formCrearUsuario.get('impReparacionDanios')?.touched && !formCrearUsuario.get('impReparacionDanios')?.valid">El importe de reparación de daños es obligatorio</div>
             </div>            
         </div>
