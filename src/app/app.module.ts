@@ -15,11 +15,12 @@ import { ListadoUsuariosComponent } from './usuarios/listado-usuarios/listado-us
 import { CrearUsuarioComponent } from './usuarios/crear-usuario/crear-usuario.component';
 import { EditarUsuarioComponent } from './usuarios/editar-usuario/editar-usuario.component';
 import { InicioSesionComponent } from './inicio-sesion/inicio-sesion.component';
+import { CrearMensajeComponent } from './siniestros/crear-mensaje/crear-mensaje.component';
 
 @NgModule({
   declarations: [
     AppComponent,    
-    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent, DetallesSiniestroComponent, SubirDocumentacionComponent, SubirImagenComponent, ListadoUsuariosComponent, CrearUsuarioComponent, EditarUsuarioComponent, InicioSesionComponent
+    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent, DetallesSiniestroComponent, SubirDocumentacionComponent, SubirImagenComponent, ListadoUsuariosComponent, CrearUsuarioComponent, EditarUsuarioComponent, InicioSesionComponent, CrearMensajeComponent
   ],
   imports: [
     BrowserModule,
