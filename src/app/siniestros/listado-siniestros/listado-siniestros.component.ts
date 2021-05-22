@@ -5,7 +5,7 @@ import { Siniestro } from 'src/app/interfaces/siniestro';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { Permisos } from 'src/app/permisos/permisos';
 import { AseguradorasService } from 'src/app/servicios/aseguradoras.service';
-import { PeritosService } from 'src/app/servicios/peritos.service';
+import { PermisosService } from 'src/app/servicios/permisos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
@@ -22,7 +22,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   public idPeritoSeleccionado: number;
   public idAseguradoraSeleccionada: number;
 
-  constructor(private siniestrosService: SiniestrosService, private router: Router, private peritosService: PeritosService,
+  constructor(private siniestrosService: SiniestrosService, private router: Router, private permisosService: PermisosService,
               private aseguradorasService: AseguradorasService, private usuariosService: UsuariosService) {
 
     this.siniestros = [];
@@ -40,6 +40,12 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   public async cerrarSiniestro(idSiniestro: number): Promise<void> {
+    let esPeritoNoResponsable: boolean = this.permisosService.tienePermisoPeritoNoResponsable();
+
+    // if (esPeritoNoResponsable)
+    
+
+
     let accion: SweetAlertResult = await Swal.fire({
       title: `¿Está seguro que desea cerrar el siniestro con id ${idSiniestro}?`,
       icon: 'warning',

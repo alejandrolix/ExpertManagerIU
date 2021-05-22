@@ -14,4 +14,27 @@ export class PermisosService {
   public obtenerTodos(): Observable<Permiso[]> {
     return this.http.get<Permiso[]>(`${environment.urlApi}/Permisos`);
   }
+
+  public obtenerIdPermisoLogueado(): number {
+    let idPermiso: string | null = localStorage.getItem('idPermiso');
+
+    if (idPermiso == null)
+        return 0;
+
+    let idPermisoNumero: number = parseInt(idPermiso);
+
+    return idPermisoNumero;
+  }
+
+  public tienePermisoPeritoNoResponsable(): boolean {
+    let idPermiso: number = this.obtenerIdPermisoLogueado();
+
+    if (idPermiso != 0)
+      if (idPermiso == 3)
+        return true;
+      else
+        return false;
+
+    return false;
+  }
 }
