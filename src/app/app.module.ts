@@ -18,11 +18,12 @@ import { InicioSesionComponent } from './inicio-sesion/inicio-sesion.component';
 import { CrearMensajeComponent } from './siniestros/crear-mensaje/crear-mensaje.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { MenuNavegacionComponent } from './menu-navegacion/menu-navegacion.component';
+import { PiePaginaComponent } from './pie-pagina/pie-pagina.component';
 
 @NgModule({
   declarations: [
     AppComponent,    
-    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent, DetallesSiniestroComponent, SubirDocumentacionComponent, SubirImagenComponent, ListadoUsuariosComponent, CrearUsuarioComponent, EditarUsuarioComponent, InicioSesionComponent, CrearMensajeComponent, InicioComponent, MenuNavegacionComponent
+    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent, DetallesSiniestroComponent, SubirDocumentacionComponent, SubirImagenComponent, ListadoUsuariosComponent, CrearUsuarioComponent, EditarUsuarioComponent, InicioSesionComponent, CrearMensajeComponent, InicioComponent, MenuNavegacionComponent, PiePaginaComponent
   ],
   imports: [
     BrowserModule,
