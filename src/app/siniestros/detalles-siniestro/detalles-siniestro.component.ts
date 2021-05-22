@@ -97,6 +97,10 @@ export class DetallesSiniestroComponent implements OnInit {
     this.router.navigate(['/subirImagen', idSiniestro]);
   }
 
+  public crearMensaje(idSiniestro: number): void {
+    this.router.navigate(['/crearMensaje', idSiniestro]);
+  }
+
   public async eliminarImagen(idImagen: number): Promise<void> {
     let accion: SweetAlertResult = await Swal.fire({
       title: `¿Está seguro que desea eliminar la imagen con id ${idImagen}?`,
