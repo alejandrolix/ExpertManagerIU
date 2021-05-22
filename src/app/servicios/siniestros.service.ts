@@ -30,4 +30,8 @@ export class SiniestrosService {
   public eliminar(id: number): Observable<boolean> {    
     return this.http.delete<boolean>(`${environment.urlApi}/Siniestros/${id}`);
   }
+
+  public cerrar(id: number): Observable<boolean> {    
+    return this.http.put<boolean>(`${environment.urlApi}/Siniestros/Cerrar/${id}`, null);
+  }
 }

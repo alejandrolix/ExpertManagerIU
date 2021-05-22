@@ -34,6 +34,32 @@ export class ListadoSiniestrosComponent implements OnInit {
     this.aseguradoras = await this.aseguradorasService.obtenerTodas().toPromise();
   }
 
+  public async cerrarSiniestro(idSiniestro: number): Promise<void> {
+    let accion: SweetAlertResult = await Swal.fire({
+      title: `¿Está seguro que desea cerrar el siniestro con id ${idSiniestro}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (accion.isConfirmed) {      
+      let respuesta: boolean = await this.siniestrosService.cerrar(idSiniestro).toPromise();
+
+      if (respuesta)
+        this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();
+      else
+        Swal.fire({
+          title: `Ha habido un problema al cerrar el siniestro con id ${idSiniestro}`,
+          icon: 'error',          
+          confirmButtonColor: '#3085d6',          
+          confirmButtonText: 'Aceptar',          
+        });
+    }
+  }
+
   public async filtrarSiniestros(): Promise<void> {
     this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();
   }
