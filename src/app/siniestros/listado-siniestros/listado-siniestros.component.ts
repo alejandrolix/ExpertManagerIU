@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Aseguradora } from 'src/app/interfaces/aseguradora';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { Usuario } from 'src/app/interfaces/usuario';
-import { Permisos } from 'src/app/permisos/permisos';
 import { AseguradorasService } from 'src/app/servicios/aseguradoras.service';
 import { PeritosService } from 'src/app/servicios/peritos.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Permisos } from './permisos/permisos';
+import { PermisosService } from './servicios/permisos.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,7 @@ import { Permisos } from './permisos/permisos';
 export class AppComponent {
   public estaSesionIniciada: boolean;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private permisosService: PermisosService) {
     if (localStorage.getItem('usuario') == null) {      
       this.estaSesionIniciada = false;
       this.router.navigateByUrl('/inicioSesion');
@@ -24,7 +24,7 @@ export class AppComponent {
     this.router.navigateByUrl('/siniestros');
   }
 
-  public esPermisoAdministracion(): boolean {
-    return Permisos.esPermisoAdministracion();
+  public tienePermisoAdministracion(): boolean {
+    return this.permisosService.tienePermisoAdministracion();
   }
 }
