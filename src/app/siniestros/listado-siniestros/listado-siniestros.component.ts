@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Aseguradora } from 'src/app/interfaces/aseguradora';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { Usuario } from 'src/app/interfaces/usuario';
+import { Permisos } from 'src/app/permisos/permisos';
 import { AseguradorasService } from 'src/app/servicios/aseguradoras.service';
 import { PeritosService } from 'src/app/servicios/peritos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
@@ -32,6 +33,10 @@ export class ListadoSiniestrosComponent implements OnInit {
     this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();  
     this.peritos = await this.peritosService.obtenerTodos().toPromise();   
     this.aseguradoras = await this.aseguradorasService.obtenerTodas().toPromise();
+  }
+
+  public esPermisoAdministracion(): boolean {
+    return Permisos.esPermisoAdministracion();
   }
 
   public async cerrarSiniestro(idSiniestro: number): Promise<void> {
