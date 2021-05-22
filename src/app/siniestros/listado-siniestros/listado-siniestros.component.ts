@@ -41,7 +41,6 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   public async cerrarSiniestro(idSiniestro: number): Promise<void> {
-    debugger;
     let esPeritoNoResponsable: boolean = this.permisosService.tienePermisoPeritoNoResponsable();
 
     if (esPeritoNoResponsable) {
@@ -57,7 +56,7 @@ export class ListadoSiniestrosComponent implements OnInit {
 
       if (impValoracionDaniosSiniestro > impReparacionDaniosPerito) {
         Swal.fire({
-          title: `No puede cerrar el siniestro con id ${idSiniestro} porque el importe de valoración de daños supera el establecido al perito`,
+          title: 'No puede cerrar el siniestro porque el importe de valoración de daños supera el establecido al perito',
           icon: 'error',          
           confirmButtonColor: '#3085d6',          
           confirmButtonText: 'Aceptar',          
