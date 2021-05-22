@@ -1,1 +1,13 @@
-<p>crear-mensaje works!</p>
+<h2 class="mb-4">Crear mensaje</h2>
+<form *ngIf="formCrearMensaje != undefined" [formGroup]="formCrearMensaje" (ngSubmit)="crear()">
+    <div class="row">
+        <div class="col">
+            <label class="form-label mt-4">Descripción</label>
+            <textarea class="form-control anchura60porCiento" rows="3" formControlName="descripcion"></textarea>
+            <div class="invalid-feedback" *ngIf="formCrearMensaje.get('descripcion')?.touched && !formCrearMensaje.get('descripcion')?.valid">La descripción es obligatoria</div>
+        </div>
+        <div class="col"></div>
+    </div>
+
+    <button type="submit" [disabled]="!formCrearMensaje.valid" class="btn btn-primary mt-5">Crear</button>
+</form>
