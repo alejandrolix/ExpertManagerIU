@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InicioSesionComponent } from './inicio-sesion/inicio-sesion.component';
+import { CrearMensajeComponent } from './siniestros/crear-mensaje/crear-mensaje.component';
 import { CrearSiniestroComponent } from './siniestros/crear-siniestro/crear-siniestro.component';
 import { DetallesSiniestroComponent } from './siniestros/detalles-siniestro/detalles-siniestro.component';
 import { EditarSiniestroComponent } from './siniestros/editar-siniestro/editar-siniestro.component';
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'crearSiniestro',
     component: CrearSiniestroComponent
+  },
+  {
+    path: 'crearMensaje/:id',
+    component: CrearMensajeComponent
   },
   {
     path: 'editarSiniestro/:id',
