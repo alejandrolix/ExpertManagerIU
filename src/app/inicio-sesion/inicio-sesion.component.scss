@@ -36,6 +36,10 @@
     button[type="submit"]{ margin-top:10px; }
 }
 
+.invalid-feedback {
+    display: block;
+}
+
 /* Mobile */
 
 @media screen and (max-width:500px){
