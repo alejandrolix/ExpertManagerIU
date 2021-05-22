@@ -95,7 +95,11 @@ export class ListadoSiniestrosComponent implements OnInit {
       this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();
     else {
       let idPerito: number = this.usuariosService.obtenerIdUsuarioLogueado();
-      this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.idAseguradoraSeleccionada).toPromise();
+
+      if (this.permisosService.tienePermisoPeritoResponsable())
+        this.siniestros = await this.siniestrosService.obtenerPorPeritoResponsable(idPerito, this.idAseguradoraSeleccionada).toPromise();
+      else
+        this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.idAseguradoraSeleccionada).toPromise();
     }
   }
 
