@@ -33,12 +33,9 @@ export class InicioSesionComponent implements OnInit {
       hashContrasenia: hashContrasenia
     };
 
-    let respuesta: boolean = await this.inicioSesionService.iniciarSesion(credenciales).toPromise();
+    let respuesta: any = await this.inicioSesionService.iniciarSesion(credenciales).toPromise();
 
-    if (respuesta) {
-      this.router.navigateByUrl('/siniestros');
-    }
-    else
+    if (!respuesta)
       Swal.fire({
         title: 'El usuario y/o la contraseña no son correctos',
         showClass: {
@@ -49,6 +46,11 @@ export class InicioSesionComponent implements OnInit {
         },
         icon: 'error',
         confirmButtonText: 'Aceptar'
-      });
+      });      
+    else {
+      // localStorage.setItem('usuario')
+
+      // this.router.navigateByUrl('/siniestros');
+    }
   }
 }

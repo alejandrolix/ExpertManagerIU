@@ -11,7 +11,7 @@ export class InicioSesionService {
 
   constructor(private http: HttpClient) { }
 
-  public iniciarSesion(credenciales: any): Observable<boolean> {
-    return this.http.post<boolean>(`${environment.urlApi}/InicioSesion`, credenciales);
+  public iniciarSesion(credenciales: any): Observable<Usuario> {
+    return this.http.post<Usuario>(`${environment.urlApi}/InicioSesion`, credenciales);
   }
 }
