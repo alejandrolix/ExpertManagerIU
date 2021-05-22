@@ -57,7 +57,7 @@
                 <td class="align-middle">{{ siniestro.danio }}</td>
                 <td class="align-middle">{{ siniestro.impValoracionDanios }}</td>
                 <td class="align-middle">
-                    <i title="Cerrar siniestro" class="fas fa-power-off me-3"></i>
+                    <i title="Cerrar siniestro" *ngIf="siniestro.idEstado == 3" class="fas fa-power-off me-3"></i>
                 </td>
                 <td class="align-middle" (click)="verDetalles(siniestro.id)">
                     <i title="Ver detalles" class="fas fa-info me-3"></i>
