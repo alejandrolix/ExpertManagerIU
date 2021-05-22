@@ -11,7 +11,7 @@ import { InicioSesionService } from '../servicios/inicio-sesion.service';
 })
 export class InicioSesionComponent implements OnInit {
   public formInicioSesion: FormGroup;
-  @Output() sesionIniciada: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() sesionIniciada = new EventEmitter<boolean>();
 
   constructor(private inicioSesionService: InicioSesionService) { }
 
