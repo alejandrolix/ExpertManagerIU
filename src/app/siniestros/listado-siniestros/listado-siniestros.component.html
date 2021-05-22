@@ -2,7 +2,7 @@
 <div class="row mt-5">
     <div class="col-12">
         <div class="d-flex justify-content-start">
-            <div class="me-5" *ngIf="esPermisoAdministracion()">
+            <div class="me-5" *ngIf="tienePermisoAdministracion()">
                 <label class="form-label">Perito</label>
                 <select class="form-select" [(ngModel)]="idPeritoSeleccionado" (change)="filtrarSiniestros()">
                     <option value="0" selected>Todos</option>
@@ -23,7 +23,7 @@
         <button type="button" class="btn btn-secondary mt-4" (click)="eliminarFiltros()">Eliminar filtros</button>
     </div>
 </div>
-<div class="d-flex justify-content-end mb-3" *ngIf="esPermisoAdministracion()">
+<div class="d-flex justify-content-end mb-3" *ngIf="tienePermisoAdministracion()">
     <i title="Crear" (click)="crear()" class="fas fa-plus"></i>
 </div>
 <div class="table-responsive">
@@ -39,10 +39,10 @@
                 <th scope="col">Sujeto Afectado</th>
                 <th scope="col">Daño</th>
                 <th scope="col">Imp. Valoración Daños</th>
-                <th scope="col" *ngIf="!esPermisoAdministracion()"></th>
+                <th scope="col" *ngIf="!tienePermisoAdministracion()"></th>
                 <th scope="col"></th>
-                <th scope="col" *ngIf="esPermisoAdministracion()"></th>
-                <th scope="col" *ngIf="esPermisoAdministracion()"></th>
+                <th scope="col" *ngIf="tienePermisoAdministracion()"></th>
+                <th scope="col" *ngIf="tienePermisoAdministracion()"></th>
             </tr>
         </thead>
         <tbody>
@@ -56,16 +56,16 @@
                 <td class="align-middle">{{ siniestro.sujetoAfectado }}</td>
                 <td class="align-middle">{{ siniestro.danio }}</td>
                 <td class="align-middle">{{ siniestro.impValoracionDanios }}</td>
-                <td class="align-middle" *ngIf="!esPermisoAdministracion()">
+                <td class="align-middle" *ngIf="!tienePermisoAdministracion()">
                     <i title="Cerrar siniestro" (click)="cerrarSiniestro(siniestro.id)" *ngIf="siniestro.idEstado == 3" class="fas fa-power-off me-3"></i>
                 </td>
                 <td class="align-middle" (click)="verDetalles(siniestro.id)">
                     <i title="Ver detalles" class="fas fa-info me-3"></i>
                 </td>
-                <td class="align-middle" (click)="editar(siniestro.id)" *ngIf="esPermisoAdministracion()">
+                <td class="align-middle" (click)="editar(siniestro.id)" *ngIf="tienePermisoAdministracion()">
                     <i title="Editar" class="fas fa-pencil-alt me-3"></i>
                 </td>
-                <td class="align-middle" (click)="eliminar(siniestro.id)" *ngIf="esPermisoAdministracion()">
+                <td class="align-middle" (click)="eliminar(siniestro.id)" *ngIf="tienePermisoAdministracion()">
                     <i title="Eliminar" class="fas fa-trash-alt"></i>
                 </td>
             </tr>

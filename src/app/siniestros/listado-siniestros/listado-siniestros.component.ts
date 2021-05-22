@@ -36,8 +36,8 @@ export class ListadoSiniestrosComponent implements OnInit {
     this.aseguradoras = await this.aseguradorasService.obtenerTodas().toPromise();
   }
 
-  public esPermisoAdministracion(): boolean {
-    return Permisos.esPermisoAdministracion();
+  public tienePermisoAdministracion(): boolean {
+    return this.permisosService.tienePermisoAdministracion();
   }
 
   public async cerrarSiniestro(idSiniestro: number): Promise<void> {
@@ -91,7 +91,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   public async filtrarSiniestros(): Promise<void> {
-    if (Permisos.esPermisoAdministracion())
+    if (this.permisosService.tienePermisoAdministracion())
       this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();
     else {
       let idPerito: number = this.usuariosService.obtenerIdUsuarioLogueado();
