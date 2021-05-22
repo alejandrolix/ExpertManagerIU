@@ -31,15 +31,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    if (Permisos.esPermisoAdministracion()) {
-      this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();
-      this.peritos = await this.peritosService.obtenerTodos().toPromise();
-    }        
-    else {
-      let idPerito: number = this.usuariosService.obtenerIdUsuarioLogueado();
-      this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.idAseguradoraSeleccionada).toPromise();
-    }
-             
+    await this.filtrarSiniestros();
     this.aseguradoras = await this.aseguradorasService.obtenerTodas().toPromise();
   }
 
