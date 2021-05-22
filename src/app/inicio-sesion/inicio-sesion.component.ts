@@ -46,6 +46,7 @@ export class InicioSesionComponent implements OnInit {
         confirmButtonText: 'Aceptar'
       });      
     else {
+      localStorage.setItem('idUsuario', respuesta.id);
       localStorage.setItem('usuario', credenciales.nombre);
       localStorage.setItem('idPermiso', respuesta.idPermiso);
 
