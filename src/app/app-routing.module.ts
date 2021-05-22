@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InicioSesionComponent } from './inicio-sesion/inicio-sesion.component';
+import { InicioComponent } from './inicio/inicio.component';
 import { CrearMensajeComponent } from './siniestros/crear-mensaje/crear-mensaje.component';
 import { CrearSiniestroComponent } from './siniestros/crear-siniestro/crear-siniestro.component';
 import { DetallesSiniestroComponent } from './siniestros/detalles-siniestro/detalles-siniestro.component';
@@ -13,6 +14,10 @@ import { EditarUsuarioComponent } from './usuarios/editar-usuario/editar-usuario
 import { ListadoUsuariosComponent } from './usuarios/listado-usuarios/listado-usuarios.component';
 
 const routes: Routes = [
+  {
+    path: 'inicio',
+    component: InicioComponent
+  },
   {
     path: 'siniestros',
     component: ListadoSiniestrosComponent
