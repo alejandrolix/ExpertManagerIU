@@ -16,12 +16,11 @@ import { CrearUsuarioComponent } from './usuarios/crear-usuario/crear-usuario.co
 import { EditarUsuarioComponent } from './usuarios/editar-usuario/editar-usuario.component';
 import { InicioSesionComponent } from './inicio-sesion/inicio-sesion.component';
 import { CrearMensajeComponent } from './siniestros/crear-mensaje/crear-mensaje.component';
-import { InformeComponent } from './informe/informe.component';
 
 @NgModule({
   declarations: [
     AppComponent,    
-    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent, DetallesSiniestroComponent, SubirDocumentacionComponent, SubirImagenComponent, ListadoUsuariosComponent, CrearUsuarioComponent, EditarUsuarioComponent, InicioSesionComponent, CrearMensajeComponent, InformeComponent
+    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent, DetallesSiniestroComponent, SubirDocumentacionComponent, SubirImagenComponent, ListadoUsuariosComponent, CrearUsuarioComponent, EditarUsuarioComponent, InicioSesionComponent, CrearMensajeComponent
   ],
   imports: [
     BrowserModule,
