@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Permisos } from './permisos/permisos';
 
 @Component({
   selector: 'app-root',
@@ -23,18 +24,7 @@ export class AppComponent {
     this.router.navigateByUrl('/siniestros');
   }
 
-  get esPermisoAdministracion(): boolean {
-    let idPermiso: string | null = localStorage.getItem('idPermiso');
-
-    if (idPermiso !== null) {
-      let idPermisoNumero: number = parseInt(idPermiso);
-
-      if (idPermisoNumero == 1)
-        return true;
-      else
-        return false;
-    }
-    
-    return false;     
+  public esPermisoAdministracion(): boolean {
+    return Permisos.esPermisoAdministracion();
   }
 }
