@@ -1,31 +1,35 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Expert Manager</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Mostrar navegación">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" routerLink="/inicio" routerLinkActive="active">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/siniestros" routerLinkActive="active">Siniestros</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/usuarios" routerLinkActive="active">Usuarios</a>
-                </li>                
-            </ul>
+<app-inicio-sesion *ngIf="!estaSesionIniciada"></app-inicio-sesion>
+
+<div *ngIf="estaSesionIniciada">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Expert Manager</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Mostrar navegación">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" routerLink="/inicio" routerLinkActive="active">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/siniestros" routerLinkActive="active">Siniestros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/usuarios" routerLinkActive="active">Usuarios</a>
+                    </li>                
+                </ul>
+            </div>
         </div>
+    </nav>
+    
+    <div class="container-fluid mt-4">
+        <div class="container margenAbajo">
+            <router-outlet></router-outlet>
+        </div>    
+    
+        <footer class="footer fixed-bottom bg-dark">
+            <p class="mt-2 text-center">Expert Manager ha sido desarrollado por ViewAx. Copyright &copy; 2020-2021</p>
+        </footer>
     </div>
-</nav>
-
-<div class="container-fluid mt-4">
-    <div class="container margenAbajo">
-        <router-outlet></router-outlet>
-    </div>    
-
-    <footer class="footer fixed-bottom bg-dark">
-        <p class="mt-2 text-center">Expert Manager ha sido desarrollado por ViewAx. Copyright &copy; 2020-2021</p>
-    </footer>
 </div>
