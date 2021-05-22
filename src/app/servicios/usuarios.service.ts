@@ -30,4 +30,8 @@ export class UsuariosService {
   public eliminar(id: number): Observable<boolean> {    
     return this.http.delete<boolean>(`${environment.urlApi}/Usuarios/${id}`);
   }
+
+  public iniciarSesion(credenciales: any): Observable<Usuario> {
+    return this.http.post<Usuario>(`${environment.urlApi}/Usuarios/IniciarSesion`, credenciales);
+  }
 }

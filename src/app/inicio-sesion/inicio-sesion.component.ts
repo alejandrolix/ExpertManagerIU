@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { sha256 } from 'js-sha256';
 import Swal from 'sweetalert2';
-import { InicioSesionService } from '../servicios/inicio-sesion.service';
+import { UsuariosService } from '../servicios/usuarios.service';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -13,7 +13,7 @@ export class InicioSesionComponent implements OnInit {
   public formInicioSesion: FormGroup;
   @Output() sesionIniciada = new EventEmitter<boolean>();
 
-  constructor(private inicioSesionService: InicioSesionService) { }
+  constructor(private usuariosService: UsuariosService) { }
 
   ngOnInit(): void {
     this.formInicioSesion = new FormGroup({
@@ -31,7 +31,7 @@ export class InicioSesionComponent implements OnInit {
       hashContrasenia: hashContrasenia
     };
 
-    let respuesta: any = await this.inicioSesionService.iniciarSesion(credenciales).toPromise();
+    let respuesta: any = await this.usuariosService.iniciarSesion(credenciales).toPromise();
 
     if (!respuesta)
       Swal.fire({
