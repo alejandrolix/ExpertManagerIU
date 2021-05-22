@@ -7,6 +7,7 @@ import { Permisos } from 'src/app/permisos/permisos';
 import { AseguradorasService } from 'src/app/servicios/aseguradoras.service';
 import { PeritosService } from 'src/app/servicios/peritos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
+import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
@@ -22,7 +23,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   public idAseguradoraSeleccionada: number;
 
   constructor(private siniestrosService: SiniestrosService, private router: Router, private peritosService: PeritosService,
-              private aseguradorasService: AseguradorasService) {
+              private aseguradorasService: AseguradorasService, private usuariosService: UsuariosService) {
 
     this.siniestros = [];
     this.idPeritoSeleccionado = 0;
@@ -30,8 +31,15 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();  
-    this.peritos = await this.peritosService.obtenerTodos().toPromise();   
+    if (Permisos.esPermisoAdministracion()) {
+      this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();
+      this.peritos = await this.peritosService.obtenerTodos().toPromise();
+    }        
+    else {
+      let idPerito: number = this.usuariosService.obtenerIdUsuarioLogueado();
+      this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.idAseguradoraSeleccionada).toPromise();
+    }
+             
     this.aseguradoras = await this.aseguradorasService.obtenerTodas().toPromise();
   }
 
