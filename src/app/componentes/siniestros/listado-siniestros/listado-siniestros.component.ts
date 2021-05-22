@@ -4,6 +4,7 @@ import { Aseguradora } from 'src/app/interfaces/aseguradora';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AseguradorasService } from 'src/app/servicios/aseguradoras.service';
+import { MensajesService } from 'src/app/servicios/mensajes.service';
 import { PeritosService } from 'src/app/servicios/peritos.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
@@ -23,7 +24,8 @@ export class ListadoSiniestrosComponent implements OnInit {
   public idAseguradoraSeleccionada: number;
 
   constructor(private siniestrosService: SiniestrosService, private router: Router, private permisosService: PermisosService,
-              private aseguradorasService: AseguradorasService, private usuariosService: UsuariosService, private peritosService: PeritosService) {
+              private aseguradorasService: AseguradorasService, private usuariosService: UsuariosService, private peritosService: PeritosService,
+              private mensajesService: MensajesService) {
 
     this.siniestros = [];
     this.idPeritoSeleccionado = 0;
@@ -54,12 +56,20 @@ export class ListadoSiniestrosComponent implements OnInit {
       let impValoracionDaniosSiniestro: number = Number(siniestroActual.impValoracionDanios.replace(',', '.').replace(' €', ''));
 
       if (impValoracionDaniosSiniestro > impReparacionDaniosPerito) {
-        Swal.fire({
+        await Swal.fire({
           title: 'No puede cerrar el siniestro porque el importe de valoración de daños supera el establecido al perito',
           icon: 'error',          
           confirmButtonColor: '#3085d6',          
           confirmButtonText: 'Aceptar',          
         });
+
+        let idUsuarioCreado: number = this.usuariosService.obtenerIdUsuarioLogueado();
+        let mensaje = {
+          idUsuarioCreado: idUsuarioCreado,
+          idSiniestro: idSiniestro
+        };
+    
+        await this.mensajesService.crearMensajeRevisarCierre(mensaje).toPromise();
       }
       else
         this.mostrarAlertaCerrarSiniestro(idSiniestro);
