@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Documentacion } from 'src/app/interfaces/documentacion';
 import { Imagen } from 'src/app/interfaces/imagen';
 import { Siniestro } from 'src/app/interfaces/siniestro';
+import { Permisos } from 'src/app/permisos/permisos';
 import { DocumentacionesService } from 'src/app/servicios/documentaciones.service';
 import { ImagenesService } from 'src/app/servicios/imagenes.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
@@ -26,6 +27,10 @@ export class DetallesSiniestroComponent implements OnInit {
     this.siniestro = await this.siniestrosService.obtenerPorId(idSiniestro).toPromise();
     this.documentaciones = await this.documentacionesService.obtenerPorIdSiniestro(idSiniestro).toPromise();
     this.imagenes = await this.imagenesService.obtenerPorIdSiniestro(idSiniestro).toPromise();
+  }
+
+  public esPermisoAdministracion(): boolean {
+    return Permisos.esPermisoAdministracion();
   }
 
   async verArchivo(id: number): Promise<void> {
