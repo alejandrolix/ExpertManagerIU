@@ -74,7 +74,12 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   public async filtrarSiniestros(): Promise<void> {
-    this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();
+    if (Permisos.esPermisoAdministracion())
+      this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();
+    else {
+      let idPerito: number = this.usuariosService.obtenerIdUsuarioLogueado();
+      this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.idAseguradoraSeleccionada).toPromise();
+    }
   }
 
   public async eliminarFiltros(): Promise<void> {
