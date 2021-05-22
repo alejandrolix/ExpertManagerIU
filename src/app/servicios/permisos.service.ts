@@ -37,4 +37,16 @@ export class PermisosService {
 
     return false;
   }
+
+  public tienePermisoPeritoResponsable(): boolean {
+    let idPermiso: number = this.obtenerIdPermisoLogueado();
+
+    if (idPermiso != 0)
+      if (idPermiso == 2)
+        return true;
+      else
+        return false;
+
+    return false;
+  }
 }
