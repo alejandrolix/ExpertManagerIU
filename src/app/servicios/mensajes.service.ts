@@ -15,6 +15,10 @@ export class MensajesService {
     return this.http.post<boolean>(`${environment.urlApi}/Mensajes`, mensaje);
   }
 
+  public eliminar(idMensaje: number): Observable<boolean> {
+    return this.http.delete<boolean>(`${environment.urlApi}/Mensajes/${idMensaje}`);
+  }
+
   public obtenerTodosPorIdSiniestro(idSiniestro: number): Observable<Mensaje[]> {
     return this.http.get<Mensaje[]>(`${environment.urlApi}/Mensajes/${idSiniestro}`);
   }

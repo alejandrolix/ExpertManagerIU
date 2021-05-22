@@ -123,7 +123,7 @@
                     <td>{{ mensaje.descripcion }}</td>
                     <td>{{ mensaje.usuarioCreado }}</td>
                     <td class="align-middle">
-                        <i title="Eliminar" class="fas fa-trash-alt"></i>
+                        <i title="Eliminar" (click)="eliminarMensaje(mensaje.id)" class="fas fa-trash-alt"></i>
                     </td>
                 </tr>
             </tbody>

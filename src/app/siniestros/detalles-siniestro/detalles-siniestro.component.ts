@@ -93,6 +93,43 @@ export class DetallesSiniestroComponent implements OnInit {
     }
   }
 
+  public async eliminarMensaje(idMensaje: number): Promise<void> {
+    let accion: SweetAlertResult = await Swal.fire({
+      title: `¿Está seguro que desea eliminar el mensaje con id ${idMensaje}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (accion.isConfirmed) {      
+      let respuesta: boolean = await this.mensajesService.eliminar(idMensaje).toPromise();
+
+      if (respuesta) {
+        await Swal.fire({
+          title: 'Mensaje eliminado',
+          icon: 'success',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Aceptar',
+          cancelButtonText: 'Cancelar'
+        });
+
+        this.mensajes = await this.mensajesService.obtenerTodosPorIdSiniestro(this.siniestro.id).toPromise();
+      }        
+      else
+        Swal.fire({
+          title: `Ha habido un problema al eliminar el mensaje con id ${idMensaje}`,
+          icon: 'error',          
+          confirmButtonColor: '#3085d6',          
+          confirmButtonText: 'Aceptar',          
+        });
+    }
+  }
+
   public subirImagen(idSiniestro: number): void {
     this.router.navigate(['/subirImagen', idSiniestro]);
   }
