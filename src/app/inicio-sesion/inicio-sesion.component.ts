@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { sha256 } from 'js-sha256';
 import Swal from 'sweetalert2';
 import { InicioSesionService } from '../servicios/inicio-sesion.service';
@@ -12,9 +11,9 @@ import { InicioSesionService } from '../servicios/inicio-sesion.service';
 })
 export class InicioSesionComponent implements OnInit {
   public formInicioSesion: FormGroup;
-  @Output() newItemEvent = new EventEmitter<boolean>();
+  @Output() sesionIniciada: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(private inicioSesionService: InicioSesionService, private router: Router) { }
+  constructor(private inicioSesionService: InicioSesionService) { }
 
   ngOnInit(): void {
     this.formInicioSesion = new FormGroup({
@@ -50,7 +49,7 @@ export class InicioSesionComponent implements OnInit {
       localStorage.setItem('usuario', credenciales.nombre);
       localStorage.setItem('idPermiso', respuesta.idPermiso);
 
-      this.newItemEvent.emit(true);
+      this.sesionIniciada.emit(true);
     }
   }
 }
