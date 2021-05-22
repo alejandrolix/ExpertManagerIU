@@ -8,6 +8,7 @@ import { AseguradorasService } from 'src/app/servicios/aseguradoras.service';
 import { DaniosService } from 'src/app/servicios/danios.service';
 import { PeritosService } from 'src/app/servicios/peritos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
+import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -22,7 +23,7 @@ export class CrearSiniestroComponent implements OnInit {
   public formCrearSiniestro: FormGroup;
 
   constructor(private aseguradorasService: AseguradorasService, private daniosService: DaniosService, private peritosService: PeritosService, private siniestrosService: SiniestrosService,
-              private router: Router) {
+              private router: Router, private usuariosService: UsuariosService) {
     this.aseguradoras = [];
     this.danios = [];
     this.peritos = [];
@@ -47,6 +48,7 @@ export class CrearSiniestroComponent implements OnInit {
     if (!this.formCrearSiniestro.valid)
       return;
 
+    let idUsuarioAlta: number = this.usuariosService.obtenerIdUsuarioLogueado();
     let idAseguradora: number = parseInt(this.formCrearSiniestro.get('aseguradora')?.value);
     let direccion: string = this.formCrearSiniestro.get('direccion')?.value;
     let descripcion: string = this.formCrearSiniestro.get('descripcion')?.value;
@@ -55,7 +57,7 @@ export class CrearSiniestroComponent implements OnInit {
     let idPerito: number = parseInt(this.formCrearSiniestro.get('perito')?.value);
 
     let siniestro = {
-      idUsuarioAlta: 1,
+      idUsuarioAlta: idUsuarioAlta,
       idAseguradora: idAseguradora,
       direccion: direccion,
       descripcion: descripcion,
