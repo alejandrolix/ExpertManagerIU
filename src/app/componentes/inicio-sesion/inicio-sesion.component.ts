@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { sha256 } from 'js-sha256';
 import Swal from 'sweetalert2';
-import { UsuariosService } from '../servicios/usuarios.service';
+import { UsuariosService } from '../../servicios/usuarios.service';
 
 @Component({
   selector: 'app-inicio-sesion',

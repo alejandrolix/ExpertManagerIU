@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PermisosService } from '../servicios/permisos.service';
+import { PermisosService } from '../../servicios/permisos.service';
 
 @Component({
   selector: 'app-menu-navegacion',

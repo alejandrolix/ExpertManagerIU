@@ -3,22 +3,22 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ListadoSiniestrosComponent } from './siniestros/listado-siniestros/listado-siniestros.component';
+import { ListadoSiniestrosComponent } from './componentes/siniestros/listado-siniestros/listado-siniestros.component';
 import { HttpClientModule } from '@angular/common/http';
-import { CrearSiniestroComponent } from './siniestros/crear-siniestro/crear-siniestro.component';
+import { CrearSiniestroComponent } from './componentes/siniestros/crear-siniestro/crear-siniestro.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EditarSiniestroComponent } from './siniestros/editar-siniestro/editar-siniestro.component';
-import { DetallesSiniestroComponent } from './siniestros/detalles-siniestro/detalles-siniestro.component';
-import { SubirDocumentacionComponent } from './siniestros/subir-documentacion/subir-documentacion.component';
-import { SubirImagenComponent } from './siniestros/subir-imagen/subir-imagen.component';
+import { EditarSiniestroComponent } from './componentes/siniestros/editar-siniestro/editar-siniestro.component';
+import { DetallesSiniestroComponent } from './componentes/siniestros/detalles-siniestro/detalles-siniestro.component';
+import { SubirDocumentacionComponent } from './componentes/siniestros/subir-documentacion/subir-documentacion.component';
+import { SubirImagenComponent } from './componentes/siniestros/subir-imagen/subir-imagen.component';
 import { ListadoUsuariosComponent } from './usuarios/listado-usuarios/listado-usuarios.component';
 import { CrearUsuarioComponent } from './usuarios/crear-usuario/crear-usuario.component';
 import { EditarUsuarioComponent } from './usuarios/editar-usuario/editar-usuario.component';
-import { InicioSesionComponent } from './inicio-sesion/inicio-sesion.component';
-import { CrearMensajeComponent } from './siniestros/crear-mensaje/crear-mensaje.component';
-import { InicioComponent } from './inicio/inicio.component';
-import { MenuNavegacionComponent } from './menu-navegacion/menu-navegacion.component';
-import { PiePaginaComponent } from './pie-pagina/pie-pagina.component';
+import { InicioSesionComponent } from './componentes/inicio-sesion/inicio-sesion.component';
+import { CrearMensajeComponent } from './componentes/siniestros/crear-mensaje/crear-mensaje.component';
+import { InicioComponent } from './componentes/inicio/inicio.component';
+import { MenuNavegacionComponent } from './componentes/menu-navegacion/menu-navegacion.component';
+import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.component';
 
 @NgModule({
   declarations: [
