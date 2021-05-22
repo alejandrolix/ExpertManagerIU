@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,12 @@ import { Component } from '@angular/core';
 export class AppComponent {
   public estaSesionIniciada: boolean;
 
-  constructor() {
+  constructor(private router: Router) {
     this.estaSesionIniciada = false;
+  }
+
+  public mostrarPaginaPrincipal(e: boolean): void {
+    this.estaSesionIniciada = e;
+    this.router.navigateByUrl('/siniestros');
   }
 }

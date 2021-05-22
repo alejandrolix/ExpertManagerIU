@@ -1,4 +1,4 @@
-<app-inicio-sesion *ngIf="!estaSesionIniciada"></app-inicio-sesion>
+<app-inicio-sesion *ngIf="!estaSesionIniciada" (newItemEvent)="mostrarPaginaPrincipal($event)"></app-inicio-sesion>
 
 <div *ngIf="estaSesionIniciada">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">

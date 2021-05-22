@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { sha256 } from 'js-sha256';
@@ -12,10 +12,9 @@ import { InicioSesionService } from '../servicios/inicio-sesion.service';
 })
 export class InicioSesionComponent implements OnInit {
   public formInicioSesion: FormGroup;
+  @Output() newItemEvent = new EventEmitter<boolean>();
 
-  constructor(private inicioSesionService: InicioSesionService, private router: Router) {
-    
-  }
+  constructor(private inicioSesionService: InicioSesionService, private router: Router) { }
 
   ngOnInit(): void {
     this.formInicioSesion = new FormGroup({
@@ -48,9 +47,10 @@ export class InicioSesionComponent implements OnInit {
         confirmButtonText: 'Aceptar'
       });      
     else {
-      // localStorage.setItem('usuario')
+      localStorage.setItem('usuario', credenciales.nombre);
+      localStorage.setItem('idPermiso', respuesta.idPermiso);
 
-      // this.router.navigateByUrl('/siniestros');
+      this.newItemEvent.emit(true);
     }
   }
 }
