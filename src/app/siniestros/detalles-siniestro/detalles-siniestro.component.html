@@ -52,7 +52,7 @@
     </div>
 
     <h2 class="mb-3 mt-5">Documentación</h2>
-    <div class="d-flex justify-content-end mb-3" *ngIf="esPermisoAdministracion()">
+    <div class="d-flex justify-content-end mb-3" *ngIf="tienePermisoAdministracion()">
         <i title="Subir documentación" (click)="subirDocumentacion(siniestro.id)" class="fas fa-plus"></i>
     </div>
     <div class="table-responsive">
@@ -61,7 +61,7 @@
                 <tr>
                     <th scope="col">Descripción</th>
                     <th scope="col"></th>
-                    <th scope="col" *ngIf="esPermisoAdministracion()"></th>
+                    <th scope="col" *ngIf="tienePermisoAdministracion()"></th>
                 </tr>
             </thead>
             <tbody>
@@ -70,7 +70,7 @@
                     <td class="align-middle" (click)="verArchivo(documentacion.id)">
                         <i title="Ver documentación" class="fas fa-search"></i>              
                     </td>
-                    <td class="align-middle" (click)="eliminarDocumentacion(documentacion.id)" *ngIf="esPermisoAdministracion()">
+                    <td class="align-middle" (click)="eliminarDocumentacion(documentacion.id)" *ngIf="tienePermisoAdministracion()">
                         <i title="Eliminar" class="fas fa-trash-alt"></i>
                     </td>
                 </tr>
@@ -79,7 +79,7 @@
     </div>
 
     <h2 class="mb-3 mt-5">Imágenes</h2>
-    <div class="d-flex justify-content-end mb-3" *ngIf="esPermisoAdministracion()">
+    <div class="d-flex justify-content-end mb-3" *ngIf="tienePermisoAdministracion()">
         <i title="Subir imagen" (click)="subirImagen(siniestro.id)" class="fas fa-plus"></i>
     </div>
     <div class="table-responsive">
@@ -88,7 +88,7 @@
                 <tr>
                     <th scope="col">Descripción</th>
                     <th scope="col"></th>
-                    <th scope="col" *ngIf="esPermisoAdministracion()"></th>
+                    <th scope="col" *ngIf="tienePermisoAdministracion()"></th>
                 </tr>
             </thead>
             <tbody>
@@ -97,7 +97,7 @@
                     <td class="align-middle" (click)="verImagen(imagen.id)">
                         <i title="Ver imagen" class="fas fa-search"></i>              
                     </td>
-                    <td class="align-middle" (click)="eliminarImagen(imagen.id)" *ngIf="esPermisoAdministracion()">
+                    <td class="align-middle" (click)="eliminarImagen(imagen.id)" *ngIf="tienePermisoAdministracion()">
                         <i title="Eliminar" class="fas fa-trash-alt"></i>
                     </td>
                 </tr>

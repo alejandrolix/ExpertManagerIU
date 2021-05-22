@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Documentacion } from 'src/app/interfaces/documentacion';
 import { Imagen } from 'src/app/interfaces/imagen';
 import { Siniestro } from 'src/app/interfaces/siniestro';
-import { Permisos } from 'src/app/permisos/permisos';
 import { DocumentacionesService } from 'src/app/servicios/documentaciones.service';
 import { ImagenesService } from 'src/app/servicios/imagenes.service';
+import { PermisosService } from 'src/app/servicios/permisos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
@@ -20,7 +20,7 @@ export class DetallesSiniestroComponent implements OnInit {
   public imagenes: Imagen[];
 
   constructor(private route: ActivatedRoute, private siniestrosService: SiniestrosService, private documentacionesService: DocumentacionesService,
-              private router: Router, private imagenesService: ImagenesService) { }
+              private router: Router, private imagenesService: ImagenesService, private permisosService: PermisosService) { }
 
   async ngOnInit(): Promise<void> {
     let idSiniestro: number = Number(this.route.snapshot.paramMap.get('id'));
@@ -29,8 +29,8 @@ export class DetallesSiniestroComponent implements OnInit {
     this.imagenes = await this.imagenesService.obtenerPorIdSiniestro(idSiniestro).toPromise();
   }
 
-  public esPermisoAdministracion(): boolean {
-    return Permisos.esPermisoAdministracion();
+  public tienePermisoAdministracion(): boolean {
+    return this.permisosService.tienePermisoAdministracion();
   }
 
   async verArchivo(id: number): Promise<void> {
