@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { InformeComponent } from './informe/informe.component';
 import { InicioSesionComponent } from './inicio-sesion/inicio-sesion.component';
 import { CrearMensajeComponent } from './siniestros/crear-mensaje/crear-mensaje.component';
 import { CrearSiniestroComponent } from './siniestros/crear-siniestro/crear-siniestro.component';
@@ -57,6 +58,10 @@ const routes: Routes = [
     path: 'inicioSesion',
     component: InicioSesionComponent
   },
+  {
+    path: 'informe',
+    component: InformeComponent
+  }
 ];
 
 @NgModule({
