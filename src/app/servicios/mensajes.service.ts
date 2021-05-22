@@ -16,6 +16,6 @@ export class MensajesService {
   }
 
   public obtenerTodosPorIdSiniestro(idSiniestro: number): Observable<Mensaje[]> {
-    return this.http.get<Mensaje[]>(`${environment.urlApi}/Mensajes`);
+    return this.http.get<Mensaje[]>(`${environment.urlApi}/Mensajes/${idSiniestro}`);
   }
 }
