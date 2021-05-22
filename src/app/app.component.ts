@@ -10,7 +10,10 @@ export class AppComponent {
   public estaSesionIniciada: boolean;
 
   constructor(private router: Router) {
-    this.estaSesionIniciada = false;
+    if (localStorage.getItem('usuario') == null)
+      this.estaSesionIniciada = false;
+    else
+      this.estaSesionIniciada = true;
   }
 
   public mostrarPaginaPrincipal(e: boolean): void {
