@@ -61,32 +61,37 @@ export class ListadoSiniestrosComponent implements OnInit {
           confirmButtonText: 'Aceptar',          
         });
       }
-      else {
-        let accion: SweetAlertResult = await Swal.fire({
-          title: `¿Está seguro que desea cerrar el siniestro con id ${idSiniestro}?`,
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Aceptar',
-          cancelButtonText: 'Cancelar'
+      else
+        this.mostrarAlertaCerrarSiniestro(idSiniestro);
+    } 
+    else
+      this.mostrarAlertaCerrarSiniestro(idSiniestro);  
+  }
+
+  private async mostrarAlertaCerrarSiniestro(idSiniestro: number): Promise<void> {
+    let accion: SweetAlertResult = await Swal.fire({
+      title: `¿Está seguro que desea cerrar el siniestro con id ${idSiniestro}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (accion.isConfirmed) {      
+      let respuesta: boolean = await this.siniestrosService.cerrar(idSiniestro).toPromise();
+
+      if (respuesta)
+        await this.filtrarSiniestros();
+      else
+        Swal.fire({
+          title: `Ha habido un problema al cerrar el siniestro con id ${idSiniestro}`,
+          icon: 'error',          
+          confirmButtonColor: '#3085d6',          
+          confirmButtonText: 'Aceptar',          
         });
-    
-        if (accion.isConfirmed) {      
-          let respuesta: boolean = await this.siniestrosService.cerrar(idSiniestro).toPromise();
-    
-          if (respuesta)
-            await this.filtrarSiniestros();
-          else
-            Swal.fire({
-              title: `Ha habido un problema al cerrar el siniestro con id ${idSiniestro}`,
-              icon: 'error',          
-              confirmButtonColor: '#3085d6',          
-              confirmButtonText: 'Aceptar',          
-            });
-        }
-      }
-    }    
+    }
   }
 
   public async filtrarSiniestros(): Promise<void> {
