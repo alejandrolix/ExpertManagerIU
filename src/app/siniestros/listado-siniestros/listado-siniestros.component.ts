@@ -5,6 +5,7 @@ import { Siniestro } from 'src/app/interfaces/siniestro';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { Permisos } from 'src/app/permisos/permisos';
 import { AseguradorasService } from 'src/app/servicios/aseguradoras.service';
+import { PeritosService } from 'src/app/servicios/peritos.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
@@ -23,7 +24,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   public idAseguradoraSeleccionada: number;
 
   constructor(private siniestrosService: SiniestrosService, private router: Router, private permisosService: PermisosService,
-              private aseguradorasService: AseguradorasService, private usuariosService: UsuariosService) {
+              private aseguradorasService: AseguradorasService, private usuariosService: UsuariosService, private peritosService: PeritosService) {
 
     this.siniestros = [];
     this.idPeritoSeleccionado = 0;
@@ -40,35 +41,54 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   public async cerrarSiniestro(idSiniestro: number): Promise<void> {
+    debugger;
     let esPeritoNoResponsable: boolean = this.permisosService.tienePermisoPeritoNoResponsable();
 
-    // if (esPeritoNoResponsable)
-    
+    if (esPeritoNoResponsable) {
+      let idPeritoLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
+      let impReparacionDaniosPerito: number = await this.peritosService.obtenerImpReparacionDaniosPorIdPerito(idPeritoLogueado).toPromise();
 
+      let siniestroActual: Siniestro | undefined = this.siniestros.find(siniestro => siniestro.id == idSiniestro);
 
-    let accion: SweetAlertResult = await Swal.fire({
-      title: `¿Está seguro que desea cerrar el siniestro con id ${idSiniestro}?`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
-    });
+      if (siniestroActual == undefined)
+        return;
 
-    if (accion.isConfirmed) {      
-      let respuesta: boolean = await this.siniestrosService.cerrar(idSiniestro).toPromise();
+      let impValoracionDaniosSiniestro: number = Number(siniestroActual.impValoracionDanios.replace(',', '.').replace(' €', ''));
 
-      if (respuesta)
-        this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();
-      else
+      if (impValoracionDaniosSiniestro > impReparacionDaniosPerito) {
         Swal.fire({
-          title: `Ha habido un problema al cerrar el siniestro con id ${idSiniestro}`,
+          title: `No puede cerrar el siniestro con id ${idSiniestro} porque el importe de valoración de daños supera el establecido al perito`,
           icon: 'error',          
           confirmButtonColor: '#3085d6',          
           confirmButtonText: 'Aceptar',          
         });
-    }
+      }
+      else {
+        let accion: SweetAlertResult = await Swal.fire({
+          title: `¿Está seguro que desea cerrar el siniestro con id ${idSiniestro}?`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Aceptar',
+          cancelButtonText: 'Cancelar'
+        });
+    
+        if (accion.isConfirmed) {      
+          let respuesta: boolean = await this.siniestrosService.cerrar(idSiniestro).toPromise();
+    
+          if (respuesta)
+            await this.filtrarSiniestros();
+          else
+            Swal.fire({
+              title: `Ha habido un problema al cerrar el siniestro con id ${idSiniestro}`,
+              icon: 'error',          
+              confirmButtonColor: '#3085d6',          
+              confirmButtonText: 'Aceptar',          
+            });
+        }
+      }
+    }    
   }
 
   public async filtrarSiniestros(): Promise<void> {

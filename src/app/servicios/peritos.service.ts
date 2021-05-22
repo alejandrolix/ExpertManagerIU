@@ -14,4 +14,8 @@ export class PeritosService {
   public obtenerTodos(): Observable<Usuario[]> {    
     return this.http.get<Usuario[]>(`${environment.urlApi}/Peritos`);
   }
+
+  public obtenerImpReparacionDaniosPorIdPerito(idPerito: number): Observable<number> {
+    return this.http.get<number>(`${environment.urlApi}/Peritos/ImporteReparacionDanios/${idPerito}`);
+  } 
 }
