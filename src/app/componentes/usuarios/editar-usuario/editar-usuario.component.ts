@@ -18,8 +18,11 @@ export class EditarUsuarioComponent implements OnInit {
   public permisos: Permiso[];
   private idUsuario: number;
   public esPeritoNoResponsable: boolean;
+  public mostrarSpinner: boolean;
 
-  constructor(private permisosService: PermisosService, private usuariosService: UsuariosService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private permisosService: PermisosService, private usuariosService: UsuariosService, private router: Router, private route: ActivatedRoute) {
+    this.mostrarSpinner = true;
+  }
 
   async ngOnInit(): Promise<void> {
     this.idUsuario = Number(this.route.snapshot.paramMap.get('id'));    
@@ -39,6 +42,8 @@ export class EditarUsuarioComponent implements OnInit {
     }      
     else
       this.esPeritoNoResponsable = false;
+
+    this.mostrarSpinner = false;
   }
 
   public permisoSeleccionado(e: any): void {
