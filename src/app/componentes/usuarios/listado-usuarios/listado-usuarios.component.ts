@@ -11,11 +11,15 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
 })
 export class ListadoUsuariosComponent implements OnInit {
   public usuarios: Usuario[];
+  public mostrarSpinner: boolean;
 
-  constructor(private router: Router, private usuariosService: UsuariosService) { }
+  constructor(private router: Router, private usuariosService: UsuariosService) {
+    this.mostrarSpinner = true;
+  }
 
   async ngOnInit(): Promise<void> {
     this.usuarios = await this.usuariosService.obtenerTodos().toPromise();
+    this.mostrarSpinner = false;
   }
 
   public editar(id: number): void {
