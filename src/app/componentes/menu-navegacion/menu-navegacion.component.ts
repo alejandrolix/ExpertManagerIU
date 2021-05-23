@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import { PermisosService } from '../../servicios/permisos.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { PermisosService } from '../../servicios/permisos.service';
 })
 export class MenuNavegacionComponent implements OnInit {
 
-  constructor(private permisosService: PermisosService, private router: Router) { }
+  constructor(private permisosService: PermisosService, private usuariosService: UsuariosService) { }
 
   ngOnInit(): void {
   }
@@ -22,7 +22,7 @@ export class MenuNavegacionComponent implements OnInit {
     localStorage.removeItem('idUsuario');
     localStorage.removeItem('usuario');
     localStorage.removeItem('idPermiso');
-
-    this.router.navigateByUrl('/inicioSesion');
+    
+    this.usuariosService.cerrarSesionSubject.next(true);
   }
 }

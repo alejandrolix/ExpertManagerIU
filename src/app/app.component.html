@@ -1,4 +1,4 @@
-<app-inicio-sesion *ngIf="!estaSesionIniciada" (sesionIniciada)="mostrarPaginaPrincipal($event)"></app-inicio-sesion>
+<app-inicio-sesion *ngIf="!estaSesionIniciada"></app-inicio-sesion>
 
 <div *ngIf="estaSesionIniciada">
     <app-menu-navegacion></app-menu-navegacion>

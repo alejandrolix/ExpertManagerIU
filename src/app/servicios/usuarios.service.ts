@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Usuario } from '../interfaces/usuario';
 
@@ -8,6 +8,8 @@ import { Usuario } from '../interfaces/usuario';
   providedIn: 'root'
 })
 export class UsuariosService {
+  public iniciarSesionSubject: Subject<boolean> = new Subject<boolean>();
+  public cerrarSesionSubject: Subject<boolean> = new Subject<boolean>();
 
   constructor(private http: HttpClient) { }
 
