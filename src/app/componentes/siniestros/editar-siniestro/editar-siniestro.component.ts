@@ -27,6 +27,7 @@ export class EditarSiniestroComponent implements OnInit {
   public siniestro: Siniestro;
   public mostrarImpValoracionDanios: boolean;
   private impValoracionDanios: string;
+  public mostrarSpinner: boolean;
 
   constructor(private aseguradorasService: AseguradorasService, private daniosService: DaniosService, private peritosService: PeritosService, private siniestrosService: SiniestrosService,
               private router: Router, private estadosService: EstadosService, private route: ActivatedRoute) {
@@ -36,6 +37,7 @@ export class EditarSiniestroComponent implements OnInit {
     this.peritos = [];
     this.mostrarImpValoracionDanios = false;
     this.impValoracionDanios = '';
+    this.mostrarSpinner = true;
   }
 
   async ngOnInit(): Promise<void> {
@@ -84,7 +86,9 @@ export class EditarSiniestroComponent implements OnInit {
       this.impValoracionDanios = this.siniestro.impValoracionDanios.replace('€', '').trim();
 
       this.formEditarSiniestro.addControl('impValoracionDanios', new FormControl(this.impValoracionDanios, Validators.required));
-    }      
+    }     
+    
+    this.mostrarSpinner = false;
   }
 
   public comprobarIdEstado(e: any): void {
