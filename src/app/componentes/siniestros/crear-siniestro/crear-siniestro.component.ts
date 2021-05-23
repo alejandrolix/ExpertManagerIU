@@ -21,12 +21,14 @@ export class CrearSiniestroComponent implements OnInit {
   public danios: Danio[];
   public peritos: Usuario[];
   public formCrearSiniestro: FormGroup;
+  public mostrarSpinner: boolean;
 
   constructor(private aseguradorasService: AseguradorasService, private daniosService: DaniosService, private peritosService: PeritosService, private siniestrosService: SiniestrosService,
               private router: Router, private usuariosService: UsuariosService) {
     this.aseguradoras = [];
     this.danios = [];
     this.peritos = [];
+    this.mostrarSpinner = true;
   }
 
   async ngOnInit(): Promise<void> {
@@ -42,6 +44,8 @@ export class CrearSiniestroComponent implements OnInit {
       sujetoAfectado: new FormControl(0),
       perito: new FormControl(this.peritos[0].id)
     });
+
+    this.mostrarSpinner = false;
   }
 
   public async enviar(): Promise<void> {
