@@ -1,76 +1,78 @@
-<h2>Listado siniestros</h2>
-<div class="row mt-5">
-    <div class="col-12">
-        <div class="d-flex justify-content-start">
-            <div class="me-5" *ngIf="tienePermisoAdministracion()">
-                <label class="form-label">Perito</label>
-                <select class="form-select" [(ngModel)]="idPeritoSeleccionado" (change)="filtrarSiniestros()">
-                    <option value="0" selected>Todos</option>
-                    <option *ngFor="let perito of peritos" [value]="perito.id">{{ perito.nombre }}</option>
-                </select>
-            </div>
-            <div>
-                <label class="form-label">Aseguradora</label>
-                <select class="form-select" [(ngModel)]="idAseguradoraSeleccionada" (change)="filtrarSiniestros()">
-                    <option value="0" selected>Todas</option>
-                    <option *ngFor="let aseguradora of aseguradoras" [value]="aseguradora.id">{{ aseguradora.nombre }}
-                    </option>
-                </select>
+<app-spinner *ngIf="mostrarSpinner"></app-spinner>
+<div *ngIf="!mostrarSpinner">
+    <h2>Listado siniestros</h2>
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="d-flex justify-content-start">
+                <div class="me-5" *ngIf="tienePermisoAdministracion()">
+                    <label class="form-label">Perito</label>
+                    <select class="form-select" [(ngModel)]="idPeritoSeleccionado" (change)="filtrarSiniestros()">
+                        <option value="0" selected>Todos</option>
+                        <option *ngFor="let perito of peritos" [value]="perito.id">{{ perito.nombre }}</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Aseguradora</label>
+                    <select class="form-select" [(ngModel)]="idAseguradoraSeleccionada" (change)="filtrarSiniestros()">
+                        <option value="0" selected>Todas</option>
+                        <option *ngFor="let aseguradora of aseguradoras" [value]="aseguradora.id">{{ aseguradora.nombre }}
+                        </option>
+                    </select>
+                </div>
             </div>
         </div>
+        <div class="col-12 mb-3">
+            <button type="button" class="btn btn-secondary mt-4" (click)="eliminarFiltros()">Eliminar filtros</button>
+        </div>
     </div>
-    <div class="col-12 mb-3">
-        <button type="button" class="btn btn-secondary mt-4" (click)="eliminarFiltros()">Eliminar filtros</button>
+    <div class="d-flex justify-content-end mb-3" *ngIf="tienePermisoAdministracion()">
+        <i title="Crear" (click)="crear()" class="fas fa-plus"></i>
     </div>
-</div>
-<div class="d-flex justify-content-end mb-3" *ngIf="tienePermisoAdministracion()">
-    <i title="Crear" (click)="crear()" class="fas fa-plus"></i>
-</div>
-<app-spinner *ngIf="mostrarSpinner"></app-spinner>
-<div class="table-responsive" *ngIf="!mostrarSpinner">
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Aseguradora</th>
-                <th scope="col">Descripción</th>
-                <th scope="col">Perito</th>
-                <th scope="col">Fecha/Hora Alta</th>
-                <th scope="col">Sujeto Afectado</th>
-                <th scope="col">Daño</th>
-                <th scope="col">Imp. Valoración Daños</th>
-                <th scope="col" *ngIf="!tienePermisoAdministracion()"></th>
-                <th scope="col"></th>
-                <th scope="col" *ngIf="tienePermisoAdministracion()"></th>
-                <th scope="col" *ngIf="tienePermisoAdministracion()"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let siniestro of siniestros">
-                <td class="align-middle">{{ siniestro.id }}</td>
-                <td class="align-middle">{{ siniestro.estado }}</td>
-                <td class="align-middle">{{ siniestro.aseguradora }}</td>
-                <td class="align-middle">{{ siniestro.descripcion }}</td>
-                <td class="align-middle">{{ siniestro.perito }}</td>
-                <td class="align-middle">{{ siniestro.fechaHoraAlta }}</td>
-                <td class="align-middle">{{ siniestro.sujetoAfectado }}</td>
-                <td class="align-middle">{{ siniestro.danio }}</td>
-                <td class="align-middle">{{ siniestro.impValoracionDanios }}</td>
-                <td class="align-middle" *ngIf="!tienePermisoAdministracion()">
-                    <i title="Cerrar siniestro" (click)="cerrarSiniestro(siniestro.id)" *ngIf="siniestro.idEstado == 3"
-                        class="fas fa-power-off me-3"></i>
-                </td>
-                <td class="align-middle" (click)="verDetalles(siniestro.id)">
-                    <i title="Ver detalles" class="fas fa-info me-3"></i>
-                </td>
-                <td class="align-middle" (click)="editar(siniestro.id)" *ngIf="tienePermisoAdministracion()">
-                    <i title="Editar" class="fas fa-pencil-alt me-3"></i>
-                </td>
-                <td class="align-middle" (click)="eliminar(siniestro.id)" *ngIf="tienePermisoAdministracion()">
-                    <i title="Eliminar" class="fas fa-trash-alt"></i>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Aseguradora</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Perito</th>
+                    <th scope="col">Fecha/Hora Alta</th>
+                    <th scope="col">Sujeto Afectado</th>
+                    <th scope="col">Daño</th>
+                    <th scope="col">Imp. Valoración Daños</th>
+                    <th scope="col" *ngIf="!tienePermisoAdministracion()"></th>
+                    <th scope="col"></th>
+                    <th scope="col" *ngIf="tienePermisoAdministracion()"></th>
+                    <th scope="col" *ngIf="tienePermisoAdministracion()"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let siniestro of siniestros">
+                    <td class="align-middle">{{ siniestro.id }}</td>
+                    <td class="align-middle">{{ siniestro.estado }}</td>
+                    <td class="align-middle">{{ siniestro.aseguradora }}</td>
+                    <td class="align-middle">{{ siniestro.descripcion }}</td>
+                    <td class="align-middle">{{ siniestro.perito }}</td>
+                    <td class="align-middle">{{ siniestro.fechaHoraAlta }}</td>
+                    <td class="align-middle">{{ siniestro.sujetoAfectado }}</td>
+                    <td class="align-middle">{{ siniestro.danio }}</td>
+                    <td class="align-middle">{{ siniestro.impValoracionDanios }}</td>
+                    <td class="align-middle" *ngIf="!tienePermisoAdministracion()">
+                        <i title="Cerrar siniestro" (click)="cerrarSiniestro(siniestro.id)" *ngIf="siniestro.idEstado == 3"
+                            class="fas fa-power-off me-3"></i>
+                    </td>
+                    <td class="align-middle" (click)="verDetalles(siniestro.id)">
+                        <i title="Ver detalles" class="fas fa-info me-3"></i>
+                    </td>
+                    <td class="align-middle" (click)="editar(siniestro.id)" *ngIf="tienePermisoAdministracion()">
+                        <i title="Editar" class="fas fa-pencil-alt me-3"></i>
+                    </td>
+                    <td class="align-middle" (click)="eliminar(siniestro.id)" *ngIf="tienePermisoAdministracion()">
+                        <i title="Eliminar" class="fas fa-trash-alt"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

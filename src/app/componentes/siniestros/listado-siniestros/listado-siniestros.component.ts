@@ -35,9 +35,10 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.filtrarSiniestros();
-    this.mostrarSpinner = false;
+    await this.filtrarSiniestros();    
     this.aseguradoras = await this.aseguradorasService.obtenerTodas().toPromise();
+
+    this.mostrarSpinner = false;
   }
 
   public tienePermisoAdministracion(): boolean {
