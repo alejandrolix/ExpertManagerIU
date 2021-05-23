@@ -16,8 +16,11 @@ export class CrearUsuarioComponent implements OnInit {
   public formCrearUsuario: FormGroup;
   public permisos: Permiso[];
   public esPeritoNoResponsable: boolean;
+  public mostrarSpinner: boolean;
 
-  constructor(private permisosService: PermisosService, private usuariosService: UsuariosService, private router: Router) { }
+  constructor(private permisosService: PermisosService, private usuariosService: UsuariosService, private router: Router) {
+    this.mostrarSpinner = true;
+  }
 
   async ngOnInit(): Promise<void> {
     this.permisos = await this.permisosService.obtenerTodos().toPromise();    
@@ -28,6 +31,8 @@ export class CrearUsuarioComponent implements OnInit {
       repetirContrasenia: new FormControl('', [Validators.required, this.comprobarContrasenias]),
       permiso: new FormControl(this.permisos[0].id)
     });
+
+    this.mostrarSpinner = false;
   }
 
   public permisoSeleccionado(e: any): void {
