@@ -19,11 +19,12 @@ import { CrearMensajeComponent } from './componentes/siniestros/crear-mensaje/cr
 import { InicioComponent } from './componentes/inicio/inicio.component';
 import { MenuNavegacionComponent } from './componentes/menu-navegacion/menu-navegacion.component';
 import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.component';
+import { SpinnerComponent } from './componentes/spinner/spinner.component';
 
 @NgModule({
   declarations: [
     AppComponent,    
-    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent, DetallesSiniestroComponent, SubirDocumentacionComponent, SubirImagenComponent, ListadoUsuariosComponent, CrearUsuarioComponent, EditarUsuarioComponent, InicioSesionComponent, CrearMensajeComponent, InicioComponent, MenuNavegacionComponent, PiePaginaComponent
+    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent, DetallesSiniestroComponent, SubirDocumentacionComponent, SubirImagenComponent, ListadoUsuariosComponent, CrearUsuarioComponent, EditarUsuarioComponent, InicioSesionComponent, CrearMensajeComponent, InicioComponent, MenuNavegacionComponent, PiePaginaComponent, SpinnerComponent
   ],
   imports: [
     BrowserModule,

@@ -22,6 +22,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   public aseguradoras: Aseguradora[];
   public idPeritoSeleccionado: number;
   public idAseguradoraSeleccionada: number;
+  public mostrarSpinner: boolean;
 
   constructor(private siniestrosService: SiniestrosService, private router: Router, private permisosService: PermisosService,
               private aseguradorasService: AseguradorasService, private usuariosService: UsuariosService, private peritosService: PeritosService,
@@ -30,10 +31,12 @@ export class ListadoSiniestrosComponent implements OnInit {
     this.siniestros = [];
     this.idPeritoSeleccionado = 0;
     this.idAseguradoraSeleccionada = 0;
+    this.mostrarSpinner = true;
   }
 
   async ngOnInit(): Promise<void> {
     await this.filtrarSiniestros();
+    this.mostrarSpinner = false;
     this.aseguradoras = await this.aseguradorasService.obtenerTodas().toPromise();
   }
 
