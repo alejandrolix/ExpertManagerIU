@@ -21,10 +21,14 @@ export class DetallesSiniestroComponent implements OnInit {
   public documentaciones: Documentacion[];
   public imagenes: Imagen[];
   public mensajes: Mensaje[];
+  public mostrarSpinner: boolean;
 
   constructor(private route: ActivatedRoute, private siniestrosService: SiniestrosService, private documentacionesService: DocumentacionesService,
               private router: Router, private imagenesService: ImagenesService, private permisosService: PermisosService,
-              private mensajesService: MensajesService) { }
+              private mensajesService: MensajesService) {
+
+    this.mostrarSpinner = true;
+  }
 
   async ngOnInit(): Promise<void> {
     let idSiniestro: number = Number(this.route.snapshot.paramMap.get('id'));
@@ -32,6 +36,8 @@ export class DetallesSiniestroComponent implements OnInit {
     this.documentaciones = await this.documentacionesService.obtenerPorIdSiniestro(idSiniestro).toPromise();
     this.imagenes = await this.imagenesService.obtenerPorIdSiniestro(idSiniestro).toPromise();
     this.mensajes = await this.mensajesService.obtenerTodosPorIdSiniestro(idSiniestro).toPromise();
+
+    this.mostrarSpinner = false;
   }
 
   public tienePermisoAdministracion(): boolean {
