@@ -18,11 +18,7 @@ export class MenuNavegacionComponent implements OnInit {
     return this.permisosService.tienePermisoAdministracion();
   }
 
-  public cerrarSesion(): void {
-    localStorage.removeItem('idUsuario');
-    localStorage.removeItem('usuario');
-    localStorage.removeItem('idPermiso');
-    
+  public cerrarSesion(): void {        
     this.usuariosService.cerrarSesionSubject.next(true);
   }
 }

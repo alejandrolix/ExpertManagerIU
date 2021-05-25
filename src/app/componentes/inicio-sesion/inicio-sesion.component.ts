@@ -17,7 +17,12 @@ export class InicioSesionComponent implements OnInit {
     this.mostrarSpinner = false;
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
+    let idUsuarioLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
+
+    if (idUsuarioLogueado != 0)
+      this.usuariosService.cerrarSesionSubject.next(true);
+
     this.formInicioSesion = new FormGroup({
       usuario: new FormControl('', Validators.required),
       contrasenia: new FormControl('', Validators.required)

@@ -34,6 +34,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.cerrarSesionSubscription = this.usuariosService.cerrarSesionSubject.subscribe((respuesta: boolean) => {      
       if (respuesta) {
+        localStorage.removeItem('idUsuario');
+        localStorage.removeItem('usuario');
+        localStorage.removeItem('idPermiso');
+
         this.estaSesionIniciada = false;
         this.router.navigateByUrl('/inicioSesion');
       }        
