@@ -15,13 +15,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router, private usuariosService: UsuariosService) { }     
 
-  ngOnInit(): void {    
+  ngOnInit(): void {        
     let idUsuarioLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
 
     if (idUsuarioLogueado == 0) {          
       this.estaSesionIniciada = false;
       this.router.navigateByUrl('/inicioSesion');
     }
+    else
+      this.estaSesionIniciada = true;
     
     this.iniciarSesionSubscription = this.usuariosService.iniciarSesionSubject.subscribe((respuesta: boolean) => {
       if (respuesta) {
