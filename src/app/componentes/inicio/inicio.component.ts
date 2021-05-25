@@ -22,9 +22,7 @@ export class InicioComponent implements OnInit {
     let idUsuarioLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
     this.tieneUsuarioPermisoAdministracion = this.permisosService.tienePermisoAdministracion();
 
-    this.estadisticas = await this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuarioLogueado).toPromise();
-    console.log(this.estadisticas)
-
+    this.estadisticas = await this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuarioLogueado).toPromise();    
     this.mostrarSpinner = false;
   }
 }

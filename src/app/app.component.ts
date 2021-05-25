@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.iniciarSesionSubscription = this.usuariosService.iniciarSesionSubject.subscribe((respuesta: boolean) => {
       if (respuesta) {
         this.estaSesionIniciada = true;
-        this.router.navigateByUrl('/siniestros');
+        this.router.navigateByUrl('/inicio');
       }
     });
 
