@@ -12,8 +12,11 @@ import { UsuariosService } from '../../servicios/usuarios.service';
 })
 export class InicioSesionComponent implements OnInit {
   public formInicioSesion: FormGroup;
+  public mostrarSpinner: boolean;
 
-  constructor(private usuariosService: UsuariosService) { }
+  constructor(private usuariosService: UsuariosService) {
+    this.mostrarSpinner = false;
+  }
 
   ngOnInit(): void {
     this.formInicioSesion = new FormGroup({
@@ -23,6 +26,7 @@ export class InicioSesionComponent implements OnInit {
   }
 
   public async iniciarSesion(): Promise<void> {
+    this.mostrarSpinner = true;
     let nombre: string = this.formInicioSesion.get('usuario')?.value;
     let hashContrasenia: string = sha256(this.formInicioSesion.get('contrasenia')?.value);
 
@@ -52,5 +56,7 @@ export class InicioSesionComponent implements OnInit {
 
       this.usuariosService.iniciarSesionSubject.next(true);
     }
+
+    this.mostrarSpinner = false;
   }
 }
