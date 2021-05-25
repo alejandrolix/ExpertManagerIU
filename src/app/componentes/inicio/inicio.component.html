@@ -1,1 +1,41 @@
-<p>inicio works!</p>
+<app-spinner *ngIf="mostrarSpinner"></app-spinner>
+
+<div class="row" *ngIf="!mostrarSpinner">
+  <div class="col-12 col-md-6">
+    <div class="card">
+      <div class="card-header">
+        Total Siniestros
+      </div>
+      <div class="card-body">
+        <h5 *ngIf="estadisticas.numSiniestros >= 2 || estadisticas.numSiniestros == 0">{{ estadisticas.numSiniestros }} siniestros totales</h5>
+        <h5 *ngIf="estadisticas.numSiniestros == 1">{{ estadisticas.numSiniestros }} siniestro total</h5>        
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6 mt-5 mt-md-0 mt-lg-0 mt-xl-0 mt-xxl-0">
+    <div class="card">
+      <div class="card-header">
+        Total Siniestros por Aseguradora
+      </div>
+      <div class="card-body">
+        <div class="d-flex justify-content-between" *ngFor="let nsPorAseguradora of estadisticas.numSiniestrosPorAseguradora">
+          <div>{{ nsPorAseguradora.item1 }}</div>
+          <div>{{ nsPorAseguradora.item2 }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6 mt-5" *ngIf="!tieneUsuarioPermisoAdministracion">
+    <div class="card">
+      <div class="card-header">
+        Siniestros para Cerrar
+      </div>
+      <div class="card-body">
+        <div class="d-flex justify-content-between" *ngFor="let nsCerrarPorAseguradora of estadisticas.numSiniestrosCerrarPorAseguradora">
+          <div>{{ nsCerrarPorAseguradora.item1 }}</div>
+          <div>{{ nsCerrarPorAseguradora.item2 }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
