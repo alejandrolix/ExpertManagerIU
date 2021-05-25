@@ -61,6 +61,10 @@ const routes: Routes = [
   {
     path: 'inicioSesion',
     component: InicioSesionComponent
+  },
+  {
+    path: '**',
+    component: InicioSesionComponent
   }
 ];
 
