@@ -12,11 +12,12 @@ import { SubirImagenComponent } from './componentes/siniestros/subir-imagen/subi
 import { CrearUsuarioComponent } from './componentes/usuarios/crear-usuario/crear-usuario.component';
 import { EditarUsuarioComponent } from './componentes/usuarios/editar-usuario/editar-usuario.component';
 import { ListadoUsuariosComponent } from './componentes/usuarios/listado-usuarios/listado-usuarios.component';
+import { AccederRutaGuard } from './guards/acceder-ruta.guard';
 
 const routes: Routes = [
   {
     path: 'inicio',
-    component: InicioComponent
+    component: InicioComponent    
   },
   {
     path: 'siniestros',
@@ -48,7 +49,8 @@ const routes: Routes = [
   },
   {
     path: 'usuarios',
-    component: ListadoUsuariosComponent
+    component: ListadoUsuariosComponent,
+    canActivate: [AccederRutaGuard]
   },
   {
     path: 'crearUsuario',
