@@ -25,15 +25,18 @@ const routes: Routes = [
   },
   {
     path: 'crearSiniestro',
-    component: CrearSiniestroComponent
+    component: CrearSiniestroComponent,
+    canActivate: [AccederRutaGuard]
   },
   {
     path: 'crearMensaje/:id',
-    component: CrearMensajeComponent
+    component: CrearMensajeComponent,
+    canActivate: [AccederRutaGuard]
   },
   {
     path: 'editarSiniestro/:id',
-    component: EditarSiniestroComponent
+    component: EditarSiniestroComponent,
+    canActivate: [AccederRutaGuard]
   },
   {
     path: 'detallesSiniestro/:id',
@@ -41,11 +44,13 @@ const routes: Routes = [
   },
   {
     path: 'subirDocumentacion/:id',
-    component: SubirDocumentacionComponent
+    component: SubirDocumentacionComponent,
+    canActivate: [AccederRutaGuard]
   },
   {
     path: 'subirImagen/:id',
-    component: SubirImagenComponent
+    component: SubirImagenComponent,
+    canActivate: [AccederRutaGuard]
   },
   {
     path: 'usuarios',
@@ -54,11 +59,13 @@ const routes: Routes = [
   },
   {
     path: 'crearUsuario',
-    component: CrearUsuarioComponent
+    component: CrearUsuarioComponent,
+    canActivate: [AccederRutaGuard]
   },
   {
     path: 'editarUsuario/:id',
-    component: EditarUsuarioComponent
+    component: EditarUsuarioComponent,
+    canActivate: [AccederRutaGuard]
   },
   {
     path: 'inicioSesion',

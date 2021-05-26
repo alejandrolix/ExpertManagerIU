@@ -9,6 +9,7 @@ import { PermisosService } from '../servicios/permisos.service';
   providedIn: 'root'
 })
 export class AccederRutaGuard implements CanActivate {
+  
   constructor(private permisosService: PermisosService) { }
 
   canActivate(
