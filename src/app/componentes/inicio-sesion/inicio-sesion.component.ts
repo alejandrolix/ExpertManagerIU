@@ -39,7 +39,26 @@ export class InicioSesionComponent implements OnInit {
       hashContrasenia: hashContrasenia
     };
 
-    let respuesta: any = await this.usuariosService.iniciarSesion(credenciales).toPromise();
+    let respuesta: any;
+
+    try {
+      respuesta = await this.usuariosService.iniciarSesion(credenciales).toPromise(); 
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al iniciar sesión. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      }); 
+
+      this.mostrarSpinner = false;
+      return;
+    }    
 
     if (!respuesta)
       Swal.fire({
