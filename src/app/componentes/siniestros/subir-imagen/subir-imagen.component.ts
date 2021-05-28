@@ -80,7 +80,28 @@ export class SubirImagenComponent implements OnInit {
     }
   }
 
-  public comprobarImagen(): void {
-    this.hayImagenSeleccionada = true;
+  public async comprobarImagen(): Promise<void> {
+    let nombreImagen: string = this.imagen.nativeElement.files[0].name;
+    let partesNombreImagen: string[] = nombreImagen.split('.');
+    let extensionImagen: string = partesNombreImagen[partesNombreImagen.length - 1];
+    let extensionesPermitidas: string[] = ['jpeg', 'jpg', 'png'];
+
+    if (!extensionesPermitidas.includes(extensionImagen)) {
+      await Swal.fire({
+        title: 'La imagen seleccionada tiene que ser en formato jpeg, jpg o png',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+      
+      this.imagen.nativeElement.value = "";
+    }      
+    else
+      this.hayImagenSeleccionada = true;
   }
 }
