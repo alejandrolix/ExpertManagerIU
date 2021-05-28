@@ -80,7 +80,27 @@ export class SubirDocumentacionComponent implements OnInit {
     }
   }
 
-  public comprobarArchivo(): void {
-    this.hayArchivoSeleccionado = true;
+  public async comprobarArchivo(): Promise<void> {
+    let nombreArchivo: string = this.archivo.nativeElement.files[0].name;
+    let partesNombreArchivo: string[] = nombreArchivo.split('.');
+    let extensionArchivo: string = partesNombreArchivo[partesNombreArchivo.length - 1];
+
+    if (extensionArchivo !== 'pdf') {
+      await Swal.fire({
+        title: 'El archivo seleccionado tiene que ser pdf',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+      
+      this.archivo.nativeElement.value = "";
+    }      
+    else
+      this.hayArchivoSeleccionado = true;
   }
 }
