@@ -47,7 +47,20 @@ export class SubirDocumentacionComponent implements OnInit {
         archivo: archivo
       };
 
-      let respuesta: boolean = await this.documentacionesService.subirDocumentacion(documentacion).toPromise();
+      let respuesta: boolean;
+
+      try {
+        respuesta = await this.documentacionesService.subirDocumentacion(documentacion).toPromise();
+      } catch (error) {
+        await Swal.fire({
+          title: 'Ha habido un error al crear la documentación. Inténtelo de nuevo',
+          icon: 'error',          
+          confirmButtonColor: '#3085d6',          
+          confirmButtonText: 'Aceptar',          
+        });
+
+        return;
+      }      
 
       if (respuesta) {
         let accion = await Swal.fire({
