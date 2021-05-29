@@ -47,7 +47,20 @@ export class SubirImagenComponent implements OnInit {
         imagen: imagen
       };
 
-      let respuesta: boolean = await this.imagenesService.subirImagen(envioImagen).toPromise();
+      let respuesta: boolean;
+
+      try {
+        respuesta = await this.imagenesService.subirImagen(envioImagen).toPromise(); 
+      } catch (error) {
+        await Swal.fire({
+          title: 'Ha habido un error al crear la imagen. Inténtelo de nuevo',
+          icon: 'error',          
+          confirmButtonColor: '#3085d6',          
+          confirmButtonText: 'Aceptar',          
+        });
+
+        return;
+      }      
 
       if (respuesta) {
         let accion = await Swal.fire({
