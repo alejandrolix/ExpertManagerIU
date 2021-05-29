@@ -23,7 +23,19 @@ export class CrearUsuarioComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.permisos = await this.permisosService.obtenerTodos().toPromise();    
+    try {
+      this.permisos = await this.permisosService.obtenerTodos().toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener los permisos. Inténtelo de nuevo',
+        icon: 'error',          
+        confirmButtonColor: '#3085d6',          
+        confirmButtonText: 'Aceptar',          
+      });
+
+      this.mostrarSpinner = false;
+      return;
+    }        
 
     this.formCrearUsuario = new FormGroup({
       nombre: new FormControl('', Validators.required),
@@ -77,11 +89,33 @@ export class CrearUsuarioComponent implements OnInit {
         impReparacionDanios: impReparacionDanios
       };
 
-      respuesta = await this.usuariosService.crear(nuevoUsuario).toPromise();
+      try {
+        respuesta = await this.usuariosService.crear(nuevoUsuario).toPromise();
+      } catch (error) {
+        await Swal.fire({
+          title: 'Ha habido un error al crear el usuario. Inténtelo de nuevo',
+          icon: 'error',          
+          confirmButtonColor: '#3085d6',          
+          confirmButtonText: 'Aceptar',          
+        });
+
+        return;
+      }      
     }
     else
-      respuesta = await this.usuariosService.crear(usuario).toPromise();
+      try {
+        respuesta = await this.usuariosService.crear(usuario).toPromise();
+      } catch (error) {
+        await Swal.fire({
+          title: 'Ha habido un error al crear el usuario. Inténtelo de nuevo',
+          icon: 'error',          
+          confirmButtonColor: '#3085d6',          
+          confirmButtonText: 'Aceptar',          
+        });
 
+        return;
+      }
+      
     if (respuesta) {
       let accion = await Swal.fire({
         title: 'Usuario creado correctamente',
