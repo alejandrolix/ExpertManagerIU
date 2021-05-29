@@ -39,7 +39,25 @@ export class CrearMensajeComponent implements OnInit {
       idSiniestro: idSiniestro
     };
 
-    let respuesta: boolean = await this.mensajesService.crear(mensaje).toPromise();
+    let respuesta: boolean;
+
+    try {
+      respuesta = await this.mensajesService.crear(mensaje).toPromise(); 
+    } catch (error) {
+      Swal.fire({
+        title: 'Ha habido un error al crear el mensaje. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+
+      return;
+    }    
 
     if (respuesta) {
       let accion = await Swal.fire({
