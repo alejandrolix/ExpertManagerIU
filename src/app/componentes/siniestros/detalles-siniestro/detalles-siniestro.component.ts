@@ -32,10 +32,82 @@ export class DetallesSiniestroComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     let idSiniestro: number = Number(this.route.snapshot.paramMap.get('id'));
-    this.siniestro = await this.siniestrosService.obtenerPorId(idSiniestro).toPromise();
-    this.documentaciones = await this.documentacionesService.obtenerPorIdSiniestro(idSiniestro).toPromise();
-    this.imagenes = await this.imagenesService.obtenerPorIdSiniestro(idSiniestro).toPromise();
-    this.mensajes = await this.mensajesService.obtenerTodosPorIdSiniestro(idSiniestro).toPromise();
+
+    try {
+      this.siniestro = await this.siniestrosService.obtenerPorId(idSiniestro).toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener el siniestro. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+
+      this.mostrarSpinner = false;
+      return;
+    }
+
+    try {
+      this.documentaciones = await this.documentacionesService.obtenerPorIdSiniestro(idSiniestro).toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener las documentaciones. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+
+      this.mostrarSpinner = false;
+      return;
+    }
+
+    try {
+      this.imagenes = await this.imagenesService.obtenerPorIdSiniestro(idSiniestro).toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener las imágenes. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+
+      this.mostrarSpinner = false;
+      return;
+    }
+    
+    try {
+      this.mensajes = await this.mensajesService.obtenerTodosPorIdSiniestro(idSiniestro).toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener los mensajes. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+
+      this.mostrarSpinner = false;
+      return;
+    }    
 
     this.mostrarSpinner = false;
   }
@@ -45,14 +117,50 @@ export class DetallesSiniestroComponent implements OnInit {
   }
 
   async verArchivo(id: number): Promise<void> {
-    let pdf: Blob = await this.documentacionesService.obtener(id).toPromise();
+    let pdf: Blob;
+
+    try {
+      pdf = await this.documentacionesService.obtener(id).toPromise(); 
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener la documentación. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+
+      return;
+    }    
     
     let urlPdf = URL.createObjectURL(pdf);
     window.open(urlPdf, '_blank');
   }
 
   async verImagen(id: number): Promise<void> {
-    let pdf: Blob = await (await this.imagenesService.obtener(id)).toPromise();
+    let pdf: Blob;
+
+    try {
+      pdf = await (await this.imagenesService.obtener(id)).toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener la imagen. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+
+      return;
+    }    
     
     let urlPdf = URL.createObjectURL(pdf);
     window.open(urlPdf, '_blank');
@@ -73,8 +181,26 @@ export class DetallesSiniestroComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     });
 
-    if (accion.isConfirmed) {      
-      let respuesta: boolean = await this.documentacionesService.eliminar(idDocumentacion).toPromise();
+    if (accion.isConfirmed) {   
+      let respuesta: boolean;
+
+      try {
+        respuesta = await this.documentacionesService.eliminar(idDocumentacion).toPromise(); 
+      } catch (error) {
+        await Swal.fire({
+          title: 'Ha habido un error al obtener eliminar la documentación. Inténtelo de nuevo',
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          },
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+  
+        return;
+      }      
 
       if (respuesta) {
         await Swal.fire({
@@ -87,7 +213,21 @@ export class DetallesSiniestroComponent implements OnInit {
           cancelButtonText: 'Cancelar'
         });
 
-        this.documentaciones = await this.documentacionesService.obtenerPorIdSiniestro(this.siniestro.id).toPromise();
+        try {
+          this.documentaciones = await this.documentacionesService.obtenerPorIdSiniestro(this.siniestro.id).toPromise(); 
+        } catch (error) {
+          await Swal.fire({
+            title: 'Ha habido un error al obtener las documentaciones del siniestro. Inténtelo de nuevo',
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp'
+            },
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+        }        
       }        
       else
         Swal.fire({
@@ -111,7 +251,25 @@ export class DetallesSiniestroComponent implements OnInit {
     });
 
     if (accion.isConfirmed) {      
-      let respuesta: boolean = await this.mensajesService.eliminar(idMensaje).toPromise();
+      let respuesta: boolean;
+
+      try {
+        respuesta = await this.mensajesService.eliminar(idMensaje).toPromise();
+      } catch (error) {
+        await Swal.fire({
+          title: 'Ha habido un error al eliminar el mensaje. Inténtelo de nuevo',
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          },
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+  
+        return;
+      }      
 
       if (respuesta) {
         await Swal.fire({
@@ -124,7 +282,23 @@ export class DetallesSiniestroComponent implements OnInit {
           cancelButtonText: 'Cancelar'
         });
 
-        this.mensajes = await this.mensajesService.obtenerTodosPorIdSiniestro(this.siniestro.id).toPromise();
+        try {
+          this.mensajes = await this.mensajesService.obtenerTodosPorIdSiniestro(this.siniestro.id).toPromise();
+        } catch (error) {
+          await Swal.fire({
+            title: 'Ha habido un error al obtener los mensajes del siniestro. Inténtelo de nuevo',
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp'
+            },
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+    
+          return;
+        }        
       }        
       else
         Swal.fire({
@@ -155,8 +329,26 @@ export class DetallesSiniestroComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     });
 
-    if (accion.isConfirmed) {      
-      let respuesta: boolean = await this.imagenesService.eliminar(idImagen).toPromise();
+    if (accion.isConfirmed) {     
+      let respuesta: boolean;
+
+      try {
+        respuesta = await this.imagenesService.eliminar(idImagen).toPromise();
+      } catch (error) {
+        await Swal.fire({
+          title: 'Ha habido un error al eliminar la imagen. Inténtelo de nuevo',
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          },
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+  
+        return;
+      }      
 
       if (respuesta) {
         await Swal.fire({
@@ -169,7 +361,21 @@ export class DetallesSiniestroComponent implements OnInit {
           cancelButtonText: 'Cancelar'
         });
 
-        this.imagenes = await this.imagenesService.obtenerPorIdSiniestro(this.siniestro.id).toPromise();
+        try {
+          this.imagenes = await this.imagenesService.obtenerPorIdSiniestro(this.siniestro.id).toPromise(); 
+        } catch (error) {
+          Swal.fire({
+            title: 'Ha habido un error al obtener las imágenes. Inténtelo de nuevo',
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp'
+            },
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+        }        
       }        
       else
         Swal.fire({
