@@ -26,8 +26,33 @@ export class EditarUsuarioComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.idUsuario = Number(this.route.snapshot.paramMap.get('id'));    
-    let usuario: Usuario = await this.usuariosService.obtenerPorId(this.idUsuario).toPromise();     
-    this.permisos = await this.permisosService.obtenerTodos().toPromise();
+    let usuario: Usuario;
+    
+    try {
+      usuario = await this.usuariosService.obtenerPorId(this.idUsuario).toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener el usuario. Inténtelo de nuevo',
+        icon: 'error',          
+        confirmButtonColor: '#3085d6',          
+        confirmButtonText: 'Aceptar',          
+      });
+
+      return;
+    }
+
+    try {
+      this.permisos = await this.permisosService.obtenerTodos().toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener los permisos. Inténtelo de nuevo',
+        icon: 'error',          
+        confirmButtonColor: '#3085d6',          
+        confirmButtonText: 'Aceptar',          
+      });
+
+      return;
+    }             
 
     this.formEditarUsuario = new FormGroup({
       nombre: new FormControl(usuario.nombre, Validators.required),
@@ -88,10 +113,32 @@ export class EditarUsuarioComponent implements OnInit {
         impReparacionDanios: impReparacionDanios
       };
 
-      respuesta = await this.usuariosService.editar(nuevoUsuario, this.idUsuario).toPromise();
+      try {
+        respuesta = await this.usuariosService.editar(nuevoUsuario, this.idUsuario).toPromise();
+      } catch (error) {
+        await Swal.fire({
+          title: 'Ha habido un error al editar el usuario. Inténtelo de nuevo',
+          icon: 'error',          
+          confirmButtonColor: '#3085d6',          
+          confirmButtonText: 'Aceptar',          
+        });
+
+        return;
+      }      
     }
     else
-      respuesta = await this.usuariosService.editar(usuario, this.idUsuario).toPromise();
+      try {
+        respuesta = await this.usuariosService.editar(usuario, this.idUsuario).toPromise();
+      } catch (error) {
+        await Swal.fire({
+          title: 'Ha habido un error al editar el usuario. Inténtelo de nuevo',
+          icon: 'error',          
+          confirmButtonColor: '#3085d6',          
+          confirmButtonText: 'Aceptar',          
+        });
+
+        return;
+      }      
 
     if (respuesta) {
       let accion = await Swal.fire({
