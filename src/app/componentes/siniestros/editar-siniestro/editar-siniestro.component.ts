@@ -58,6 +58,7 @@ export class EditarSiniestroComponent implements OnInit {
         confirmButtonText: 'Aceptar'
       });
 
+      this.mostrarSpinner = false;
       return;
     }
 
@@ -76,6 +77,7 @@ export class EditarSiniestroComponent implements OnInit {
         confirmButtonText: 'Aceptar'
       });
 
+      this.mostrarSpinner = false;
       return;
     }          
 
@@ -94,6 +96,7 @@ export class EditarSiniestroComponent implements OnInit {
         confirmButtonText: 'Aceptar'
       });
 
+      this.mostrarSpinner = false;
       return;
     }
 
@@ -112,6 +115,7 @@ export class EditarSiniestroComponent implements OnInit {
         confirmButtonText: 'Aceptar'
       });
 
+      this.mostrarSpinner = false;
       return;
     }
 
@@ -130,6 +134,7 @@ export class EditarSiniestroComponent implements OnInit {
         confirmButtonText: 'Aceptar'
       });
 
+      this.mostrarSpinner = false;
       return;
     }
               
