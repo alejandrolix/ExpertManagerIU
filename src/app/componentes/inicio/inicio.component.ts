@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { InicioService } from 'src/app/servicios/inicio.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-inicio',
@@ -22,7 +23,22 @@ export class InicioComponent implements OnInit {
     let idUsuarioLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
     this.tieneUsuarioPermisoAdministracion = this.permisosService.tienePermisoAdministracion();
 
-    this.estadisticas = await this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuarioLogueado).toPromise();    
+    try {
+      this.estadisticas = await this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuarioLogueado).toPromise();
+    } catch (error) {
+      Swal.fire({
+        title: 'Ha habido un error al obtener las estadísticas del usuario. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+    }
+        
     this.mostrarSpinner = false;
   }
 }
