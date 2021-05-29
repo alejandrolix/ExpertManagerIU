@@ -18,7 +18,17 @@ export class ListadoUsuariosComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.usuarios = await this.usuariosService.obtenerTodos().toPromise();
+    try {
+      this.usuarios = await this.usuariosService.obtenerTodos().toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener los usuarios. Inténtelo de nuevo',
+        icon: 'error',          
+        confirmButtonColor: '#3085d6',          
+        confirmButtonText: 'Aceptar',          
+      });
+    }
+    
     this.mostrarSpinner = false;
   }
 
@@ -37,11 +47,33 @@ export class ListadoUsuariosComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     });
 
-    if (accion.isConfirmed) {      
-      let respuesta: boolean = await this.usuariosService.eliminar(id).toPromise();
+    if (accion.isConfirmed) {
+      let respuesta: boolean;
 
+      try {
+        respuesta = await this.usuariosService.eliminar(id).toPromise();
+      } catch (error) {
+        await Swal.fire({
+          title: 'Ha habido un error al eliminar el usuario. Inténtelo de nuevo',
+          icon: 'error',          
+          confirmButtonColor: '#3085d6',          
+          confirmButtonText: 'Aceptar',          
+        });
+
+        return;
+      }
+      
       if (respuesta)
-        this.usuarios = await this.usuariosService.obtenerTodos().toPromise();
+        try {
+          this.usuarios = await this.usuariosService.obtenerTodos().toPromise();
+        } catch (error) {
+          Swal.fire({
+            title: 'Ha habido un error al obtener los usuarios. Inténtelo de nuevo',
+            icon: 'error',          
+            confirmButtonColor: '#3085d6',          
+            confirmButtonText: 'Aceptar',          
+          });
+        }        
       else
         Swal.fire({
           title: `Ha habido un problema al eliminar el usuario con id ${id}`,
