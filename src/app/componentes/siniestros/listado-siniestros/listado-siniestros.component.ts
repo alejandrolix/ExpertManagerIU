@@ -50,7 +50,25 @@ export class ListadoSiniestrosComponent implements OnInit {
 
     if (esPeritoNoResponsable) {
       let idPeritoLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
-      let impReparacionDaniosPerito: number = await this.peritosService.obtenerImpReparacionDaniosPorIdPerito(idPeritoLogueado).toPromise();
+      let impReparacionDaniosPerito: number;
+
+      try {
+        impReparacionDaniosPerito = await this.peritosService.obtenerImpReparacionDaniosPorIdPerito(idPeritoLogueado).toPromise();
+      } catch (error) {
+        await Swal.fire({
+          title: 'Ha habido un error al obtener el importe de reparación de daños del perito. Inténtelo de nuevo',
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          },
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+  
+        return;
+      }      
 
       let siniestroActual: Siniestro | undefined = this.siniestros.find(siniestro => siniestro.id == idSiniestro);
 
@@ -72,8 +90,17 @@ export class ListadoSiniestrosComponent implements OnInit {
           idUsuarioCreado: idUsuarioCreado,
           idSiniestro: idSiniestro
         };
-    
-        await this.mensajesService.crearMensajeRevisarCierre(mensaje).toPromise();
+
+        try {
+          await this.mensajesService.crearMensajeRevisarCierre(mensaje).toPromise(); 
+        } catch (error) {
+          Swal.fire({
+            title: 'Ha habido un error al crear el mensaje de cierre. Inténtelo de nuevo',
+            icon: 'error',          
+            confirmButtonColor: '#3085d6',          
+            confirmButtonText: 'Aceptar',          
+          });
+        }        
       }
       else
         this.mostrarAlertaCerrarSiniestro(idSiniestro);
@@ -93,8 +120,21 @@ export class ListadoSiniestrosComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     });
 
-    if (accion.isConfirmed) {      
-      let respuesta: boolean = await this.siniestrosService.cerrar(idSiniestro).toPromise();
+    if (accion.isConfirmed) {  
+      let respuesta: boolean;
+
+      try {
+        respuesta = await this.siniestrosService.cerrar(idSiniestro).toPromise(); 
+      } catch (error) {
+        await Swal.fire({
+          title: 'Ha habido un error al cerrar el siniestro. Inténtelo de nuevo',
+          icon: 'error',          
+          confirmButtonColor: '#3085d6',          
+          confirmButtonText: 'Aceptar',          
+        });
+
+        return;
+      }            
 
       if (respuesta)
         await this.filtrarSiniestros();
@@ -110,14 +150,58 @@ export class ListadoSiniestrosComponent implements OnInit {
 
   public async filtrarSiniestros(): Promise<void> {
     if (this.permisosService.tienePermisoAdministracion())
-      this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();
+      try {
+        this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();
+      } catch (error) {
+        Swal.fire({
+          title: 'Ha habido un error al obtener los siniestros. Inténtelo de nuevo',
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          },
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+      }     
     else {
       let idPerito: number = this.usuariosService.obtenerIdUsuarioLogueado();
 
       if (this.permisosService.tienePermisoPeritoResponsable())
-        this.siniestros = await this.siniestrosService.obtenerPorPeritoResponsable(idPerito, this.idAseguradoraSeleccionada).toPromise();
+        try {
+          this.siniestros = await this.siniestrosService.obtenerPorPeritoResponsable(idPerito, this.idAseguradoraSeleccionada).toPromise();
+        } catch (error) {
+          Swal.fire({
+            title: 'Ha habido un error al obtener los siniestros del perito responsable. Inténtelo de nuevo',
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp'
+            },
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+        }        
       else
-        this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.idAseguradoraSeleccionada).toPromise();
+        try {
+          this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.idAseguradoraSeleccionada).toPromise();
+        } catch (error) {
+          Swal.fire({
+            title: 'Ha habido un error al obtener los siniestros del perito no responsable. Inténtelo de nuevo',
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp'
+            },
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+    
+          return;
+        }        
     }
   }
 
@@ -143,11 +227,43 @@ export class ListadoSiniestrosComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     });
 
-    if (accion.isConfirmed) {      
-      let respuesta: boolean = await this.siniestrosService.eliminar(id).toPromise();
+    if (accion.isConfirmed) {  
+      let respuesta: boolean;
+
+      try {
+        respuesta = await this.siniestrosService.eliminar(id).toPromise(); 
+      } catch (error) {
+        await Swal.fire({
+          title: 'Ha habido un error al eliminar el siniestro. Inténtelo de nuevo',
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          },
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+  
+        return;
+      }            
 
       if (respuesta)
-        this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();
+        try {
+          this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();
+        } catch (error) {
+          Swal.fire({
+            title: 'Ha habido un error al obtener los siniestros. Inténtelo de nuevo',
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp'
+            },
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });    
+        }        
       else
         Swal.fire({
           title: `Ha habido un problema al eliminar el siniestro con id ${id}`,
