@@ -32,9 +32,62 @@ export class CrearSiniestroComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.aseguradoras = await this.aseguradorasService.obtenerTodas().toPromise();
-    this.danios = await this.daniosService.obtenerTodos().toPromise();
-    this.peritos = await this.peritosService.obtenerTodos().toPromise();
+    try {
+      this.aseguradoras = await this.aseguradorasService.obtenerTodas().toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener las aseguradoras. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+
+      this.mostrarSpinner = false;
+      return;
+    }
+
+    try {
+      this.danios = await this.daniosService.obtenerTodos().toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener los daños. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+
+      this.mostrarSpinner = false;
+      return;
+    }
+    
+    try {
+      this.peritos = await this.peritosService.obtenerTodos().toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener los peritos. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+
+      this.mostrarSpinner = false;
+      return;
+    }    
 
     this.formCrearSiniestro = new FormGroup({
       aseguradora: new FormControl(this.aseguradoras[0].id),
@@ -70,7 +123,25 @@ export class CrearSiniestroComponent implements OnInit {
       idPerito: idPerito
     };
 
-    let respuesta: boolean = await this.siniestrosService.crear(siniestro).toPromise();
+    let respuesta: boolean;
+
+    try {
+      respuesta = await this.siniestrosService.crear(siniestro).toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al crear el siniestro. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+
+      return;
+    }    
 
     if (respuesta) {
       let accion = await Swal.fire({
