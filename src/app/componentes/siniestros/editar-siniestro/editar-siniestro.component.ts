@@ -41,14 +41,98 @@ export class EditarSiniestroComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    let idSiniestro: number = Number(this.route.snapshot.paramMap.get('id'));    
-    this.siniestro = await this.siniestrosService.obtenerPorId(idSiniestro).toPromise();          
-
-    this.estados = await this.estadosService.obtenerTodos().toPromise();
-    this.aseguradoras = await this.aseguradorasService.obtenerTodas().toPromise();
-    this.danios = await this.daniosService.obtenerTodos().toPromise();
-    this.peritos = await this.peritosService.obtenerTodos().toPromise();  
+    let idSiniestro: number = Number(this.route.snapshot.paramMap.get('id'));  
     
+    try {
+      this.siniestro = await this.siniestrosService.obtenerPorId(idSiniestro).toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener el siniestro. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+
+      return;
+    }
+
+    try {
+      this.estados = await this.estadosService.obtenerTodos().toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener los estados. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+
+      return;
+    }          
+
+    try {
+      this.aseguradoras = await this.aseguradorasService.obtenerTodas().toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener las aseguradoras. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+
+      return;
+    }
+
+    try {
+      this.danios = await this.daniosService.obtenerTodos().toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener los daños. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+
+      return;
+    }
+
+    try {
+      this.peritos = await this.peritosService.obtenerTodos().toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al obtener los peritos. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+
+      return;
+    }
+              
     let idEstadoSeleccionado = this.estados.find(e => e.id == this.siniestro.idEstado)?.id;
 
     if (idEstadoSeleccionado == undefined)
@@ -134,7 +218,25 @@ export class EditarSiniestroComponent implements OnInit {
       siniestro = nuevoSiniestro;
     }
 
-    let respuesta: boolean = await this.siniestrosService.editar(siniestro, this.siniestro.id).toPromise();
+    let respuesta: boolean;
+
+    try {
+      respuesta = await this.siniestrosService.editar(siniestro, this.siniestro.id).toPromise();
+    } catch (error) {
+      await Swal.fire({
+        title: 'Ha habido un error al editar el siniestro. Inténtelo de nuevo',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        },
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+
+      return;
+    }    
 
     if (respuesta) {
       let accion: SweetAlertResult = await Swal.fire({
