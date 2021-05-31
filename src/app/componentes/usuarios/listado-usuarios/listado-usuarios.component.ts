@@ -52,6 +52,18 @@ export class ListadoUsuariosComponent implements OnInit {
 
       try {
         respuesta = await this.usuariosService.eliminar(id).toPromise();
+
+        await Swal.fire({
+          title: 'Usuario eliminado correctamente',
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          },
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
       } catch (error) {
         await Swal.fire({
           title: 'Ha habido un error al eliminar el usuario. Inténtelo de nuevo',
