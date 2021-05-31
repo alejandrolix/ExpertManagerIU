@@ -206,7 +206,7 @@ export class DetallesSiniestroComponent implements OnInit {
         await Swal.fire({
           title: 'Documentación eliminada',
           icon: 'success',
-          showCancelButton: true,
+          showCancelButton: false,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
           confirmButtonText: 'Aceptar',
