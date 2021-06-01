@@ -16,7 +16,6 @@ export class MenuNavegacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger;
     if (localStorage.getItem('usuario') == null)
       this.mostrarUsuario = false;
     else {
