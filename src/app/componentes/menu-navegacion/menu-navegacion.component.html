@@ -18,7 +18,8 @@
                 </li>
             </ul>
 
-            <div class="d-flex justify-content-start justify-content-md-end me-2" id="cerrarSesion">
+            <div class="d-flex justify-content-start justify-content-md-end me-2" id="sesion">     
+                <div class="align-self-center me-4" id="usuario" *ngIf="mostrarUsuario">Usuario: {{ usuario }}</div>                  
                 <button type="button" class="btn btn-outline-danger" (click)="cerrarSesion()">Cerrar Sesión</button>
             </div>
         </div>

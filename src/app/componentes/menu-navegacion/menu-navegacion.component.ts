@@ -8,10 +8,21 @@ import { PermisosService } from '../../servicios/permisos.service';
   styleUrls: ['./menu-navegacion.component.scss']
 })
 export class MenuNavegacionComponent implements OnInit {
+  public usuario: string;
+  public mostrarUsuario: boolean;
 
-  constructor(private permisosService: PermisosService, private usuariosService: UsuariosService) { }
+  constructor(private permisosService: PermisosService, private usuariosService: UsuariosService) {
+    this.mostrarUsuario = false;
+  }
 
   ngOnInit(): void {
+    debugger;
+    if (localStorage.getItem('usuario') == null)
+      this.mostrarUsuario = false;
+    else {
+      this.mostrarUsuario = true;
+      this.usuario = localStorage.getItem('usuario') ?? '';
+    }    
   }
 
   public tienePermisoAdministracion(): boolean {
