@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { sha256 } from 'js-sha256';
 import Swal from 'sweetalert2';
 import { UsuariosService } from '../../servicios/usuarios.service';
@@ -13,20 +14,22 @@ export class InicioSesionComponent implements OnInit {
   public formInicioSesion: FormGroup;
   public mostrarSpinner: boolean;
 
-  constructor(private usuariosService: UsuariosService) {
+  constructor(private usuariosService: UsuariosService, private router: Router) {
     this.mostrarSpinner = false;
   }
 
   ngOnInit(): void {    
     let idUsuarioLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
 
-    if (idUsuarioLogueado != 0)
+    if (idUsuarioLogueado == 0) {
       this.usuariosService.cerrarSesionSubject.next(true);
-
-    this.formInicioSesion = new FormGroup({
-      usuario: new FormControl('', Validators.required),
-      contrasenia: new FormControl('', Validators.required)
-    });
+      this.formInicioSesion = new FormGroup({
+        usuario: new FormControl('', Validators.required),
+        contrasenia: new FormControl('', Validators.required)
+      });
+    }
+    else
+      this.router.navigateByUrl('/inicio');
   }
 
   public async iniciarSesion(): Promise<void> {
