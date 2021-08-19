@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
 import Swal from 'sweetalert2';
 import { UsuariosService } from '../../servicios/usuarios.service';
 
@@ -13,7 +14,7 @@ export class InicioSesionComponent implements OnInit {
   public formInicioSesion: FormGroup;
   public mostrarSpinner: boolean;
 
-  constructor(private usuariosService: UsuariosService, private router: Router) {
+  constructor(private usuariosService: UsuariosService, private router: Router, private generarHashService: GenerarHashService) {
     this.mostrarSpinner = false;
   }
 
@@ -34,7 +35,7 @@ export class InicioSesionComponent implements OnInit {
   public async iniciarSesion(): Promise<void> {
     this.mostrarSpinner = true;
     let nombre: string = this.formInicioSesion.get('usuario')?.value;
-    let hashContrasenia: string = this.formInicioSesion.get('contrasenia')?.value;
+    let hashContrasenia: string = await this.generarHashService.generar(this.formInicioSesion.get('contrasenia')?.value);
 
     let credenciales = {
       nombre: nombre,
