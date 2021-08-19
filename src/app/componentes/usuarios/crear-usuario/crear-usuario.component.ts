@@ -3,9 +3,9 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { Permiso } from 'src/app/interfaces/permiso';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
-import { sha256 } from 'js-sha256';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
 
 @Component({
   selector: 'app-crear-usuario',
@@ -18,7 +18,7 @@ export class CrearUsuarioComponent implements OnInit {
   public esPeritoNoResponsable: boolean;
   public mostrarSpinner: boolean;
 
-  constructor(private permisosService: PermisosService, private usuariosService: UsuariosService, private router: Router) {
+  constructor(private permisosService: PermisosService, private usuariosService: UsuariosService, private router: Router, private generarHashService: GenerarHashService) {
     this.mostrarSpinner = true;
   }
 
@@ -71,7 +71,7 @@ export class CrearUsuarioComponent implements OnInit {
 
     let nombre: string = this.formCrearUsuario.get('nombre')?.value;
     let idPermiso: number = Number(this.formCrearUsuario.get('permiso')?.value);
-    let hashContrasenia: string = sha256(this.formCrearUsuario.get('contrasenia')?.value);
+    let hashContrasenia: string = await this.generarHashService.generar(this.formCrearUsuario.get('contrasenia')?.value);
 
     let usuario = {
       nombre: nombre,

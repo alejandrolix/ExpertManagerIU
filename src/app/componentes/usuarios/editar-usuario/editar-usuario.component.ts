@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { sha256 } from 'js-sha256';
 import { Permiso } from 'src/app/interfaces/permiso';
 import { Usuario } from 'src/app/interfaces/usuario';
+import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import Swal from 'sweetalert2';
@@ -20,7 +20,9 @@ export class EditarUsuarioComponent implements OnInit {
   public esPeritoNoResponsable: boolean;
   public mostrarSpinner: boolean;
 
-  constructor(private permisosService: PermisosService, private usuariosService: UsuariosService, private router: Router, private route: ActivatedRoute) {
+  constructor(private permisosService: PermisosService, private usuariosService: UsuariosService, private router: Router, private route: ActivatedRoute,
+              private generarHashService: GenerarHashService) {
+
     this.mostrarSpinner = true;
   }
 
@@ -97,7 +99,7 @@ export class EditarUsuarioComponent implements OnInit {
 
     let nombre: string = this.formEditarUsuario.get('nombre')?.value;
     let idPermiso: number = Number(this.formEditarUsuario.get('permiso')?.value);
-    let hashContrasenia: string = sha256(this.formEditarUsuario.get('contrasenia')?.value);
+    let hashContrasenia: string = await this.generarHashService.generar(this.formEditarUsuario.get('contrasenia')?.value);
 
     let usuario = {
       nombre: nombre,
