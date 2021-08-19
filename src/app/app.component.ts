@@ -37,6 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
         localStorage.removeItem('idUsuario');
         localStorage.removeItem('usuario');
         localStorage.removeItem('idPermiso');
+        localStorage.removeItem('token');
 
         this.estaSesionIniciada = false;
         this.router.navigateByUrl('/inicioSesion');
