@@ -32,12 +32,22 @@ export class InicioSesionComponent implements OnInit {
       this.router.navigateByUrl('/inicio');
   }
 
+  async crearHash(texto: string): Promise<string> {
+    let msgUint8: Uint8Array = new TextEncoder().encode(texto);                           
+    let hashBuffer: ArrayBuffer = await crypto.subtle.digest('SHA-256', msgUint8);           
+    let hashArray: number[] = Array.from(new Uint8Array(hashBuffer));                     
+    let hashHex: string[] = hashArray.map(b => b.toString(16).padStart(2, '0'));
+    let hash = hashHex.join(''); 
+
+    return hash;
+  }
+
   public async iniciarSesion(): Promise<void> {
     this.mostrarSpinner = true;
     let nombre: string = this.formInicioSesion.get('usuario')?.value;
-    let hashContrasenia: string = sha256(this.formInicioSesion.get('contrasenia')?.value);
+    let hashContrasenia: string = await this.crearHash(this.formInicioSesion.get('contrasenia')?.value);
 
-    let credenciales: any = {
+    let credenciales = {
       nombre: nombre,
       hashContrasenia: hashContrasenia
     };
