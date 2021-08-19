@@ -79,7 +79,7 @@ export class InicioSesionComponent implements OnInit {
       localStorage.setItem('idUsuario', respuesta.id);
       localStorage.setItem('usuario', credenciales.nombre);
       localStorage.setItem('idPermiso', respuesta.idPermiso);
-      //localStorage.setItem('token', respuesta.token);
+      localStorage.setItem('token', respuesta.token);
 
       this.usuariosService.iniciarSesionSubject.next(true);
     }
