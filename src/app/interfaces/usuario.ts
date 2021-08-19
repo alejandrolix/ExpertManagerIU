@@ -7,4 +7,5 @@ export interface Usuario {
     permiso: string;
     hashContrasenia: string;
     impReparacionDanios: number;
+    token: string;
 }
