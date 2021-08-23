@@ -21,7 +21,7 @@ export class ApiRestTokenInterceptor implements HttpInterceptor {
     if (token) {
       let peticionToken: HttpRequest<unknown> = request.clone({
         setHeaders: {
-          authorization: `Bearer ${ token }`
+          authorization: `Bearer ${token}`
         }
       });
 
