@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 import { PermisosService } from '../servicios/permisos.service';
 
@@ -12,10 +11,9 @@ export class AccederRutaGuard implements CanActivate {
   
   constructor(private permisosService: PermisosService) { }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
+  canActivate(route: ActivatedRouteSnapshot,
+              state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+      
     if (this.permisosService.tienePermisoAdministracion())
       return true;
 
@@ -25,17 +23,17 @@ export class AccederRutaGuard implements CanActivate {
         icon: 'error',          
         confirmButtonColor: '#3085d6',          
         confirmButtonText: 'Aceptar',          
-      }).then((accion: SweetAlertResult) => {
+      })
+      .then((accion: SweetAlertResult) => {
         if (accion.isConfirmed) {
           observer.next(false);
           observer.complete();
+
+          return false;
         }          
+
+        return true;
       });
-    }).pipe(
-      map(() => {
-          history.back();
-          return false;  
-      })
-    );
+    });
   }
 }
