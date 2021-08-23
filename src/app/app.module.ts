@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListadoSiniestrosComponent } from './componentes/siniestros/listado-siniestros/listado-siniestros.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CrearSiniestroComponent } from './componentes/siniestros/crear-siniestro/crear-siniestro.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditarSiniestroComponent } from './componentes/siniestros/editar-siniestro/editar-siniestro.component';
@@ -20,6 +20,7 @@ import { InicioComponent } from './componentes/inicio/inicio.component';
 import { MenuNavegacionComponent } from './componentes/menu-navegacion/menu-navegacion.component';
 import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.component';
 import { SpinnerComponent } from './componentes/spinner/spinner.component';
+import { ApiRestTokenInterceptor } from './interceptor/api-rest-token.interceptor';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,13 @@ import { SpinnerComponent } from './componentes/spinner/spinner.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiRestTokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
