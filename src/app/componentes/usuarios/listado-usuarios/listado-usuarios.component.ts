@@ -33,7 +33,7 @@ export class ListadoUsuariosComponent implements OnInit {
   }
 
   public editar(id: number): void {
-    this.router.navigate(['editarUsuario', id]);
+    this.router.navigate(['editar', id], { relativeTo: this.activatedRoute });
   }
 
   public async eliminar(id: number): Promise<void> {    

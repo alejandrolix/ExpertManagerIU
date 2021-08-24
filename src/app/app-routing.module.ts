@@ -74,14 +74,14 @@ const routes: Routes = [
         path: 'crear',
         component: CrearUsuarioComponent,
         canActivate: [AccederRutaGuard]
-      }
+      },
+      {
+        path: 'editar/:id',
+        component: EditarUsuarioComponent,
+        canActivate: [AccederRutaGuard]
+      },
     ]
-  },  
-  {
-    path: 'editarUsuario/:id',
-    component: EditarUsuarioComponent,
-    canActivate: [AccederRutaGuard]
-  },
+  },    
   {
     path: 'inicioSesion',
     component: InicioSesionComponent
