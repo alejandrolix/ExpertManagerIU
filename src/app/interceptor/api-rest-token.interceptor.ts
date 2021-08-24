@@ -13,7 +13,7 @@ export class ApiRestTokenInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (request.url.includes('api/Usuarios/IniciarSesion'))
+    if (request.url.includes('api/Usuarios/IniciarSesion'))   // Ignoramos la ruta de iniciar sesión. Es decir, no se comprueba si existe token.
       return next.handle(request);
 
     let token: string | null = localStorage.getItem('token');
