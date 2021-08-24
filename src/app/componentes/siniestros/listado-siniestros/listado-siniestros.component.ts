@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Aseguradora } from 'src/app/interfaces/aseguradora';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { Usuario } from 'src/app/interfaces/usuario';
@@ -26,7 +26,7 @@ export class ListadoSiniestrosComponent implements OnInit {
 
   constructor(private siniestrosService: SiniestrosService, private router: Router, private permisosService: PermisosService,
               private aseguradorasService: AseguradorasService, private usuariosService: UsuariosService, private peritosService: PeritosService,
-              private mensajesService: MensajesService) {
+              private mensajesService: MensajesService, private activatedRoute: ActivatedRoute) {
 
     this.siniestros = [];
     this.idPeritoSeleccionado = 0;
@@ -288,7 +288,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   } 
 
   public crear(): void {
-    this.router.navigateByUrl('/crearSiniestro');
+    this.router.navigate(['crear'], { relativeTo: this.activatedRoute });
   }
 
   public verDetalles(id: number): void {
