@@ -19,27 +19,29 @@ export class InicioComponent implements OnInit {
     this.mostrarSpinner = false;
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.mostrarSpinner = true;
     let idUsuarioLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
     this.tieneUsuarioPermisoAdministracion = this.permisosService.tienePermisoAdministracion();
 
-    try {
-      this.estadisticas = await this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuarioLogueado).toPromise();
-    } catch (error) {
-      Swal.fire({
-        title: 'Ha habido un error al obtener las estadísticas del usuario. Inténtelo de nuevo',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
-    }
-        
+    this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuarioLogueado)
+                      .subscribe((estadisticas: Estadistica) => this.estadisticas = estadisticas,
+                      () => this.mostrarAlertaError('Ha habido un error al obtener las estadísticas del usuario. Inténtelo de nuevo'));
+
     this.mostrarSpinner = false;
+  }
+
+  private mostrarAlertaError(mensaje: string): void {
+    Swal.fire({
+      title: mensaje,
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      },
+      icon: 'error',
+      confirmButtonText: 'Aceptar'
+    });
   }
 }
