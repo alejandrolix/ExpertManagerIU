@@ -36,11 +36,6 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'crearSiniestro',
-    component: CrearSiniestroComponent,
-    canActivate: [AccederRutaGuard]
-  },
-  {
     path: 'crearMensaje/:id',
     component: CrearMensajeComponent,
     canActivate: [AccederRutaGuard]
