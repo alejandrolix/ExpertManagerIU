@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Estadistica } from 'src/app/interfaces/estadistica';
 import { InicioService } from 'src/app/servicios/inicio.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
@@ -10,7 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./inicio.component.scss']
 })
 export class InicioComponent implements OnInit {
-  public estadisticas: any;
+  public estadisticas: Estadistica;
   public mostrarSpinner: boolean;
   public tieneUsuarioPermisoAdministracion: boolean;
 
