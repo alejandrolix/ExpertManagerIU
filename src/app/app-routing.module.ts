@@ -79,7 +79,7 @@ const routes: Routes = [
         path: 'editar/:id',
         component: EditarUsuarioComponent,
         canActivate: [AccederRutaGuard]
-      },
+      }
     ]
   },    
   {
