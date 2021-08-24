@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
@@ -13,7 +13,7 @@ export class ListadoUsuariosComponent implements OnInit {
   public usuarios: Usuario[];
   public mostrarSpinner: boolean;
 
-  constructor(private router: Router, private usuariosService: UsuariosService) {
+  constructor(private router: Router, private usuariosService: UsuariosService, private activatedRoute: ActivatedRoute) {
     this.mostrarSpinner = true;
   }
 
@@ -97,6 +97,6 @@ export class ListadoUsuariosComponent implements OnInit {
   }
 
   public crear(): void {
-    this.router.navigateByUrl('/crearUsuario');
+    this.router.navigate(['crear'], { relativeTo: this.activatedRoute });
   }
 }

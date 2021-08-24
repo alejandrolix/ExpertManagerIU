@@ -22,11 +22,12 @@ import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.componen
 import { SpinnerComponent } from './componentes/spinner/spinner.component';
 import { ApiRestTokenInterceptor } from './interceptor/api-rest-token.interceptor';
 import { SiniestrosComponent } from './componentes/siniestros/siniestros.component';
+import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
 
 @NgModule({
   declarations: [
     AppComponent,    
-    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent, DetallesSiniestroComponent, SubirDocumentacionComponent, SubirImagenComponent, ListadoUsuariosComponent, CrearUsuarioComponent, EditarUsuarioComponent, InicioSesionComponent, CrearMensajeComponent, InicioComponent, MenuNavegacionComponent, PiePaginaComponent, SpinnerComponent, SiniestrosComponent
+    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent, DetallesSiniestroComponent, SubirDocumentacionComponent, SubirImagenComponent, ListadoUsuariosComponent, CrearUsuarioComponent, EditarUsuarioComponent, InicioSesionComponent, CrearMensajeComponent, InicioComponent, MenuNavegacionComponent, PiePaginaComponent, SpinnerComponent, SiniestrosComponent, UsuariosComponent
   ],
   imports: [
     BrowserModule,

@@ -13,6 +13,7 @@ import { SubirImagenComponent } from './componentes/siniestros/subir-imagen/subi
 import { CrearUsuarioComponent } from './componentes/usuarios/crear-usuario/crear-usuario.component';
 import { EditarUsuarioComponent } from './componentes/usuarios/editar-usuario/editar-usuario.component';
 import { ListadoUsuariosComponent } from './componentes/usuarios/listado-usuarios/listado-usuarios.component';
+import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
 import { AccederRutaGuard } from './guards/acceder-ruta.guard';
 
 const routes: Routes = [
@@ -61,14 +62,21 @@ const routes: Routes = [
   },
   {
     path: 'usuarios',
-    component: ListadoUsuariosComponent,
-    canActivate: [AccederRutaGuard]
-  },
-  {
-    path: 'crearUsuario',
-    component: CrearUsuarioComponent,
-    canActivate: [AccederRutaGuard]
-  },
+    component: UsuariosComponent,
+    canActivate: [AccederRutaGuard],
+    children: [
+      {
+        path: '',
+        component: ListadoUsuariosComponent,
+        canActivate: [AccederRutaGuard]
+      },
+      {
+        path: 'crear',
+        component: CrearUsuarioComponent,
+        canActivate: [AccederRutaGuard]
+      }
+    ]
+  },  
   {
     path: 'editarUsuario/:id',
     component: EditarUsuarioComponent,
