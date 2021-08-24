@@ -32,19 +32,19 @@ const routes: Routes = [
         path: 'crear',
         component: CrearSiniestroComponent,
         canActivate: [AccederRutaGuard]
-      }
+      },
+      {
+        path: 'editar/:id',
+        component: EditarSiniestroComponent,
+        canActivate: [AccederRutaGuard]
+      },
     ]
   },
   {
     path: 'crearMensaje/:id',
     component: CrearMensajeComponent,
     canActivate: [AccederRutaGuard]
-  },
-  {
-    path: 'editarSiniestro/:id',
-    component: EditarSiniestroComponent,
-    canActivate: [AccederRutaGuard]
-  },
+  },  
   {
     path: 'detallesSiniestro/:id',
     component: DetallesSiniestroComponent
