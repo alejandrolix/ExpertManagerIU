@@ -38,17 +38,17 @@ const routes: Routes = [
         component: EditarSiniestroComponent,
         canActivate: [AccederRutaGuard]
       },
+      {
+        path: 'detalles/:id',
+        component: DetallesSiniestroComponent
+      }
     ]
   },
   {
     path: 'crearMensaje/:id',
     component: CrearMensajeComponent,
     canActivate: [AccederRutaGuard]
-  },  
-  {
-    path: 'detallesSiniestro/:id',
-    component: DetallesSiniestroComponent
-  },
+  },    
   {
     path: 'subirDocumentacion/:id',
     component: SubirDocumentacionComponent,
