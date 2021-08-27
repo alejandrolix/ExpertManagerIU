@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
-import { map, catchError } from "rxjs/operators";
+import { map, catchError, tap } from "rxjs/operators";
 import { RespuestaApi } from "../interfaces/respuestaApi";
 
 export class PeticionHttp {
@@ -9,10 +9,16 @@ export class PeticionHttp {
     public hacerPeticionGet<T>(url: string): Observable<T> {
         return this.http.get<RespuestaApi>(url)
             .pipe(
+                tap((respuesta: RespuestaApi) => {
+                    if (respuesta.codigoRespuesta === 500 && respuesta.mensaje)
+                        throw new Error(respuesta.mensaje);     // El mensaje del error se procesa en la función "catchError".
+
+                    return throwError(null);
+                }),
                 map((respuesta: RespuestaApi) => respuesta.datos),
-                catchError(error => {
-                    if (error.codigoRespuesta === 500 && error.mensaje)
-                        return throwError(error.mensaje);
+                catchError((error: Error) => {
+                    if (error.message)
+                        return throwError(error.message);
 
                     return throwError('Ha habido un error al obtener los datos');
                 })

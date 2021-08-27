@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { PeticionHttp } from '../clases/PeticionHttp';
 import { Siniestro } from '../interfaces/siniestro';
 
 @Injectable({
@@ -12,7 +13,9 @@ export class SiniestrosService {
   constructor(private http: HttpClient) { }
 
   public obtenerTodos(idPerito: number, idAseguradora: number): Observable<Siniestro[]> {    
-    return this.http.get<Siniestro[]>(`${environment.urlApi}/Siniestros?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
+    let peticionHttp: PeticionHttp = new PeticionHttp(this.http);
+
+    return peticionHttp.hacerPeticionGet<Siniestro[]>(`${environment.urlApi}/Siniestros?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
   }
 
   public obtenerPorPeritoNoResponsable(idPerito: number, idAseguradora: number): Observable<Siniestro[]> {    

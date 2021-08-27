@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Alerta } from 'src/app/clases/Alertas';
 import { Aseguradora } from 'src/app/interfaces/aseguradora';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { Usuario } from 'src/app/interfaces/usuario';
@@ -151,21 +152,9 @@ export class ListadoSiniestrosComponent implements OnInit {
 
   public async filtrarSiniestros(): Promise<void> {
     if (this.permisosService.tienePermisoAdministracion())
-      try {
-        this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();
-      } catch (error) {
-        Swal.fire({
-          title: 'Ha habido un error al obtener los siniestros. Inténtelo de nuevo',
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-          },
-          icon: 'error',
-          confirmButtonText: 'Aceptar'
-        });
-      }     
+      this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada)
+                            .subscribe((siniestros: Siniestro[]) => this.siniestros = siniestros,
+                            (mensaje: string) => Alerta.mostrarError(mensaje));   
     else {
       let idPerito: number = this.usuariosService.obtenerIdUsuarioLogueado();
 
