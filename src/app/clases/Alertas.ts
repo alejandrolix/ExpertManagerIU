@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-export class Alertas {
+export class Alerta {
   public static mostrarError(mensaje: string): void {
     Swal.fire({
       title: mensaje,

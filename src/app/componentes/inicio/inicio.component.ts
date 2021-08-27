@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Alertas } from 'src/app/clases/Alertas';
+import { Alerta } from 'src/app/clases/Alertas';
 import { Estadistica } from 'src/app/interfaces/estadistica';
 import { InicioService } from 'src/app/servicios/inicio.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';
@@ -26,7 +26,7 @@ export class InicioComponent implements OnInit {
 
     this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuarioLogueado)
                       .subscribe((estadisticas: Estadistica) => this.estadisticas = estadisticas,
-                      (mensaje: string) => Alertas.mostrarError(mensaje));
+                      (mensaje: string) => Alerta.mostrarError(mensaje));
 
     this.mostrarSpinner = false;
   }
