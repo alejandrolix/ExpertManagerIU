@@ -10,28 +10,22 @@ import { Siniestro } from '../interfaces/siniestro';
 })
 export class SiniestrosService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private peticionHttp: PeticionHttp) { }
 
   public obtenerTodos(idPerito: number, idAseguradora: number): Observable<Siniestro[]> {    
-    let peticionHttp: PeticionHttp = new PeticionHttp(this.http);
-
-    return peticionHttp.hacerPeticionGet<Siniestro[]>(`${environment.urlApi}/Siniestros?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
+    return this.peticionHttp.hacerPeticionGet<Siniestro[]>(`${environment.urlApi}/Siniestros?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
   }
 
   public obtenerPorPeritoNoResponsable(idPerito: number, idAseguradora: number): Observable<Siniestro[]> { 
-    let peticionHttp: PeticionHttp = new PeticionHttp(this.http);
-
-    return peticionHttp.hacerPeticionGet<Siniestro[]>(`${environment.urlApi}/Siniestros/PeritoNoResponsable?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
+    return this.peticionHttp.hacerPeticionGet<Siniestro[]>(`${environment.urlApi}/Siniestros/PeritoNoResponsable?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
   }
 
   public obtenerPorPeritoResponsable(idPerito: number, idAseguradora: number): Observable<Siniestro[]> {   
-    let peticionHttp: PeticionHttp = new PeticionHttp(this.http);
-    
-    return peticionHttp.hacerPeticionGet<Siniestro[]>(`${environment.urlApi}/Siniestros/PeritoResponsable?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
+    return this.peticionHttp.hacerPeticionGet<Siniestro[]>(`${environment.urlApi}/Siniestros/PeritoResponsable?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
   }
 
   public obtenerPorId(id: number): Observable<Siniestro> {    
-    return this.http.get<Siniestro>(`${environment.urlApi}/Siniestros/${id}`);
+    return this.peticionHttp.hacerPeticionGet<Siniestro>(`${environment.urlApi}/Siniestros/${id}`);
   }
 
   public crear(siniestro: any): Observable<boolean> {    

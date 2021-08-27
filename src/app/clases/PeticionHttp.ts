@@ -1,8 +1,10 @@
 import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { map, catchError, tap } from "rxjs/operators";
 import { RespuestaApi } from "../interfaces/respuestaApi";
 
+@Injectable()
 export class PeticionHttp {
     constructor(private http: HttpClient) {}
 
