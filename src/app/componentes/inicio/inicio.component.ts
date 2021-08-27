@@ -26,7 +26,7 @@ export class InicioComponent implements OnInit {
 
     this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuarioLogueado)
                       .subscribe((estadisticas: Estadistica) => this.estadisticas = estadisticas,
-                      () => this.mostrarAlertaError('Ha habido un error al obtener las estadísticas del usuario. Inténtelo de nuevo'));
+                      (mensaje: string) => this.mostrarAlertaError(mensaje));
 
     this.mostrarSpinner = false;
   }
