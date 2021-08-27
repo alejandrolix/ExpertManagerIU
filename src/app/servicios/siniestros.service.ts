@@ -18,8 +18,10 @@ export class SiniestrosService {
     return peticionHttp.hacerPeticionGet<Siniestro[]>(`${environment.urlApi}/Siniestros?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
   }
 
-  public obtenerPorPeritoNoResponsable(idPerito: number, idAseguradora: number): Observable<Siniestro[]> {    
-    return this.http.get<Siniestro[]>(`${environment.urlApi}/Siniestros/PeritoNoResponsable?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
+  public obtenerPorPeritoNoResponsable(idPerito: number, idAseguradora: number): Observable<Siniestro[]> { 
+    let peticionHttp: PeticionHttp = new PeticionHttp(this.http);
+
+    return peticionHttp.hacerPeticionGet<Siniestro[]>(`${environment.urlApi}/Siniestros/PeritoNoResponsable?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
   }
 
   public obtenerPorPeritoResponsable(idPerito: number, idAseguradora: number): Observable<Siniestro[]> {   
