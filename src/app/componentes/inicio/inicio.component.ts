@@ -26,7 +26,7 @@ export class InicioComponent implements OnInit {
 
     this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuarioLogueado)
                       .subscribe((estadisticas: Estadistica) => this.estadisticas = estadisticas,
-                      (mensaje: string) => Alertas.mostrarAlertaError(mensaje));
+                      (mensaje: string) => Alertas.mostrarError(mensaje));
 
     this.mostrarSpinner = false;
   }
