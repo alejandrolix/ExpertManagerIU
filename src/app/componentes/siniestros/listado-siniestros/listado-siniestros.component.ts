@@ -159,21 +159,9 @@ export class ListadoSiniestrosComponent implements OnInit {
       let idPerito: number = this.usuariosService.obtenerIdUsuarioLogueado();
 
       if (this.permisosService.tienePermisoPeritoResponsable())
-        try {
-          this.siniestros = await this.siniestrosService.obtenerPorPeritoResponsable(idPerito, this.idAseguradoraSeleccionada).toPromise();
-        } catch (error) {
-          Swal.fire({
-            title: 'Ha habido un error al obtener los siniestros del perito responsable. Inténtelo de nuevo',
-            showClass: {
-              popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOutUp'
-            },
-            icon: 'error',
-            confirmButtonText: 'Aceptar'
-          });
-        }        
+        this.siniestrosService.obtenerPorPeritoResponsable(idPerito, this.idAseguradoraSeleccionada)
+                              .subscribe((siniestros: Siniestro[]) => this.siniestros = siniestros,
+                              (mensaje: string) => Alerta.mostrarError(mensaje));       
       else
         try {
           this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.idAseguradoraSeleccionada).toPromise();
