@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -10,11 +9,9 @@ import { Estadistica } from '../interfaces/estadistica';
 })
 export class InicioService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private peticionHttp: PeticionHttp) { }
 
   public obtenerEstadisticasPorIdUsuario(idUsuario: number): Observable<Estadistica> {
-    let peticionHttp: PeticionHttp = new PeticionHttp(this.http);
-    
-    return peticionHttp.hacerPeticionGet<Estadistica>(`${environment.urlApi}/Inicio/${idUsuario}`);
+    return this.peticionHttp.hacerPeticionGet<Estadistica>(`${environment.urlApi}/Inicio/${idUsuario}`);
   }
 }
