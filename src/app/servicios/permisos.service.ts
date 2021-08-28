@@ -19,7 +19,7 @@ export class PermisosService {
     let idPermiso: string | null = localStorage.getItem('idPermiso');
 
     if (idPermiso == null)
-        return 0;
+      return 0;
 
     let idPermisoNumero: number = parseInt(idPermiso);
 
@@ -54,13 +54,13 @@ export class PermisosService {
     let idPermiso: string | null = localStorage.getItem('idPermiso');
 
     if (idPermiso == null)
-        return false;
+      return false;
 
     let idPermisoNumero: number = parseInt(idPermiso);
 
     if (idPermisoNumero == 1)
-        return true;
+      return true;
     else
-        return false;
-}
+      return false;
+  }
 }
