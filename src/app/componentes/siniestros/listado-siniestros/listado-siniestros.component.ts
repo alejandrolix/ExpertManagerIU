@@ -35,12 +35,12 @@ export class ListadoSiniestrosComponent implements OnInit {
     this.mostrarSpinner = true;
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.filtrarSiniestros();    
     this.aseguradorasService.obtenerTodas()
                             .subscribe((aseguradoras: Aseguradora[]) => this.aseguradoras = aseguradoras,
                             (mensaje: string) => Alerta.mostrarError(mensaje));
-                            
+
     this.peritosService.obtenerTodos()
                         .subscribe((peritos: Usuario[]) => this.peritos = peritos,
                         (mensaje: string) => Alerta.mostrarError(mensaje));
