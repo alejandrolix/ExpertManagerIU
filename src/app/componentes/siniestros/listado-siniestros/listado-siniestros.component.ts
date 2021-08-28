@@ -36,7 +36,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.filtrarSiniestros();    
+    this.filtrarSiniestros();    
     this.aseguradoras = await this.aseguradorasService.obtenerTodas().toPromise();
     this.peritos = await this.peritosService.obtenerTodos().toPromise();
 
@@ -150,7 +150,7 @@ export class ListadoSiniestrosComponent implements OnInit {
     }
   }
 
-  public async filtrarSiniestros(): Promise<void> {
+  public filtrarSiniestros(): void {
     if (this.permisosService.tienePermisoAdministracion())
       this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada)
                             .subscribe((siniestros: Siniestro[]) => this.siniestros = siniestros,
