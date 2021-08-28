@@ -41,7 +41,9 @@ export class ListadoSiniestrosComponent implements OnInit {
                             .subscribe((aseguradoras: Aseguradora[]) => this.aseguradoras = aseguradoras,
                             (mensaje: string) => Alerta.mostrarError(mensaje));
                             
-    this.peritos = await this.peritosService.obtenerTodos().toPromise();
+    this.peritosService.obtenerTodos()
+                        .subscribe((peritos: Usuario[]) => this.peritos = peritos,
+                        (mensaje: string) => Alerta.mostrarError(mensaje));
 
     this.mostrarSpinner = false;
   }
