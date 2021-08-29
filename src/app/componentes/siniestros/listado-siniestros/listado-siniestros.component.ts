@@ -174,9 +174,12 @@ export class ListadoSiniestrosComponent implements OnInit {
           Alerta.mostrarError(error);
         }
       else
-        this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.idAseguradoraSeleccionada)
-                              .subscribe((siniestros: Siniestro[]) => this.siniestros = siniestros,
-                              (mensaje: string) => Alerta.mostrarError(mensaje));        
+        try {
+          this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.idAseguradoraSeleccionada)
+                                      .toPromise();
+        } catch (error) {
+          Alerta.mostrarError(error);
+        }       
     }
   }
 
