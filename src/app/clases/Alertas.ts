@@ -15,6 +15,20 @@ export class Alerta {
     });
   }
 
+  public static async mostrarErrorAsincrono(mensaje: string): Promise<void> {
+    await Swal.fire({
+      title: mensaje,
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      },
+      icon: 'error',
+      confirmButtonText: 'Aceptar'
+    });
+  }
+
   public static async mostrarPregunta(mensaje: string): Promise<SweetAlertResult> {
     let alerta: Promise<SweetAlertResult> = Swal.fire({
       title: mensaje,

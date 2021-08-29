@@ -82,12 +82,7 @@ export class ListadoSiniestrosComponent implements OnInit {
       let impValoracionDaniosSiniestro: number = Number(siniestroActual.impValoracionDanios.replace(',', '.').replace(' €', ''));
 
       if (impValoracionDaniosSiniestro > impReparacionDaniosPerito) {
-        await Swal.fire({
-          title: 'No puede cerrar el siniestro porque el importe de valoración de daños supera el establecido al perito',
-          icon: 'error',          
-          confirmButtonColor: '#3085d6',          
-          confirmButtonText: 'Aceptar',          
-        });
+        await Alerta.mostrarErrorAsincrono('No puede cerrar el siniestro porque el importe de valoración de daños supera el establecido al perito');
 
         let idUsuarioCreado: number = this.usuariosService.obtenerIdUsuarioLogueado();
         let mensaje = {
