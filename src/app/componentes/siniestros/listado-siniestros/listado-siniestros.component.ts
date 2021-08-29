@@ -190,7 +190,7 @@ export class ListadoSiniestrosComponent implements OnInit {
     }
   }
 
-  public async eliminarFiltros(): Promise<void> {
+  public eliminarFiltros(): void {
     this.idPeritoSeleccionado = 0;
     this.idAseguradoraSeleccionada = 0;
     
