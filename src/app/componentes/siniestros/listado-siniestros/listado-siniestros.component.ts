@@ -76,8 +76,10 @@ export class ListadoSiniestrosComponent implements OnInit {
 
       let siniestroActual: Siniestro | undefined = this.siniestros.find(siniestro => siniestro.id == idSiniestro);
 
-      if (siniestroActual == undefined)
+      if (siniestroActual === undefined) {
+        Alerta.mostrarError(`No se ha encontrado el siniestro con id ${idSiniestro}`);
         return;
+      }
 
       let impValoracionDaniosSiniestro: number = Number(siniestroActual.impValoracionDanios.replace(',', '.').replace(' €', ''));
 
