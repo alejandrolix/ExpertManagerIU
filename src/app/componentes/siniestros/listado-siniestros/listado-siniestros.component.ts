@@ -120,15 +120,7 @@ export class ListadoSiniestrosComponent implements OnInit {
         return;
       }            
 
-      if (respuesta)
-        this.filtrarSiniestros();
-      else
-        Swal.fire({
-          title: `Ha habido un problema al cerrar el siniestro con id ${idSiniestro}`,
-          icon: 'error',          
-          confirmButtonColor: '#3085d6',          
-          confirmButtonText: 'Aceptar',          
-        });
+      this.filtrarSiniestros();
     }
   }
 

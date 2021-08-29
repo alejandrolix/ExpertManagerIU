@@ -41,6 +41,6 @@ export class SiniestrosService {
   }
 
   public cerrar(id: number): Observable<boolean> {    
-    return this.http.put<boolean>(`${environment.urlApi}/Siniestros/Cerrar/${id}`, null);
+    return this.peticionHttp.hacerPeticionPut<boolean>(`${environment.urlApi}/Siniestros/Cerrar/${id}`, null);
   }
 }
