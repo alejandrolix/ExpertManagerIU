@@ -124,17 +124,17 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   private async mostrarAlertaCerrarSiniestro(idSiniestro: number): Promise<void> {
-    let accion: SweetAlertResult = await Swal.fire({
-      title: `¿Está seguro que desea cerrar el siniestro con id ${idSiniestro}?`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
-    });
+    // let accion: SweetAlertResult = await Swal.fire({
+    //   title: `¿Está seguro que desea cerrar el siniestro con id ${idSiniestro}?`,
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#3085d6',
+    //   cancelButtonColor: '#d33',
+    //   confirmButtonText: 'Aceptar',
+    //   cancelButtonText: 'Cancelar'
+    // });
 
-    if (accion.isConfirmed) {  
+    // if (accion.isConfirmed) {  
       let respuesta: boolean;
 
       try {
@@ -159,7 +159,7 @@ export class ListadoSiniestrosComponent implements OnInit {
           confirmButtonColor: '#3085d6',          
           confirmButtonText: 'Aceptar',          
         });
-    }
+    // }
   }
 
   public async filtrarSiniestros(): Promise<void> {
