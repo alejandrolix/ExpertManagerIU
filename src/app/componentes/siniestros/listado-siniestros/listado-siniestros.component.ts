@@ -67,20 +67,10 @@ export class ListadoSiniestrosComponent implements OnInit {
       let impReparacionDaniosPerito: number;
 
       try {
-        impReparacionDaniosPerito = await this.peritosService.obtenerImpReparacionDaniosPorIdPerito(idPeritoLogueado).toPromise();
+        impReparacionDaniosPerito = await this.peritosService.obtenerImpReparacionDaniosPorIdPerito(idPeritoLogueado)
+                                              .toPromise();
       } catch (error) {
-        await Swal.fire({
-          title: 'Ha habido un error al obtener el importe de reparación de daños del perito. Inténtelo de nuevo',
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-          },
-          icon: 'error',
-          confirmButtonText: 'Aceptar'
-        });
-  
+        Alerta.mostrarError(error);  
         return;
       }      
 
