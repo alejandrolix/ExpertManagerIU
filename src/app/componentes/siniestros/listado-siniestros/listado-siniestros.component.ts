@@ -91,7 +91,7 @@ export class ListadoSiniestrosComponent implements OnInit {
 
       let impValoracionDaniosSiniestro: number = Number(siniestroActual.impValoracionDanios.replace(',', '.').replace(' €', ''));
 
-      if (impValoracionDaniosSiniestro > impReparacionDaniosPerito) {
+      if (impValoracionDaniosSiniestro < impReparacionDaniosPerito) {
         await Swal.fire({
           title: 'No puede cerrar el siniestro porque el importe de valoración de daños supera el establecido al perito',
           icon: 'error',          
@@ -133,13 +133,7 @@ export class ListadoSiniestrosComponent implements OnInit {
         respuesta = await this.siniestrosService.cerrar(idSiniestro)
                               .toPromise(); 
       } catch (error) {
-        await Swal.fire({
-          title: 'Ha habido un error al cerrar el siniestro. Inténtelo de nuevo',
-          icon: 'error',          
-          confirmButtonColor: '#3085d6',          
-          confirmButtonText: 'Aceptar',          
-        });
-
+        Alerta.mostrarError(error);
         return;
       }            
 
