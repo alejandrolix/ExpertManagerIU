@@ -93,14 +93,10 @@ export class ListadoSiniestrosComponent implements OnInit {
         };
 
         try {
-          await this.mensajesService.crearMensajeRevisarCierre(mensaje).toPromise(); 
+          await this.mensajesService.crearMensajeRevisarCierre(mensaje)
+                    .toPromise(); 
         } catch (error) {
-          Swal.fire({
-            title: 'Ha habido un error al crear el mensaje de cierre. Inténtelo de nuevo',
-            icon: 'error',          
-            confirmButtonColor: '#3085d6',          
-            confirmButtonText: 'Aceptar',          
-          });
+          Alerta.mostrarError(error);
         }        
       }
       else
