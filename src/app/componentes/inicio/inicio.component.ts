@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Alerta } from 'src/app/clases/Alertas';
 import { Estadistica } from 'src/app/interfaces/estadistica';
+import { RespuestaApi } from 'src/app/interfaces/respuestaApi';
 import { InicioService } from 'src/app/servicios/inicio.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
@@ -19,14 +20,17 @@ export class InicioComponent implements OnInit {
     this.mostrarSpinner = false;
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.mostrarSpinner = true;
     let idUsuarioLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
     this.tieneUsuarioPermisoAdministracion = this.permisosService.tienePermisoAdministracion();
 
-    this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuarioLogueado)
-                      .subscribe((estadisticas: Estadistica) => this.estadisticas = estadisticas,
-                      (mensaje: string) => Alerta.mostrarError(mensaje));
+    try {
+      this.estadisticas = await this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuarioLogueado)                               
+                                    .toPromise();
+    } catch (error) {
+      Alerta.mostrarError('Error al obtener las estadísticas del usuario');
+    }
 
     this.mostrarSpinner = false;
   }
