@@ -155,11 +155,14 @@ export class ListadoSiniestrosComponent implements OnInit {
     }
   }
 
-  public filtrarSiniestros(): void {
+  public async filtrarSiniestros(): Promise<void> {
     if (this.permisosService.tienePermisoAdministracion())
-      this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada)
-                            .subscribe((siniestros: Siniestro[]) => this.siniestros = siniestros,
-                            (mensaje: string) => Alerta.mostrarError(mensaje));   
+      try {
+        this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada)
+                                    .toPromise();
+      } catch (error) {
+        Alerta.mostrarError(error);
+      }
     else {
       let idPerito: number = this.usuariosService.obtenerIdUsuarioLogueado();
 
