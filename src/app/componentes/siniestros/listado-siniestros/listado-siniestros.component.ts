@@ -124,21 +124,14 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   private async mostrarAlertaCerrarSiniestro(idSiniestro: number): Promise<void> {
-    // let accion: SweetAlertResult = await Swal.fire({
-    //   title: `¿Está seguro que desea cerrar el siniestro con id ${idSiniestro}?`,
-    //   icon: 'warning',
-    //   showCancelButton: true,
-    //   confirmButtonColor: '#3085d6',
-    //   cancelButtonColor: '#d33',
-    //   confirmButtonText: 'Aceptar',
-    //   cancelButtonText: 'Cancelar'
-    // });
+    let accionPregunta: SweetAlertResult = await Alerta.mostrarPregunta(`¿Está seguro que desea cerrar el siniestro con id ${idSiniestro}?`);
 
-    // if (accion.isConfirmed) {  
+    if (accionPregunta.isConfirmed) {  
       let respuesta: boolean;
 
       try {
-        respuesta = await this.siniestrosService.cerrar(idSiniestro).toPromise(); 
+        respuesta = await this.siniestrosService.cerrar(idSiniestro)
+                              .toPromise(); 
       } catch (error) {
         await Swal.fire({
           title: 'Ha habido un error al cerrar el siniestro. Inténtelo de nuevo',
@@ -151,7 +144,7 @@ export class ListadoSiniestrosComponent implements OnInit {
       }            
 
       if (respuesta)
-        await this.filtrarSiniestros();
+        this.filtrarSiniestros();
       else
         Swal.fire({
           title: `Ha habido un problema al cerrar el siniestro con id ${idSiniestro}`,
@@ -159,7 +152,7 @@ export class ListadoSiniestrosComponent implements OnInit {
           confirmButtonColor: '#3085d6',          
           confirmButtonText: 'Aceptar',          
         });
-    // }
+    }
   }
 
   public async filtrarSiniestros(): Promise<void> {
