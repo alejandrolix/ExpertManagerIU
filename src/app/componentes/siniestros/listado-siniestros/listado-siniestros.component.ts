@@ -44,11 +44,14 @@ export class ListadoSiniestrosComponent implements OnInit {
     } catch (error) {
       Alerta.mostrarError(error);
     }
-    
-    this.peritosService.obtenerTodos()
-                        .subscribe((peritos: Usuario[]) => this.peritos = peritos,
-                        (mensaje: string) => Alerta.mostrarError(mensaje));
 
+    try {
+      this.peritos = await this.peritosService.obtenerTodos()
+                               .toPromise();
+    } catch (error) {
+      Alerta.mostrarError(error);
+    }
+    
     this.mostrarSpinner = false;
   }
 
