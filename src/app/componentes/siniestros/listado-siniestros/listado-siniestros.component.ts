@@ -168,56 +168,29 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   public async eliminar(id: number): Promise<void> { 
-    let accionPregunta: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono(`¿Está seguro que desea eliminar el siniestro con id ${id}?`);    
+    let accionPregunta: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono(`¿Está seguro que desea eliminar el siniestro con id ${id}?`);   
+    
+    if (!accionPregunta.isConfirmed)
+      return;
 
-    if (accionPregunta.isConfirmed) {  
-      let respuesta: boolean;
+    let respuesta: boolean;
 
-      try {
-        respuesta = await this.siniestrosService.eliminar(id)
-                              .toPromise(); 
+    try {
+      respuesta = await this.siniestrosService.eliminar(id)
+                            .toPromise(); 
 
-        await Alerta.mostrarOkAsincrono('Siniestro eliminado correctamente');
-      } catch (error) {
-        await Swal.fire({
-          title: 'Ha habido un error al eliminar el siniestro. Inténtelo de nuevo',
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-          },
-          icon: 'error',
-          confirmButtonText: 'Aceptar'
-        });
-  
-        return;
-      }            
+      await Alerta.mostrarOkAsincrono('Siniestro eliminado correctamente');
+    } catch (error) {
+      Alerta.mostrarError(error);
+      return;
+    }            
 
-      if (respuesta)
-        try {
-          this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada).toPromise();
-        } catch (error) {
-          Swal.fire({
-            title: 'Ha habido un error al obtener los siniestros. Inténtelo de nuevo',
-            showClass: {
-              popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOutUp'
-            },
-            icon: 'error',
-            confirmButtonText: 'Aceptar'
-          });    
-        }        
-      else
-        Swal.fire({
-          title: `Ha habido un problema al eliminar el siniestro con id ${id}`,
-          icon: 'error',          
-          confirmButtonColor: '#3085d6',          
-          confirmButtonText: 'Aceptar',          
-        });
-    }
+    try {
+      this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada)
+                                  .toPromise();
+    } catch (error) {
+      Alerta.mostrarError(error);   
+    }        
   } 
 
   public crear(): void {
