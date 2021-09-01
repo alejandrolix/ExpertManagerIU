@@ -41,7 +41,7 @@ export class PeticionHttp {
                     if (error.message)
                         return throwError(error.message);
 
-                    return throwError('Ha habido un error al obtener los datos');
+                    return throwError('Ha habido un error al crear');
                 })
             );
     }
@@ -60,7 +60,7 @@ export class PeticionHttp {
                     if (error.message)
                         return throwError(error.message);
 
-                    return throwError('Ha habido un error al obtener los datos');
+                    return throwError('Ha habido un error al actualizar');
                 })
             );
     }
@@ -79,7 +79,7 @@ export class PeticionHttp {
                     if (error.message)
                         return throwError(error.message);
 
-                    return throwError('Ha habido un error al obtener los datos');
+                    return throwError('Ha habido un error al eliminar');
                 })
             );
     }
