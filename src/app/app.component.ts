@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { UsuariosService } from './servicios/usuarios.service';
 
 @Component({
@@ -25,12 +26,14 @@ export class AppComponent implements OnInit, OnDestroy {
     else
       this.estaSesionIniciada = true;
     
-    this.iniciarSesionSubscription = this.usuariosService.iniciarSesionSubject.subscribe((respuesta: boolean) => {
-      if (respuesta) {
-        this.estaSesionIniciada = true;
-        this.router.navigateByUrl('/inicio');
-      }
-    });
+    this.iniciarSesionSubscription = this.usuariosService.iniciarSesionSubject
+        .pipe(
+          map((respuesta: boolean) => respuesta)
+        )    
+        .subscribe(() => {
+          this.estaSesionIniciada = true;
+          this.router.navigateByUrl('/inicio');
+        });
 
     this.cerrarSesionSubscription = this.usuariosService.cerrarSesionSubject.subscribe((respuesta: boolean) => {      
       if (respuesta) {
