@@ -35,17 +35,19 @@ export class AppComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl('/inicio');
         });
 
-    this.cerrarSesionSubscription = this.usuariosService.cerrarSesionSubject.subscribe((respuesta: boolean) => {      
-      if (respuesta) {
-        localStorage.removeItem('idUsuario');
-        localStorage.removeItem('usuario');
-        localStorage.removeItem('idPermiso');
-        localStorage.removeItem('token');
+    this.cerrarSesionSubscription = this.usuariosService.cerrarSesionSubject
+        .pipe(
+          map((respuesta: boolean) => respuesta)
+        )    
+        .subscribe(() => {      
+          localStorage.removeItem('idUsuario');
+          localStorage.removeItem('usuario');
+          localStorage.removeItem('idPermiso');
+          localStorage.removeItem('token');
 
-        this.estaSesionIniciada = false;
-        this.router.navigateByUrl('/inicioSesion');
-      }        
-    });
+          this.estaSesionIniciada = false;
+          this.router.navigateByUrl('/inicioSesion');
+        });
   }
 
   ngOnDestroy(): void {
