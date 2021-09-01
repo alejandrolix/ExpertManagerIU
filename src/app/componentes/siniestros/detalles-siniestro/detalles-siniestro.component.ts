@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Alerta } from 'src/app/clases/Alerta';
 import { Documentacion } from 'src/app/interfaces/documentacion';
 import { Imagen } from 'src/app/interfaces/imagen';
 import { Mensaje } from 'src/app/interfaces/mensaje';
@@ -34,21 +35,12 @@ export class DetallesSiniestroComponent implements OnInit {
     let idSiniestro: number = Number(this.route.snapshot.paramMap.get('id'));
 
     try {
-      this.siniestro = await this.siniestrosService.obtenerPorId(idSiniestro).toPromise();
+      this.siniestro = await this.siniestrosService.obtenerPorId(idSiniestro)
+                                                   .toPromise();
     } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al obtener el siniestro. Inténtelo de nuevo',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
-
+      Alerta.mostrarError(error);
       this.mostrarSpinner = false;
+      
       return;
     }
 
