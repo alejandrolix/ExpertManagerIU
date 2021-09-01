@@ -29,7 +29,7 @@ export class Alerta {
     });
   }
 
-  public static async mostrarPregunta(mensaje: string): Promise<SweetAlertResult> {
+  public static async mostrarPreguntaAsincrono(mensaje: string): Promise<SweetAlertResult> {
     let alerta: Promise<SweetAlertResult> = Swal.fire({
       title: mensaje,
       icon: 'warning',

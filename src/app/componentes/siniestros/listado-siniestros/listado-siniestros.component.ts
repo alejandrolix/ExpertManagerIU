@@ -111,7 +111,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   private async mostrarAlertaCerrarSiniestro(idSiniestro: number): Promise<void> {
-    let accionPregunta: SweetAlertResult = await Alerta.mostrarPregunta(`¿Está seguro que desea cerrar el siniestro con id ${idSiniestro}?`);
+    let accionPregunta: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono(`¿Está seguro que desea cerrar el siniestro con id ${idSiniestro}?`);
 
     if (accionPregunta.isConfirmed) {  
       let respuesta: boolean;
@@ -168,7 +168,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   public async eliminar(id: number): Promise<void> { 
-    let accionPregunta: SweetAlertResult = await Alerta.mostrarPregunta(`¿Está seguro que desea eliminar el siniestro con id ${id}?`);    
+    let accionPregunta: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono(`¿Está seguro que desea eliminar el siniestro con id ${id}?`);    
 
     if (accionPregunta.isConfirmed) {  
       let respuesta: boolean;
