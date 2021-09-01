@@ -10,7 +10,7 @@ import { PeritosService } from 'src/app/servicios/peritos.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
-import Swal, { SweetAlertResult } from 'sweetalert2';
+import { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-listado-siniestros',
