@@ -42,4 +42,20 @@ export class Alerta {
 
     return await alerta;
   }
+
+  public static async mostrarOk(mensaje: string): Promise<SweetAlertResult> {
+    let alerta: Promise<SweetAlertResult> = Swal.fire({
+      title: mensaje,
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      },
+      icon: 'success',
+      confirmButtonText: 'Aceptar'
+    });
+
+    return await alerta;
+  }
 }

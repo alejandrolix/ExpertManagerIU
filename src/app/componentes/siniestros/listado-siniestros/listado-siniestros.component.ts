@@ -174,7 +174,8 @@ export class ListadoSiniestrosComponent implements OnInit {
       let respuesta: boolean;
 
       try {
-        respuesta = await this.siniestrosService.eliminar(id).toPromise(); 
+        respuesta = await this.siniestrosService.eliminar(id)
+                              .toPromise(); 
 
         await Swal.fire({
           title: 'Siniestro eliminado correctamente',
