@@ -8,10 +8,13 @@ import { Usuario } from '../interfaces/usuario';
   providedIn: 'root'
 })
 export class UsuariosService {
-  public iniciarSesionSubject: Subject<boolean> = new Subject<boolean>();
-  public cerrarSesionSubject: Subject<boolean> = new Subject<boolean>();
+  public iniciarSesionSubject: Subject<boolean>;
+  public cerrarSesionSubject: Subject<boolean>;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.iniciarSesionSubject = new Subject<boolean>();
+    this.cerrarSesionSubject = new Subject<boolean>();
+  }
 
   public obtenerTodos(): Observable<Usuario[]> {    
     return this.http.get<Usuario[]>(`${environment.urlApi}/Usuarios`);
