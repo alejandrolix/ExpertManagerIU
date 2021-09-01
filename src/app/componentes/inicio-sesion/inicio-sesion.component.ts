@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Alerta } from 'src/app/clases/Alertas';
 import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
 import Swal from 'sweetalert2';
 import { UsuariosService } from '../../servicios/usuarios.service';
@@ -45,45 +46,21 @@ export class InicioSesionComponent implements OnInit {
     let respuesta: any;
 
     try {
-      respuesta = await this.usuariosService.iniciarSesion(credenciales).toPromise(); 
+      respuesta = await this.usuariosService.iniciarSesion(credenciales)
+                            .toPromise(); 
     } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al iniciar sesión. Inténtelo de nuevo',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      }); 
-
+      Alerta.mostrarError(error); 
       this.mostrarSpinner = false;
+
       return;
     }    
 
-    if (!respuesta)
-      Swal.fire({
-        title: 'El usuario y/o la contraseña no son correctos',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });      
-    else {
-      localStorage.setItem('idUsuario', respuesta.id);
-      localStorage.setItem('usuario', credenciales.nombre);
-      localStorage.setItem('idPermiso', respuesta.idPermiso);
-      localStorage.setItem('token', respuesta.token);
+    localStorage.setItem('idUsuario', respuesta.id);
+    localStorage.setItem('usuario', credenciales.nombre);
+    localStorage.setItem('idPermiso', respuesta.idPermiso);
+    localStorage.setItem('token', respuesta.token);
 
-      this.usuariosService.iniciarSesionSubject.next(true);
-    }
-
+    this.usuariosService.iniciarSesionSubject.next(true);
     this.mostrarSpinner = false;
   }
 }
