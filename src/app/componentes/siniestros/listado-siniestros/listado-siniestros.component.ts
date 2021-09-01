@@ -173,11 +173,9 @@ export class ListadoSiniestrosComponent implements OnInit {
     if (!accionPregunta.isConfirmed)
       return;
 
-    let respuesta: boolean;
-
     try {
-      respuesta = await this.siniestrosService.eliminar(id)
-                            .toPromise(); 
+      await this.siniestrosService.eliminar(id)
+                .toPromise(); 
 
       await Alerta.mostrarOkAsincrono('Siniestro eliminado correctamente');
     } catch (error) {
