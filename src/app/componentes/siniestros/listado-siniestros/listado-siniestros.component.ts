@@ -177,17 +177,7 @@ export class ListadoSiniestrosComponent implements OnInit {
         respuesta = await this.siniestrosService.eliminar(id)
                               .toPromise(); 
 
-        await Swal.fire({
-          title: 'Siniestro eliminado correctamente',
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-          },
-          icon: 'success',
-          confirmButtonText: 'Aceptar'
-        });
+        await Alerta.mostrarOk('Siniestro eliminado correctamente');
       } catch (error) {
         await Swal.fire({
           title: 'Ha habido un error al eliminar el siniestro. Inténtelo de nuevo',
