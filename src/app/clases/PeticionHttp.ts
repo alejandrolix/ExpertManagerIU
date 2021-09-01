@@ -18,8 +18,8 @@ export class PeticionHttp {
                     return throwError(null);
                 }),
                 map((respuesta: RespuestaApi) => respuesta.datos),
-                catchError((error: Error) => {
-                    if (error.message)
+                catchError((error: any) => {
+                    if (error.status !== 0)
                         return throwError(error.message);
 
                     return throwError('Ha habido un error al obtener los datos');
