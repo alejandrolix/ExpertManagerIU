@@ -43,7 +43,7 @@ export class Alerta {
     return await alerta;
   }
 
-  public static async mostrarOk(mensaje: string): Promise<SweetAlertResult> {
+  public static async mostrarOkAsincrono(mensaje: string): Promise<SweetAlertResult> {
     let alerta: Promise<SweetAlertResult> = Swal.fire({
       title: mensaje,
       showClass: {
