@@ -81,7 +81,11 @@ export class ListadoSiniestrosComponent implements OnInit {
         return;
       }
 
-      let impValoracionDaniosSiniestro: number = Number(siniestroActual.impValoracionDanios.replace(',', '.').replace(' €', ''));
+      let impValDaniosCadena: string = siniestroActual.impValoracionDanios
+                                                      .replace(',', '.')
+                                                      .replace(' €', '');
+
+      let impValoracionDaniosSiniestro: number = Number(impValDaniosCadena);
 
       if (impValoracionDaniosSiniestro > impReparacionDaniosPerito) {
         await Alerta.mostrarErrorAsincrono('No puede cerrar el siniestro porque el importe de valoración de daños supera el establecido al perito');
@@ -163,18 +167,10 @@ export class ListadoSiniestrosComponent implements OnInit {
     this.router.navigate(['editar', id], { relativeTo: this.activatedRoute });
   }
 
-  public async eliminar(id: number): Promise<void> {    
-    let accion: SweetAlertResult = await Swal.fire({
-      title: `¿Está seguro que desea eliminar el siniestro con id ${id}?`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
-    });
+  public async eliminar(id: number): Promise<void> { 
+    let accionPregunta: SweetAlertResult = await Alerta.mostrarPregunta(`¿Está seguro que desea eliminar el siniestro con id ${id}?`);    
 
-    if (accion.isConfirmed) {  
+    if (accionPregunta.isConfirmed) {  
       let respuesta: boolean;
 
       try {
