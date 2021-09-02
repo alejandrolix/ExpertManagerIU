@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
     
     this.iniciarSesionSubscription = this.usuariosService.iniciarSesionSubject
         .pipe(
-          map((respuesta: boolean) => respuesta)
+          filter((respuesta: boolean) => respuesta)
         )    
         .subscribe(() => {
           this.estaSesionIniciada = true;
