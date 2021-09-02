@@ -37,7 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.cerrarSesionSubscription = this.usuariosService.cerrarSesionSubject
         .pipe(
-          map((respuesta: boolean) => respuesta)
+          filter((respuesta: boolean) => respuesta)
         )    
         .subscribe(() => {      
           localStorage.removeItem('idUsuario');
