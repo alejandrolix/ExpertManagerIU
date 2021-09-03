@@ -23,8 +23,10 @@ export class PeticionHttp {
 
                     if (error.error === 'no token')
                         return throwError('No existe token. Por favor, inicie sesión');                    
-                    else
-                        return throwError(error);                                                            
+                    else if (error.status === 0)
+                        return throwError('No funciona la API REST');
+
+                    return throwError(error);                                                            
                 })
             );
     }
