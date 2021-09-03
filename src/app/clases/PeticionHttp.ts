@@ -19,8 +19,12 @@ export class PeticionHttp {
                 }),
                 map((respuesta: RespuestaApi) => respuesta.datos),
                 catchError((error: any) => {
-                    
-                    return throwError('Ha habido un error al obtener los datos');                    
+                    debugger;                    
+
+                    if (error.error === 'no token')
+                        return throwError('No existe token. Por favor, inicie sesión');                    
+                    else
+                        return throwError(error);                                                            
                 })
             );
     }
