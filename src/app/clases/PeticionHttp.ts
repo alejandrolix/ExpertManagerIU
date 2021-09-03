@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { map, catchError, tap } from "rxjs/operators";
 import { RespuestaApi } from "../interfaces/respuestaApi";
+import { InfoError } from "./info-error";
 
 @Injectable()
 export class PeticionHttp {
@@ -13,16 +14,21 @@ export class PeticionHttp {
             .pipe(
                 tap((respuesta: RespuestaApi) => {
                     if (respuesta.codigoRespuesta === 500 && respuesta.mensaje)
-                        throw new Error(respuesta.mensaje);     // El mensaje del error se procesa en la función "catchError".
+                        throw new Error(respuesta.mensaje);     // El mensaje del error se procesa en la función "catchError".                    
 
-                    return throwError(null);
+                    let infoError: InfoError = new InfoError('');
+                    return throwError(infoError);
                 }),
                 map((respuesta: RespuestaApi) => respuesta.datos),
                 catchError((error: any) => {
-                    if (error.status !== 0)
-                        return throwError(error.message);
+                    let infoError: InfoError = new InfoError('');
 
-                    return throwError('Ha habido un error al obtener los datos');
+                    if (error.status !== 0)
+                        infoError.mensaje = error.message;
+                    else
+                        infoError.mensaje = 'Ha habido un error al obtener los datos';
+                    
+                    return throwError(infoError);                    
                 })
             );
     }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
+import { InfoError } from 'src/app/clases/info-error';
 import { Aseguradora } from 'src/app/interfaces/aseguradora';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { Usuario } from 'src/app/interfaces/usuario';
@@ -41,15 +42,17 @@ export class ListadoSiniestrosComponent implements OnInit {
     try {
       this.aseguradoras = await this.aseguradorasService.obtenerTodas()
                                     .toPromise();
-    } catch (error) {
+    } catch (error: any) {
       Alerta.mostrarError(error);
+      return;
     }
 
     try {
       this.peritos = await this.peritosService.obtenerTodos()
                                .toPromise();
-    } catch (error) {
+    } catch (error: any) {
       Alerta.mostrarError(error);
+      return;
     }
     
     this.mostrarSpinner = false;
@@ -69,7 +72,7 @@ export class ListadoSiniestrosComponent implements OnInit {
       try {
         impReparacionDaniosPerito = await this.peritosService.obtenerImpReparacionDaniosPorIdPerito(idPeritoLogueado)
                                               .toPromise();
-      } catch (error) {
+      } catch (error: any) {
         Alerta.mostrarError(error);  
         return;
       }      
@@ -99,7 +102,7 @@ export class ListadoSiniestrosComponent implements OnInit {
         try {
           await this.mensajesService.crearMensajeRevisarCierre(mensaje)
                     .toPromise(); 
-        } catch (error) {
+        } catch (error: any) {
           Alerta.mostrarError(error);
         }        
       }
@@ -119,7 +122,7 @@ export class ListadoSiniestrosComponent implements OnInit {
     try {
       await this.siniestrosService.cerrar(idSiniestro)
                 .toPromise(); 
-    } catch (error) {
+    } catch (error: any) {
       Alerta.mostrarError(error);
       return;
     }            
@@ -132,7 +135,7 @@ export class ListadoSiniestrosComponent implements OnInit {
       try {
         this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada)
                                     .toPromise();
-      } catch (error) {
+      } catch (error: any) {
         Alerta.mostrarError(error);
       }
     else {
@@ -142,14 +145,14 @@ export class ListadoSiniestrosComponent implements OnInit {
         try {
           this.siniestros = await this.siniestrosService.obtenerPorPeritoResponsable(idPerito, this.idAseguradoraSeleccionada)
                                       .toPromise();
-        } catch (error) {
+        } catch (error: any) {
           Alerta.mostrarError(error);
         }
       else
         try {
           this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.idAseguradoraSeleccionada)
                                       .toPromise();
-        } catch (error) {
+        } catch (error: any) {
           Alerta.mostrarError(error);
         }       
     }
@@ -177,7 +180,7 @@ export class ListadoSiniestrosComponent implements OnInit {
                 .toPromise(); 
 
       await Alerta.mostrarOkAsincrono('Siniestro eliminado correctamente');
-    } catch (error) {
+    } catch (error: any) {
       Alerta.mostrarError(error);
       return;
     }            
@@ -185,7 +188,7 @@ export class ListadoSiniestrosComponent implements OnInit {
     try {
       this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada)
                                   .toPromise();
-    } catch (error) {
+    } catch (error: any) {
       Alerta.mostrarError(error);   
     }        
   } 
