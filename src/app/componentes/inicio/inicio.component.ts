@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Alerta } from 'src/app/clases/Alerta';
 import { Estadistica } from 'src/app/interfaces/estadistica';
-import { RespuestaApi } from 'src/app/interfaces/respuestaApi';
 import { InicioService } from 'src/app/servicios/inicio.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
