@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
-import { InfoError } from 'src/app/clases/info-error';
 import { Aseguradora } from 'src/app/interfaces/aseguradora';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { Usuario } from 'src/app/interfaces/usuario';
