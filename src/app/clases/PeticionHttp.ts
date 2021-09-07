@@ -11,12 +11,6 @@ export class PeticionHttp {
     public hacerPeticionGet<T>(url: string): Observable<T> {
         return this.http.get<RespuestaApi>(url)
             .pipe(
-                tap((respuesta: RespuestaApi) => {
-                    if (respuesta.codigoRespuesta === 500 && respuesta.mensaje)
-                        throw new Error(respuesta.mensaje);     // El mensaje del error se procesa en la función "catchError".                    
-
-                    return throwError('');
-                }),
                 map((respuesta: RespuestaApi) => respuesta.datos),
                 catchError((error: any) => {
                     if (error.error === 'no token')
