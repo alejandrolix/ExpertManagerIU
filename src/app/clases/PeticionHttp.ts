@@ -11,9 +11,11 @@ export class PeticionHttp {
     public hacerPeticionGet<T>(url: string): Observable<T> {
         return this.http.get<T>(url)
             .pipe(
-                catchError((error: any) => {
+                catchError((error: any) => {                    
                     if (error.error === 'no token')
-                        return throwError('No existe token. Por favor, inicie sesión');                    
+                        return throwError('No existe token. Por favor, inicie sesión');
+                    else if (error.status === 0)                    
+                        return throwError('No funciona la API REST');
                     
                     return throwError(error.error);
                 })
