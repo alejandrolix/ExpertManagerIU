@@ -40,7 +40,7 @@ export class ListadoSiniestrosComponent implements OnInit {
     
     try {
       this.aseguradoras = await this.aseguradorasService.obtenerTodas()
-                                    .toPromise();
+                                                        .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
       return;
@@ -48,7 +48,7 @@ export class ListadoSiniestrosComponent implements OnInit {
 
     try {
       this.peritos = await this.peritosService.obtenerTodos()
-                               .toPromise();
+                                              .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
       return;
@@ -70,7 +70,7 @@ export class ListadoSiniestrosComponent implements OnInit {
 
       try {
         impReparacionDaniosPerito = await this.peritosService.obtenerImpReparacionDaniosPorIdPerito(idPeritoLogueado)
-                                              .toPromise();
+                                                             .toPromise();
       } catch (error: any) {
         Alerta.mostrarError(error);  
         return;
@@ -100,7 +100,7 @@ export class ListadoSiniestrosComponent implements OnInit {
 
         try {
           await this.mensajesService.crearMensajeRevisarCierre(mensaje)
-                    .toPromise(); 
+                                    .toPromise(); 
         } catch (error: any) {
           Alerta.mostrarError(error);
         }        
@@ -120,7 +120,7 @@ export class ListadoSiniestrosComponent implements OnInit {
  
     try {
       await this.siniestrosService.cerrar(idSiniestro)
-                .toPromise(); 
+                                  .toPromise(); 
     } catch (error: any) {
       Alerta.mostrarError(error);
       return;
@@ -133,7 +133,7 @@ export class ListadoSiniestrosComponent implements OnInit {
     if (this.permisosService.tienePermisoAdministracion())
       try {
         this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada)
-                                    .toPromise();
+                                                      .toPromise();
       } catch (error: any) {
         Alerta.mostrarError(error);
       }
@@ -143,14 +143,14 @@ export class ListadoSiniestrosComponent implements OnInit {
       if (this.permisosService.tienePermisoPeritoResponsable())
         try {
           this.siniestros = await this.siniestrosService.obtenerPorPeritoResponsable(idPerito, this.idAseguradoraSeleccionada)
-                                      .toPromise();
+                                                        .toPromise();
         } catch (error: any) {
           Alerta.mostrarError(error);
         }
       else
         try {
           this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.idAseguradoraSeleccionada)
-                                      .toPromise();
+                                                        .toPromise();
         } catch (error: any) {
           Alerta.mostrarError(error);
         }       
@@ -176,7 +176,7 @@ export class ListadoSiniestrosComponent implements OnInit {
 
     try {
       await this.siniestrosService.eliminar(id)
-                .toPromise(); 
+                                  .toPromise(); 
 
       await Alerta.mostrarOkAsincrono('Siniestro eliminado correctamente');
     } catch (error: any) {
