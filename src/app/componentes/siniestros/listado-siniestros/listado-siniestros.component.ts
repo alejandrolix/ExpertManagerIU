@@ -184,12 +184,7 @@ export class ListadoSiniestrosComponent implements OnInit {
       return;
     }            
 
-    try {
-      this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada)
-                                  .toPromise();
-    } catch (error: any) {
-      Alerta.mostrarError(error);   
-    }        
+    this.filtrarSiniestros();
   } 
 
   public crear(): void {
