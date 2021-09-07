@@ -9,9 +9,8 @@ export class PeticionHttp {
     constructor(private http: HttpClient) {}
 
     public hacerPeticionGet<T>(url: string): Observable<T> {
-        return this.http.get<RespuestaApi>(url)
+        return this.http.get<T>(url)
             .pipe(
-                map((respuesta: RespuestaApi) => respuesta.datos),
                 catchError((error: any) => {
                     if (error.error === 'no token')
                         return throwError('No existe token. Por favor, inicie sesión');                    

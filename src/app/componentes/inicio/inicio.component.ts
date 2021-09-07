@@ -25,7 +25,7 @@ export class InicioComponent implements OnInit {
     this.tieneUsuarioPermisoAdministracion = this.permisosService.tienePermisoAdministracion();
 
     try {
-      this.estadisticas = await this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuarioLogueado)                               
+      this.estadisticas = await this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuarioLogueado)
                                     .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
