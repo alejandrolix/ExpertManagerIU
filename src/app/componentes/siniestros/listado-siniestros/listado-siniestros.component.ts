@@ -176,14 +176,13 @@ export class ListadoSiniestrosComponent implements OnInit {
 
     try {
       await this.siniestrosService.eliminar(id)
-                                  .toPromise(); 
-
-      await Alerta.mostrarOkAsincrono('Siniestro eliminado correctamente');
+                                  .toPromise();       
     } catch (error: any) {
       Alerta.mostrarError(error);
       return;
     }            
 
+    await Alerta.mostrarOkAsincrono('Siniestro eliminado correctamente');
     this.filtrarSiniestros();
   } 
 
