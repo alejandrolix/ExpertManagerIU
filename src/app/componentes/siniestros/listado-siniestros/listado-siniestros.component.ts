@@ -63,6 +63,7 @@ export class ListadoSiniestrosComponent implements OnInit {
       impReparacionDanios: 0,
       token: ''
     });
+    this.idPeritoSeleccionado = 0;
 
     this.filtrarSiniestros();             
     this.mostrarSpinner = false;
