@@ -52,6 +52,18 @@ export class ListadoSiniestrosComponent implements OnInit {
       return;
     }
 
+    this.peritos.unshift({
+      id: 0,
+      nombre: 'Todos',
+      idEsPerito: 0,
+      esPerito: '',
+      idPermiso: 0,
+      permiso: '',
+      hashContrasenia: '',
+      impReparacionDanios: 0,
+      token: ''
+    });
+
     this.filtrarSiniestros();             
     this.mostrarSpinner = false;
   }

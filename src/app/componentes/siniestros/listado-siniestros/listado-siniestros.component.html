@@ -7,7 +7,6 @@
                 <div class="me-5" *ngIf="tienePermisoAdministracion()">
                     <label class="form-label">Perito</label>
                     <select class="form-select" [(ngModel)]="idPeritoSeleccionado" (change)="filtrarSiniestros()">
-                        <option value="0" selected>Todos</option>
                         <option *ngFor="let perito of peritos" [value]="perito.id">{{ perito.nombre }}</option>
                     </select>
                 </div>
