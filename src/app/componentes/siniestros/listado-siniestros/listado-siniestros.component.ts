@@ -147,13 +147,16 @@ export class ListadoSiniestrosComponent implements OnInit {
     this.filtrarSiniestros();
   }
 
-  public async filtrarSiniestros(): Promise<void> {
+  public async filtrarSiniestros(): Promise<void> {    
+    let vaciarSiniestros: boolean = false;
+
     if (this.permisosService.tienePermisoAdministracion())
       try {
         this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada)
                                                       .toPromise();
       } catch (error: any) {
         Alerta.mostrarError(error);
+        vaciarSiniestros = true;
       }
     else {
       let idPerito: number = this.usuariosService.obtenerIdUsuarioLogueado();
@@ -164,6 +167,7 @@ export class ListadoSiniestrosComponent implements OnInit {
                                                         .toPromise();
         } catch (error: any) {
           Alerta.mostrarError(error);
+          vaciarSiniestros = true;
         }
       else
         try {
@@ -171,8 +175,12 @@ export class ListadoSiniestrosComponent implements OnInit {
                                                         .toPromise();
         } catch (error: any) {
           Alerta.mostrarError(error);
+          vaciarSiniestros = true;
         }       
     }
+
+    if (vaciarSiniestros)
+      this.siniestros = [];
   }
 
   public eliminarFiltros(): void {
