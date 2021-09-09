@@ -13,8 +13,7 @@
                 <div>
                     <label class="form-label">Aseguradora</label>
                     <select class="form-select" [(ngModel)]="idAseguradoraSeleccionada" (change)="filtrarSiniestros()">
-                        <option *ngFor="let aseguradora of aseguradoras" [value]="aseguradora.id">{{ aseguradora.nombre }}
-                        </option>
+                        <option *ngFor="let aseguradora of aseguradoras" [value]="aseguradora.id">{{ aseguradora.nombre }}</option>
                     </select>
                 </div>
             </div>
