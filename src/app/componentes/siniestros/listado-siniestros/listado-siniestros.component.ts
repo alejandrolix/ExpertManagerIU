@@ -44,6 +44,12 @@ export class ListadoSiniestrosComponent implements OnInit {
       return;
     }
 
+    this.aseguradoras.unshift({
+      id: 0,
+      nombre: 'Todas'
+    });
+    this.idAseguradoraSeleccionada = 0;
+
     try {
       this.peritos = await this.peritosService.obtenerTodos()
                                               .toPromise();
