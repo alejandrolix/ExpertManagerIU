@@ -1,10 +1,10 @@
-interface DetalleEstadistica {
+interface Detalle {
     nombreAseguradora: string;
     numSiniestros: number;
 }
 
 export interface Estadistica {
     numSiniestros: number;
-    numSiniestrosCerrarPorAseguradora: DetalleEstadistica[];
-    numSiniestrosPorAseguradora: DetalleEstadistica[];
+    numSiniestrosCerrarPorAseguradora: Detalle[];
+    numSiniestrosPorAseguradora: Detalle[];
 }
