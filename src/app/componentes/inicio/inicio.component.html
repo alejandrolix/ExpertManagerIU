@@ -19,8 +19,8 @@
       </div>
       <div class="card-body">
         <div class="d-flex justify-content-between" *ngFor="let nsPorAseguradora of estadisticas.numSiniestrosPorAseguradora">
-          <div>{{ nsPorAseguradora.item1 }}</div>
-          <div>{{ nsPorAseguradora.item2 }}</div>
+          <div>{{ nsPorAseguradora.nombreAseguradora }}</div>
+          <div>{{ nsPorAseguradora.numSiniestros }}</div>
         </div>
       </div>
     </div>
@@ -32,8 +32,8 @@
       </div>
       <div class="card-body">
         <div class="d-flex justify-content-between" *ngFor="let nsCerrarPorAseguradora of estadisticas.numSiniestrosCerrarPorAseguradora">
-          <div>{{ nsCerrarPorAseguradora.item1 }}</div>
-          <div>{{ nsCerrarPorAseguradora.item2 }}</div>
+          <div>{{ nsCerrarPorAseguradora.nombreAseguradora }}</div>
+          <div>{{ nsCerrarPorAseguradora.numSiniestros }}</div>
         </div>
       </div>
     </div>
