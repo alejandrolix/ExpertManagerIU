@@ -23,7 +23,6 @@ import { SpinnerComponent } from './componentes/spinner/spinner.component';
 import { ApiRestTokenInterceptor } from './interceptor/api-rest-token.interceptor';
 import { SiniestrosComponent } from './componentes/siniestros/siniestros.component';
 import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
-import { PeticionHttp } from './clases/PeticionHttp';
 
 @NgModule({
   declarations: [
@@ -42,8 +41,7 @@ import { PeticionHttp } from './clases/PeticionHttp';
       provide: HTTP_INTERCEPTORS,
       useClass: ApiRestTokenInterceptor,
       multi: true
-    },
-    PeticionHttp
+    }
   ],
   bootstrap: [AppComponent]
 })

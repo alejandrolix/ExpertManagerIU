@@ -4,7 +4,9 @@ import { Observable, throwError } from "rxjs";
 import { map, catchError, tap } from "rxjs/operators";
 import { RespuestaApi } from "../interfaces/respuestaApi";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class PeticionHttp {
     constructor(private http: HttpClient) {}
 
