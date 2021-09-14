@@ -26,7 +26,7 @@ export class InicioComponent implements OnInit {
 
     try {
       this.estadisticas = await this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuarioLogueado)
-                                    .toPromise();
+                                                  .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
     }
