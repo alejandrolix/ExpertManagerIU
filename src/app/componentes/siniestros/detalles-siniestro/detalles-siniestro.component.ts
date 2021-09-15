@@ -37,7 +37,7 @@ export class DetallesSiniestroComponent implements OnInit {
     try {
       this.siniestro = await this.siniestrosService.obtenerPorId(idSiniestro)
                                                    .toPromise();
-    } catch (error) {
+    } catch (error: any) {
       Alerta.mostrarError(error);
       this.mostrarSpinner = false;
       
@@ -45,57 +45,30 @@ export class DetallesSiniestroComponent implements OnInit {
     }
 
     try {
-      this.documentaciones = await this.documentacionesService.obtenerPorIdSiniestro(idSiniestro).toPromise();
-    } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al obtener las documentaciones. Inténtelo de nuevo',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
+      this.documentaciones = await this.documentacionesService.obtenerPorIdSiniestro(idSiniestro)
+                                                              .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
 
       this.mostrarSpinner = false;
       return;
     }
 
     try {
-      this.imagenes = await this.imagenesService.obtenerPorIdSiniestro(idSiniestro).toPromise();
-    } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al obtener las imágenes. Inténtelo de nuevo',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
+      this.imagenes = await this.imagenesService.obtenerPorIdSiniestro(idSiniestro)
+                                                .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
 
       this.mostrarSpinner = false;
       return;
     }
     
     try {
-      this.mensajes = await this.mensajesService.obtenerTodosPorIdSiniestro(idSiniestro).toPromise();
-    } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al obtener los mensajes. Inténtelo de nuevo',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
+      this.mensajes = await this.mensajesService.obtenerTodosPorIdSiniestro(idSiniestro)
+                                                .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
 
       this.mostrarSpinner = false;
       return;
