@@ -10,7 +10,7 @@ import { DaniosService } from 'src/app/servicios/danios.service';
 import { PeritosService } from 'src/app/servicios/peritos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-crear-siniestro',
@@ -100,50 +100,21 @@ export class CrearSiniestroComponent implements OnInit {
     let respuesta: boolean;
 
     try {
-      respuesta = await this.siniestrosService.crear(siniestro).toPromise();
-    } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al crear el siniestro. Inténtelo de nuevo',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
+      respuesta = await this.siniestrosService.crear(siniestro)
+                                              .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
 
       return;
     }    
 
     if (respuesta) {
-      let accion = await Swal.fire({
-        title: 'Siniestro creado correctamente',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
-      });
+      let accion: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono('Siniestro creado correctamente');
 
       if (accion.isConfirmed)
         this.router.navigateByUrl('/siniestros');
     }     
     else
-      Swal.fire({
-        title: 'Ha habido un error al crear el siniestro',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
+      Alerta.mostrarError('Ha habido un error al crear el siniestro');
   }
 }
