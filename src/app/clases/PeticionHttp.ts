@@ -53,21 +53,16 @@ export class PeticionHttp {
     }
 
     public hacerPeticionDelete<T>(url: string): Observable<T> {
-        return this.http.delete<RespuestaApi>(url)
-            .pipe(
-                tap((respuesta: RespuestaApi) => {
-                    if (respuesta.codigoRespuesta === 500 && respuesta.mensaje)
-                        throw new Error(respuesta.mensaje);     // El mensaje del error se procesa en la función "catchError".
-
-                    return throwError(null);
-                }),
-                map((respuesta: RespuestaApi) => respuesta.datos),
-                catchError((error: Error) => {
-                    if (error.message)
-                        return throwError(error.message);
-
-                    return throwError('Ha habido un error al eliminar');
-                })
-            );
+        return this.http.delete<T>(url)
+                        .pipe(
+                            catchError((error: any) => {                    
+                                if (error.error === 'no token')
+                                    return throwError('No existe token. Por favor, inicie sesión');
+                                else if (error.status === 0)                    
+                                    return throwError('No funciona la API REST');
+                                
+                                return throwError(error.error);
+                            })
+                        );
     }
 }
