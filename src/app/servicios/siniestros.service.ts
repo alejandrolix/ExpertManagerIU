@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -10,7 +9,7 @@ import { Siniestro } from '../interfaces/siniestro';
 })
 export class SiniestrosService {
 
-  constructor(private http: HttpClient, private peticionHttp: PeticionHttp) { }
+  constructor(private peticionHttp: PeticionHttp) { }
 
   public obtenerTodos(idPerito: number, idAseguradora: number): Observable<Siniestro[]> {    
     return this.peticionHttp.hacerPeticionGet<Siniestro[]>(`${environment.urlApi}/Siniestros?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
@@ -29,11 +28,11 @@ export class SiniestrosService {
   }
 
   public crear(siniestro: any): Observable<boolean> {    
-    return this.http.post<boolean>(`${environment.urlApi}/Siniestros`, siniestro);
+    return this.peticionHttp.hacerPeticionPost<boolean>(`${environment.urlApi}/Siniestros`, siniestro);
   }
 
   public editar(siniestro: any, id: number): Observable<boolean> {    
-    return this.http.put<boolean>(`${environment.urlApi}/Siniestros/${id}`, siniestro);
+    return this.peticionHttp.hacerPeticionPut<boolean>(`${environment.urlApi}/Siniestros/${id}`, siniestro);
   }
 
   public eliminar(id: number): Observable<boolean> {    
