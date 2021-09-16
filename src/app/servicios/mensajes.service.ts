@@ -13,7 +13,7 @@ export class MensajesService {
   constructor(private http: HttpClient, private peticionHttp: PeticionHttp) { }
 
   public crear(mensaje: any): Observable<boolean> {
-    return this.http.post<boolean>(`${environment.urlApi}/Mensajes`, mensaje);
+    return this.peticionHttp.hacerPeticionPost<boolean>(`${environment.urlApi}/Mensajes`, mensaje);
   }
 
   public crearMensajeRevisarCierre(mensaje: any): Observable<boolean> {

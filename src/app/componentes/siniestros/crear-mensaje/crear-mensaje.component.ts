@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Alerta } from 'src/app/clases/Alerta';
 import { MensajesService } from 'src/app/servicios/mensajes.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
-import Swal from 'sweetalert2';
+import { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-crear-mensaje',
@@ -42,50 +43,19 @@ export class CrearMensajeComponent implements OnInit {
     let respuesta: boolean;
 
     try {
-      respuesta = await this.mensajesService.crear(mensaje).toPromise(); 
-    } catch (error) {
-      Swal.fire({
-        title: 'Ha habido un error al crear el mensaje. Inténtelo de nuevo',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
+      respuesta = await this.mensajesService.crear(mensaje)
+                                            .toPromise(); 
+    } catch (error: any) {
+      Alerta.mostrarError(error);
 
       return;
     }    
 
     if (respuesta) {
-      let accion = await Swal.fire({
-        title: 'Mensaje creado correctamente',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
-      });
+      let accion: SweetAlertResult = await Alerta.mostrarOkAsincrono('Mensaje creado correctamente');      
 
-      if (accion.isConfirmed)
-        this.router.navigate(['/detallesSiniestro', this.idSiniestro]);
-    }     
-    else
-      Swal.fire({
-        title: 'Ha habido un error al crear el mensaje',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
+      if (accion.isConfirmed)        
+        this.router.navigateByUrl(`/siniestros/detalles/${this.idSiniestro}`);
+    }         
   }
 }
