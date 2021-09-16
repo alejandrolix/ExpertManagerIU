@@ -10,7 +10,7 @@ import { DaniosService } from 'src/app/servicios/danios.service';
 import { PeritosService } from 'src/app/servicios/peritos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
-import Swal, { SweetAlertResult } from 'sweetalert2';
+import { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-crear-siniestro',
@@ -26,6 +26,7 @@ export class CrearSiniestroComponent implements OnInit {
 
   constructor(private aseguradorasService: AseguradorasService, private daniosService: DaniosService, private peritosService: PeritosService, private siniestrosService: SiniestrosService,
               private router: Router, private usuariosService: UsuariosService) {
+                
     this.aseguradoras = [];
     this.danios = [];
     this.peritos = [];
