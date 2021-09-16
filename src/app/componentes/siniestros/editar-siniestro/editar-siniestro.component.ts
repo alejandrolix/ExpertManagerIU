@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Alerta } from 'src/app/clases/Alerta';
 import { Aseguradora } from 'src/app/interfaces/aseguradora';
 import { Danio } from 'src/app/interfaces/danio';
 import { Estado } from 'src/app/interfaces/estado';
@@ -44,118 +45,73 @@ export class EditarSiniestroComponent implements OnInit {
     let idSiniestro: number = Number(this.route.snapshot.paramMap.get('id'));  
     
     try {
-      this.siniestro = await this.siniestrosService.obtenerPorId(idSiniestro).toPromise();
-    } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al obtener el siniestro. Inténtelo de nuevo',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
-
+      this.siniestro = await this.siniestrosService.obtenerPorId(idSiniestro)
+                                                   .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
       this.mostrarSpinner = false;
+
       return;
     }
 
     try {
-      this.estados = await this.estadosService.obtenerTodos().toPromise();
-    } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al obtener los estados. Inténtelo de nuevo',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
-
+      this.estados = await this.estadosService.obtenerTodos()
+                                              .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
       this.mostrarSpinner = false;
+
       return;
     }          
 
     try {
-      this.aseguradoras = await this.aseguradorasService.obtenerTodas().toPromise();
-    } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al obtener las aseguradoras. Inténtelo de nuevo',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
-
+      this.aseguradoras = await this.aseguradorasService.obtenerTodas()
+                                                        .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
       this.mostrarSpinner = false;
+
       return;
     }
 
     try {
-      this.danios = await this.daniosService.obtenerTodos().toPromise();
-    } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al obtener los daños. Inténtelo de nuevo',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
-
+      this.danios = await this.daniosService.obtenerTodos()
+                                            .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
       this.mostrarSpinner = false;
+
       return;
     }
 
     try {
-      this.peritos = await this.peritosService.obtenerTodos().toPromise();
-    } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al obtener los peritos. Inténtelo de nuevo',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
-
+      this.peritos = await this.peritosService.obtenerTodos()
+                                              .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
       this.mostrarSpinner = false;
+
       return;
     }
               
-    let idEstadoSeleccionado = this.estados.find(e => e.id == this.siniestro.idEstado)?.id;
+    let idEstadoSeleccionado: number | undefined = this.estados.find(e => e.id == this.siniestro.idEstado)?.id;
 
     if (idEstadoSeleccionado == undefined)
       return;
 
-    let idAseguradoraSeleccionada = this.aseguradoras.find(a => a.id == this.siniestro.idAseguradora)?.id;
+    let idAseguradoraSeleccionada: number | undefined = this.aseguradoras.find(a => a.id == this.siniestro.idAseguradora)?.id;
 
     if (idAseguradoraSeleccionada == undefined)
       return;
 
-    let idDanioSeleccionado = this.danios.find(d => d.id == this.siniestro.idDanio)?.id;
+    let idDanioSeleccionado: number | undefined = this.danios.find(d => d.id == this.siniestro.idDanio)?.id;
 
     if (idDanioSeleccionado == undefined)
       return;
 
     let idSujetoAfecSeleccionado: number = this.siniestro.idSujetoAfectado;
 
-    let idPeritoSeleccionado = this.peritos.find(p => p.id == this.siniestro.idPerito)?.id;
+    let idPeritoSeleccionado: number | undefined = this.peritos.find(p => p.id == this.siniestro.idPerito)?.id;
 
     if (idPeritoSeleccionado == undefined)
       return;    
@@ -172,7 +128,9 @@ export class EditarSiniestroComponent implements OnInit {
 
     if (idEstadoSeleccionado == 3) {    // Estado Valorado
       this.mostrarImpValoracionDanios = true;
-      this.impValoracionDanios = this.siniestro.impValoracionDanios.replace('€', '').trim();
+      this.impValoracionDanios = this.siniestro.impValoracionDanios
+                                               .replace('€', '')
+                                               .trim();
 
       this.formEditarSiniestro.addControl('impValoracionDanios', new FormControl(this.impValoracionDanios, Validators.required));
     }     
