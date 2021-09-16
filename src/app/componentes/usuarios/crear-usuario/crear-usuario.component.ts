@@ -3,7 +3,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { Permiso } from 'src/app/interfaces/permiso';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
-import Swal, { SweetAlertResult } from 'sweetalert2';
+import { SweetAlertResult } from 'sweetalert2';
 import { Router } from '@angular/router';
 import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
 import { Alerta } from 'src/app/clases/Alerta';
