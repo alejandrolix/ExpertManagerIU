@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Alerta } from 'src/app/clases/Alerta';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
@@ -19,14 +20,10 @@ export class ListadoUsuariosComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      this.usuarios = await this.usuariosService.obtenerTodos().toPromise();
-    } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al obtener los usuarios. Inténtelo de nuevo',
-        icon: 'error',          
-        confirmButtonColor: '#3085d6',          
-        confirmButtonText: 'Aceptar',          
-      });
+      this.usuarios = await this.usuariosService.obtenerTodos()
+                                                .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
     }
     
     this.mostrarSpinner = false;

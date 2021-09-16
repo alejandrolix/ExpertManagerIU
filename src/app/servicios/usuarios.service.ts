@@ -18,7 +18,7 @@ export class UsuariosService {
   }
 
   public obtenerTodos(): Observable<Usuario[]> {    
-    return this.http.get<Usuario[]>(`${environment.urlApi}/Usuarios`);
+    return this.peticionHttp.hacerPeticionGet<Usuario[]>(`${environment.urlApi}/Usuarios`);
   }
 
   public obtenerPorId(id: number): Observable<Usuario> {    
