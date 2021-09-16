@@ -152,8 +152,10 @@ export class EditarSiniestroComponent implements OnInit {
       this.crearControlImpValoracionDanios();
       this.mostrarImpValoracionDanios = true;
     }      
-    else
+    else {
+      this.formEditarSiniestro.removeControl('impValoracionDanios');
       this.mostrarImpValoracionDanios = false;
+    }
   }
 
   public async enviar(): Promise<void> {
