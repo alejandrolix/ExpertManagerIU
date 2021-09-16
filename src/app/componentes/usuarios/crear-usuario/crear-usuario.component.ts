@@ -6,6 +6,7 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
+import { Alerta } from 'src/app/clases/Alerta';
 
 @Component({
   selector: 'app-crear-usuario',
@@ -24,16 +25,12 @@ export class CrearUsuarioComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      this.permisos = await this.permisosService.obtenerTodos().toPromise();
-    } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al obtener los permisos. Inténtelo de nuevo',
-        icon: 'error',          
-        confirmButtonColor: '#3085d6',          
-        confirmButtonText: 'Aceptar',          
-      });
-
+      this.permisos = await this.permisosService.obtenerTodos()
+                                                .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
       this.mostrarSpinner = false;
+      
       return;
     }        
 
