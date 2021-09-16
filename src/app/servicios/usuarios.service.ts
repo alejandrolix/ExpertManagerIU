@@ -26,7 +26,7 @@ export class UsuariosService {
   }
 
   public crear(usuario: any): Observable<boolean> {    
-    return this.http.post<boolean>(`${environment.urlApi}/Usuarios`, usuario);
+    return this.peticionHttp.hacerPeticionPost<boolean>(`${environment.urlApi}/Usuarios`, usuario);
   }
 
   public editar(usuario: any, id: number): Observable<boolean> {    
