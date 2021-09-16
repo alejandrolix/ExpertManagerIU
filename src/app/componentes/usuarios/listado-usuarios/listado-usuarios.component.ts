@@ -19,14 +19,17 @@ export class ListadoUsuariosComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    await this.obtenerUsuarios();
+    this.mostrarSpinner = false;
+  }
+
+  private async obtenerUsuarios(): Promise<void> {
     try {
       this.usuarios = await this.usuariosService.obtenerTodos()
                                                 .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
     }
-    
-    this.mostrarSpinner = false;
   }
 
   public editar(id: number): void {
@@ -49,13 +52,7 @@ export class ListadoUsuariosComponent implements OnInit {
       
       if (respuesta) {
         await Alerta.mostrarOkAsincrono('Usuario eliminado correctamente');        
-
-        try {
-          this.usuarios = await this.usuariosService.obtenerTodos()
-                                                    .toPromise();
-        } catch (error: any) {
-          Alerta.mostrarError(error);
-        }        
+        await this.obtenerUsuarios();
       }
     }
   }
