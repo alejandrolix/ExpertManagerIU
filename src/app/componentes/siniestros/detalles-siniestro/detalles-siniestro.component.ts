@@ -64,17 +64,20 @@ export class DetallesSiniestroComponent implements OnInit {
       return;
     }
     
+    await this.obtenerMensajes();
+    this.mostrarSpinner = false;
+  }
+
+  private async obtenerMensajes(): Promise<void> {
     try {
-      this.mensajes = await this.mensajesService.obtenerTodosPorIdSiniestro(idSiniestro)
+      this.mensajes = await this.mensajesService.obtenerTodosPorIdSiniestro(this.siniestro.id)
                                                 .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
 
       this.mostrarSpinner = false;
       return;
-    }    
-
-    this.mostrarSpinner = false;
+    }
   }
 
   public tienePermisoAdministracion(): boolean {
@@ -205,73 +208,24 @@ export class DetallesSiniestroComponent implements OnInit {
   }
 
   public async eliminarMensaje(idMensaje: number): Promise<void> {
-    let accion: SweetAlertResult = await Swal.fire({
-      title: `¿Está seguro que desea eliminar el mensaje con id ${idMensaje}?`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
-    });
+    let accion: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono(`¿Está seguro que desea eliminar el mensaje con id ${idMensaje}?`);
 
     if (accion.isConfirmed) {      
       let respuesta: boolean;
 
       try {
-        respuesta = await this.mensajesService.eliminar(idMensaje).toPromise();
-      } catch (error) {
-        await Swal.fire({
-          title: 'Ha habido un error al eliminar el mensaje. Inténtelo de nuevo',
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-          },
-          icon: 'error',
-          confirmButtonText: 'Aceptar'
-        });
+        respuesta = await this.mensajesService.eliminar(idMensaje)
+                                              .toPromise();
+      } catch (error: any) {
+        Alerta.mostrarError(error);
   
         return;
       }      
 
       if (respuesta) {
-        await Swal.fire({
-          title: 'Mensaje eliminado',
-          icon: 'success',
-          showCancelButton: false,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Aceptar',
-          cancelButtonText: 'Cancelar'
-        });
-
-        try {
-          this.mensajes = await this.mensajesService.obtenerTodosPorIdSiniestro(this.siniestro.id).toPromise();
-        } catch (error) {
-          await Swal.fire({
-            title: 'Ha habido un error al obtener los mensajes del siniestro. Inténtelo de nuevo',
-            showClass: {
-              popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOutUp'
-            },
-            icon: 'error',
-            confirmButtonText: 'Aceptar'
-          });
-    
-          return;
-        }        
+        await Alerta.mostrarOkAsincrono('Mensaje eliminado');      
+        await this.obtenerMensajes();        
       }        
-      else
-        Swal.fire({
-          title: `Ha habido un problema al eliminar el mensaje con id ${idMensaje}`,
-          icon: 'error',          
-          confirmButtonColor: '#3085d6',          
-          confirmButtonText: 'Aceptar',          
-        });
     }
   }
 

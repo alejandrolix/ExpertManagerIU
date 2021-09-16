@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -10,7 +9,7 @@ import { Mensaje } from '../interfaces/mensaje';
 })
 export class MensajesService {
 
-  constructor(private http: HttpClient, private peticionHttp: PeticionHttp) { }
+  constructor(private peticionHttp: PeticionHttp) { }
 
   public crear(mensaje: any): Observable<boolean> {
     return this.peticionHttp.hacerPeticionPost<boolean>(`${environment.urlApi}/Mensajes`, mensaje);
@@ -21,7 +20,7 @@ export class MensajesService {
   }
 
   public eliminar(idMensaje: number): Observable<boolean> {
-    return this.http.delete<boolean>(`${environment.urlApi}/Mensajes/${idMensaje}`);
+    return this.peticionHttp.hacerPeticionDelete<boolean>(`${environment.urlApi}/Mensajes/${idMensaje}`);
   }
 
   public obtenerTodosPorIdSiniestro(idSiniestro: number): Observable<Mensaje[]> {
