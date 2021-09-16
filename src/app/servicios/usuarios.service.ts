@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -12,7 +11,7 @@ export class UsuariosService {
   public iniciarSesionSubject: Subject<boolean>;
   public cerrarSesionSubject: Subject<boolean>;
 
-  constructor(private http: HttpClient, private peticionHttp: PeticionHttp) {
+  constructor(private peticionHttp: PeticionHttp) {
     this.iniciarSesionSubject = new Subject<boolean>();
     this.cerrarSesionSubject = new Subject<boolean>();
   }
@@ -30,7 +29,7 @@ export class UsuariosService {
   }
 
   public editar(usuario: any, id: number): Observable<boolean> {    
-    return this.http.put<boolean>(`${environment.urlApi}/Usuarios/${id}`, usuario);
+    return this.peticionHttp.hacerPeticionPut<boolean>(`${environment.urlApi}/Usuarios/${id}`, usuario);
   }
 
   public eliminar(id: number): Observable<boolean> {    

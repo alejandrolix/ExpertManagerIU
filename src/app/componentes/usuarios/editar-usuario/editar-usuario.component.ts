@@ -7,7 +7,7 @@ import { Usuario } from 'src/app/interfaces/usuario';
 import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
-import Swal from 'sweetalert2';
+import { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -113,60 +113,28 @@ export class EditarUsuarioComponent implements OnInit {
       };
 
       try {
-        respuesta = await this.usuariosService.editar(nuevoUsuario, this.idUsuario).toPromise();
-      } catch (error) {
-        await Swal.fire({
-          title: 'Ha habido un error al editar el usuario. Inténtelo de nuevo',
-          icon: 'error',          
-          confirmButtonColor: '#3085d6',          
-          confirmButtonText: 'Aceptar',          
-        });
-
+        respuesta = await this.usuariosService.editar(nuevoUsuario, this.idUsuario)
+                                              .toPromise();
+      } catch (error: any) {
+        Alerta.mostrarError(error);
         return;
       }      
     }
     else
       try {
-        respuesta = await this.usuariosService.editar(usuario, this.idUsuario).toPromise();
-      } catch (error) {
-        await Swal.fire({
-          title: 'Ha habido un error al editar el usuario. Inténtelo de nuevo',
-          icon: 'error',          
-          confirmButtonColor: '#3085d6',          
-          confirmButtonText: 'Aceptar',          
-        });
-
+        respuesta = await this.usuariosService.editar(usuario, this.idUsuario)
+                                              .toPromise();
+      } catch (error: any) {
+        Alerta.mostrarError(error);
         return;
       }      
 
     if (respuesta) {
-      let accion = await Swal.fire({
-        title: 'Usuario editado correctamente',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
-      });
+      let accion: SweetAlertResult = await Alerta.mostrarOkAsincrono('Usuario editado correctamente');      
 
       if (accion.isConfirmed)
         this.router.navigateByUrl('/usuarios');
     }     
-    else
-      Swal.fire({
-        title: 'Ha habido un error al editar el usuario',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
   }
 
   public comprobarLetraPulsada(e: any): void {
