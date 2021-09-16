@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
-import Swal, { SweetAlertResult } from 'sweetalert2';
+import { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-listado-usuarios',
