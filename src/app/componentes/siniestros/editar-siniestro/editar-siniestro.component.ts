@@ -141,7 +141,7 @@ export class EditarSiniestroComponent implements OnInit {
 
   private crearControlImpValoracionDanios(): void {
     let control: FormControl = new FormControl(this.impValoracionDanios, Validators.required);
-    
+
     this.formEditarSiniestro.addControl('impValoracionDanios', control);
   }
 
@@ -179,7 +179,7 @@ export class EditarSiniestroComponent implements OnInit {
       idPerito: idPerito
     };    
 
-    if (idEstado == 3) {
+    if (idEstado == TipoEstado.Valorado) {
       let nuevoSiniestro = {
         ...siniestro,
         impValoracionDanios: this.formEditarSiniestro.get('impValoracionDanios')?.value
@@ -191,50 +191,19 @@ export class EditarSiniestroComponent implements OnInit {
     let respuesta: boolean;
 
     try {
-      respuesta = await this.siniestrosService.editar(siniestro, this.siniestro.id).toPromise();
-    } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al editar el siniestro. Inténtelo de nuevo',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
+      respuesta = await this.siniestrosService.editar(siniestro, this.siniestro.id)
+                                              .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
 
       return;
     }    
 
     if (respuesta) {
-      let accion: SweetAlertResult = await Swal.fire({
-        title: 'Siniestro editado correctamente',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
-      });
+      let accion: SweetAlertResult = await Alerta.mostrarOkAsincrono('Siniestro editado correctamente');
 
       if (accion.isConfirmed)
         this.router.navigateByUrl('/siniestros');
     }     
-    else
-      Swal.fire({
-        title: 'Ha habido un error al editar el siniestro',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
   }
 }
