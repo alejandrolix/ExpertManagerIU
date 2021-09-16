@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
+import { TipoEstado } from 'src/app/enumeraciones/tipo-estado.enum';
 import { Aseguradora } from 'src/app/interfaces/aseguradora';
 import { Danio } from 'src/app/interfaces/danio';
 import { Estado } from 'src/app/interfaces/estado';
@@ -126,23 +127,29 @@ export class EditarSiniestroComponent implements OnInit {
       perito: new FormControl(idPeritoSeleccionado)
     });    
 
-    if (idEstadoSeleccionado == 3) {    // Estado Valorado
+    if (idEstadoSeleccionado == TipoEstado.Valorado) {
       this.mostrarImpValoracionDanios = true;
       this.impValoracionDanios = this.siniestro.impValoracionDanios
                                                .replace('€', '')
                                                .trim();
 
-      this.formEditarSiniestro.addControl('impValoracionDanios', new FormControl(this.impValoracionDanios, Validators.required));
+      this.crearControlImpValoracionDanios();
     }     
     
     this.mostrarSpinner = false;
   }
 
-  public comprobarIdEstado(e: any): void {
-    let idEstado = parseInt(e.target.value);
+  private crearControlImpValoracionDanios(): void {
+    let control: FormControl = new FormControl(this.impValoracionDanios, Validators.required);
+    
+    this.formEditarSiniestro.addControl('impValoracionDanios', control);
+  }
 
-    if (idEstado == 3) {
-      this.formEditarSiniestro.addControl('impValoracionDanios', new FormControl(this.impValoracionDanios, Validators.required));
+  public comprobarIdEstado(e: any): void {
+    let idEstado: number = parseInt(e.target.value);
+
+    if (idEstado == TipoEstado.Valorado) {
+      this.crearControlImpValoracionDanios();
       this.mostrarImpValoracionDanios = true;
     }      
     else
