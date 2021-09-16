@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { PeticionHttp } from '../clases/PeticionHttp';
 import { Permiso } from '../interfaces/permiso';
 
 @Injectable({
@@ -9,10 +9,10 @@ import { Permiso } from '../interfaces/permiso';
 })
 export class PermisosService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private peticionHttp: PeticionHttp) { }
 
   public obtenerTodos(): Observable<Permiso[]> {
-    return this.http.get<Permiso[]>(`${environment.urlApi}/Permisos`);
+    return this.peticionHttp.hacerPeticionGet<Permiso[]>(`${environment.urlApi}/Permisos`);
   }
 
   public obtenerIdPermisoLogueado(): number {
