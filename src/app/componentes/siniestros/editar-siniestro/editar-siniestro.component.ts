@@ -13,7 +13,7 @@ import { DaniosService } from 'src/app/servicios/danios.service';
 import { EstadosService } from 'src/app/servicios/estados.service';
 import { PeritosService } from 'src/app/servicios/peritos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
-import Swal, { SweetAlertResult } from 'sweetalert2';
+import { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-editar-siniestro',
