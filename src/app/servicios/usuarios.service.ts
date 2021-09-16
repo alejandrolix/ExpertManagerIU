@@ -22,7 +22,7 @@ export class UsuariosService {
   }
 
   public obtenerPorId(id: number): Observable<Usuario> {    
-    return this.http.get<Usuario>(`${environment.urlApi}/Usuarios/${id}`);
+    return this.peticionHttp.hacerPeticionGet<Usuario>(`${environment.urlApi}/Usuarios/${id}`);
   }
 
   public crear(usuario: any): Observable<boolean> {    

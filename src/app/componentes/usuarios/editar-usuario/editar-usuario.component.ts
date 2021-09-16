@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Alerta } from 'src/app/clases/Alerta';
 import { Permiso } from 'src/app/interfaces/permiso';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
@@ -31,32 +32,14 @@ export class EditarUsuarioComponent implements OnInit {
     let usuario: Usuario;
     
     try {
-      usuario = await this.usuariosService.obtenerPorId(this.idUsuario).toPromise();
-    } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al obtener el usuario. Inténtelo de nuevo',
-        icon: 'error',          
-        confirmButtonColor: '#3085d6',          
-        confirmButtonText: 'Aceptar',          
-      });
-
+      usuario = await this.usuariosService.obtenerPorId(this.idUsuario)
+                                          .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
       this.mostrarSpinner = false;
+
       return;
     }
-
-    try {
-      this.permisos = await this.permisosService.obtenerTodos().toPromise();
-    } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al obtener los permisos. Inténtelo de nuevo',
-        icon: 'error',          
-        confirmButtonColor: '#3085d6',          
-        confirmButtonText: 'Aceptar',          
-      });
-
-      this.mostrarSpinner = false;
-      return;
-    }             
 
     this.formEditarUsuario = new FormGroup({
       nombre: new FormControl(usuario.nombre, Validators.required),
@@ -64,6 +47,16 @@ export class EditarUsuarioComponent implements OnInit {
       repetirContrasenia: new FormControl(usuario.hashContrasenia, [Validators.required, this.comprobarContrasenias]),
       permiso: new FormControl(usuario.idPermiso)
     });
+
+    try {
+      this.permisos = await this.permisosService.obtenerTodos()
+                                                .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
+      this.mostrarSpinner = false;
+
+      return;
+    }                 
 
     if (usuario.idPermiso == 3) {    // Permiso Perito no responsable
       this.esPeritoNoResponsable = true;
