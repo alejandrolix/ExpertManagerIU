@@ -81,7 +81,9 @@ export class EditarUsuarioComponent implements OnInit {
 
   comprobarContrasenias(control: AbstractControl): {[key: string]: any} | null  {
     if (control.value !== control.parent?.get('contrasenia')?.value)
-      return { contraseniasNoIguales: true };    
+      return {
+        contraseniasNoIguales: true
+      };    
 
     return null;
   }
