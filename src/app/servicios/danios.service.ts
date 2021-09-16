@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { PeticionHttp } from '../clases/PeticionHttp';
 import { Danio } from '../interfaces/danio';
 
 @Injectable({
@@ -9,9 +9,9 @@ import { Danio } from '../interfaces/danio';
 })
 export class DaniosService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private peticionHttp: PeticionHttp) { }
 
   public obtenerTodos(): Observable<Danio[]> {
-    return this.http.get<Danio[]>(`${environment.urlApi}/Danios`);
+    return this.peticionHttp.hacerPeticionGet<Danio[]>(`${environment.urlApi}/Danios`);
   }
 }
