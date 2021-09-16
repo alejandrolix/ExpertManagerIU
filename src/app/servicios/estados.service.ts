@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { PeticionHttp } from '../clases/PeticionHttp';
 import { Estado } from '../interfaces/estado';
 
 @Injectable({
@@ -9,9 +9,9 @@ import { Estado } from '../interfaces/estado';
 })
 export class EstadosService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private peticionHttp: PeticionHttp) { }
 
   public obtenerTodos(): Observable<Estado[]> {
-    return this.http.get<Estado[]>(`${environment.urlApi}/Estados`);
+    return this.peticionHttp.hacerPeticionGet<Estado[]>(`${environment.urlApi}/Estados`);
   }
 }
