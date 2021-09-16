@@ -3,7 +3,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { Permiso } from 'src/app/interfaces/permiso';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 import { Router } from '@angular/router';
 import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
 import { Alerta } from 'src/app/clases/Alerta';
@@ -78,71 +78,39 @@ export class CrearUsuarioComponent implements OnInit {
       hashContrasenia: hashContrasenia
     };
 
-    let respuesta: boolean;
+    let respuesta: boolean;    
 
     if (idPermiso == 3) {
       let impReparacionDanios: number = parseFloat(this.formCrearUsuario.get('impReparacionDanios')?.value);
-
+      
       let nuevoUsuario = {
         ...usuario,
         impReparacionDanios: impReparacionDanios
       };
 
       try {
-        respuesta = await this.usuariosService.crear(nuevoUsuario).toPromise();
-      } catch (error) {
-        await Swal.fire({
-          title: 'Ha habido un error al crear el usuario. Inténtelo de nuevo',
-          icon: 'error',          
-          confirmButtonColor: '#3085d6',          
-          confirmButtonText: 'Aceptar',          
-        });
-
+        respuesta = await this.usuariosService.crear(nuevoUsuario)
+                                              .toPromise();
+      } catch (error: any) {
+        Alerta.mostrarError(error);
         return;
       }      
     }
     else
       try {
-        respuesta = await this.usuariosService.crear(usuario).toPromise();
-      } catch (error) {
-        await Swal.fire({
-          title: 'Ha habido un error al crear el usuario. Inténtelo de nuevo',
-          icon: 'error',          
-          confirmButtonColor: '#3085d6',          
-          confirmButtonText: 'Aceptar',          
-        });
-
+        respuesta = await this.usuariosService.crear(usuario)
+                                              .toPromise();
+      } catch (error: any) {
+        Alerta.mostrarError(error);
         return;
       }
       
     if (respuesta) {
-      let accion = await Swal.fire({
-        title: 'Usuario creado correctamente',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
-      });
+      let accion: SweetAlertResult = await Alerta.mostrarOkAsincrono('Usuario creado correctamente');      
 
       if (accion.isConfirmed)
         this.router.navigateByUrl('/usuarios');
     }     
-    else
-      Swal.fire({
-        title: 'Ha habido un error al crear el usuario',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
   }
 
   public comprobarLetraPulsada(e: any): void {
