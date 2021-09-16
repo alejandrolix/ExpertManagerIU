@@ -34,62 +34,29 @@ export class ListadoUsuariosComponent implements OnInit {
   }
 
   public async eliminar(id: number): Promise<void> {    
-    let accion: SweetAlertResult = await Swal.fire({
-      title: `¿Está seguro que desea eliminar el usuario con id ${id}?`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
-    });
+    let accion: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono(`¿Está seguro que desea eliminar el usuario con id ${id}?`);
 
     if (accion.isConfirmed) {
       let respuesta: boolean;
 
       try {
-        respuesta = await this.usuariosService.eliminar(id).toPromise();
-
-        await Swal.fire({
-          title: 'Usuario eliminado correctamente',
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-          },
-          icon: 'success',
-          confirmButtonText: 'Aceptar'
-        });
-      } catch (error) {
-        await Swal.fire({
-          title: 'Ha habido un error al eliminar el usuario. Inténtelo de nuevo',
-          icon: 'error',          
-          confirmButtonColor: '#3085d6',          
-          confirmButtonText: 'Aceptar',          
-        });
-
+        respuesta = await this.usuariosService.eliminar(id)
+                                              .toPromise();        
+      } catch (error: any) {
+        Alerta.mostrarError(error);
         return;
       }
       
-      if (respuesta)
+      if (respuesta) {
+        await Alerta.mostrarOkAsincrono('Usuario eliminado correctamente');        
+
         try {
-          this.usuarios = await this.usuariosService.obtenerTodos().toPromise();
-        } catch (error) {
-          Swal.fire({
-            title: 'Ha habido un error al obtener los usuarios. Inténtelo de nuevo',
-            icon: 'error',          
-            confirmButtonColor: '#3085d6',          
-            confirmButtonText: 'Aceptar',          
-          });
+          this.usuarios = await this.usuariosService.obtenerTodos()
+                                                    .toPromise();
+        } catch (error: any) {
+          Alerta.mostrarError(error);
         }        
-      else
-        Swal.fire({
-          title: `Ha habido un problema al eliminar el usuario con id ${id}`,
-          icon: 'error',          
-          confirmButtonColor: '#3085d6',          
-          confirmButtonText: 'Aceptar',          
-        });
+      }
     }
   }
 
