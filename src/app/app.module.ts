@@ -27,7 +27,23 @@ import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
 @NgModule({
   declarations: [
     AppComponent,    
-    ListadoSiniestrosComponent, CrearSiniestroComponent, EditarSiniestroComponent, DetallesSiniestroComponent, SubirDocumentacionComponent, SubirImagenComponent, ListadoUsuariosComponent, CrearUsuarioComponent, EditarUsuarioComponent, InicioSesionComponent, CrearMensajeComponent, InicioComponent, MenuNavegacionComponent, PiePaginaComponent, SpinnerComponent, SiniestrosComponent, UsuariosComponent
+    ListadoSiniestrosComponent,
+    CrearSiniestroComponent,
+    EditarSiniestroComponent,
+    DetallesSiniestroComponent,
+    SubirDocumentacionComponent,
+    SubirImagenComponent,
+    ListadoUsuariosComponent,
+    CrearUsuarioComponent,
+    EditarUsuarioComponent,
+    InicioSesionComponent,
+    CrearMensajeComponent,
+    InicioComponent,
+    MenuNavegacionComponent,
+    PiePaginaComponent,
+    SpinnerComponent,
+    SiniestrosComponent,
+    UsuariosComponent
   ],
   imports: [
     BrowserModule,

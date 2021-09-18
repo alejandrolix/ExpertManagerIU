@@ -5,6 +5,7 @@
     
     <div class="container-fluid mt-4">
         <div class="container margenAbajo">
+            <app-spinner *ngIf="mostrarSpinner"></app-spinner>
             <router-outlet></router-outlet>
         </div>    
     

@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
 import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
-import Swal from 'sweetalert2';
 import { UsuariosService } from '../../servicios/usuarios.service';
 
 @Component({
@@ -48,7 +47,7 @@ export class InicioSesionComponent implements OnInit {
     try {
       respuesta = await this.usuariosService.iniciarSesion(credenciales)
                             .toPromise(); 
-    } catch (error) {
+    } catch (error: any) {
       Alerta.mostrarError(error); 
       this.mostrarSpinner = false;
 
