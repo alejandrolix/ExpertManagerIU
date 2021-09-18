@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
+import { Validadores } from 'src/app/clases/validadores';
 import { TipoPermiso } from 'src/app/enumeraciones/tipo-permiso.enum';
 import { Permiso } from 'src/app/interfaces/permiso';
 import { Usuario } from 'src/app/interfaces/usuario';
@@ -45,7 +46,7 @@ export class EditarUsuarioComponent implements OnInit {
     this.formEditarUsuario = new FormGroup({
       nombre: new FormControl(usuario.nombre, Validators.required),
       contrasenia: new FormControl(usuario.hashContrasenia, Validators.required),
-      repetirContrasenia: new FormControl(usuario.hashContrasenia, [Validators.required, this.comprobarContrasenias]),
+      repetirContrasenia: new FormControl(usuario.hashContrasenia, [Validators.required, Validadores.comprobarContraseniasSonIguales]),
       permiso: new FormControl(usuario.idPermiso)
     });
 
@@ -79,15 +80,6 @@ export class EditarUsuarioComponent implements OnInit {
     }      
     else
       this.esPeritoNoResponsable = false;
-  }
-
-  comprobarContrasenias(control: AbstractControl): {[key: string]: any} | null  {
-    if (control.value !== control.parent?.get('contrasenia')?.value)
-      return {
-        contraseniasNoIguales: true
-      };    
-
-    return null;
   }
 
   public async enviar(): Promise<void> {
