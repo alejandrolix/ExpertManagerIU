@@ -71,8 +71,9 @@ export class EditarUsuarioComponent implements OnInit {
 
   public permisoSeleccionado(e: any): void {
     this.formEditarUsuario.removeControl('impReparacionDanios');
+    let idPermisoSeleccionado: number = parseInt(e.target.value);
 
-    if (e.target.value === TipoPermiso.PeritoNoResponsable) {
+    if (idPermisoSeleccionado === TipoPermiso.PeritoNoResponsable) {
       this.esPeritoNoResponsable = true;
       this.formEditarUsuario.addControl('impReparacionDanios', new FormControl('', Validators.required));
     }      
@@ -137,8 +138,8 @@ export class EditarUsuarioComponent implements OnInit {
         this.router.navigateByUrl('/usuarios');
     }     
   }
-
-  public comprobarLetraPulsada(e: any): void {
+  
+  public permitirNumerosDecimales(e: KeyboardEvent): void {
     let caracteresPermitidos: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '.'];
     let teclaPulsada: string = e.key;
 
