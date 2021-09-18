@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
 import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
+import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { UsuariosService } from '../../servicios/usuarios.service';
 
 @Component({
@@ -12,10 +13,13 @@ import { UsuariosService } from '../../servicios/usuarios.service';
 })
 export class InicioSesionComponent implements OnInit {
   public formInicioSesion: FormGroup;
-  public mostrarSpinner: boolean;
+  public mostrarSpinnerInicioSesion: boolean;
 
-  constructor(private usuariosService: UsuariosService, private router: Router, private generarHashService: GenerarHashService) {
-    this.mostrarSpinner = false;
+  constructor(private usuariosService: UsuariosService, private router: Router, private generarHashService: GenerarHashService,
+              private spinnerService: SpinnerService) {
+
+    this.mostrarSpinnerInicioSesion = false;
+    this.spinnerService.ocultarSpinner();
   }
 
   ngOnInit(): void {    
@@ -33,7 +37,8 @@ export class InicioSesionComponent implements OnInit {
   }  
 
   public async iniciarSesion(): Promise<void> {
-    this.mostrarSpinner = true;
+    this.mostrarSpinnerInicioSesion = true;
+    this.spinnerService.mostrarSpinner();
     let nombre: string = this.formInicioSesion.get('usuario')?.value;
     let hashContrasenia: string = await this.generarHashService.generar(this.formInicioSesion.get('contrasenia')?.value);
 
@@ -49,7 +54,7 @@ export class InicioSesionComponent implements OnInit {
                             .toPromise(); 
     } catch (error: any) {
       Alerta.mostrarError(error); 
-      this.mostrarSpinner = false;
+      this.mostrarSpinnerInicioSesion = false;
 
       return;
     }    
@@ -59,7 +64,8 @@ export class InicioSesionComponent implements OnInit {
     localStorage.setItem('idPermiso', respuesta.idPermiso);
     localStorage.setItem('token', respuesta.token);
 
+    this.spinnerService.ocultarSpinner();
+    this.mostrarSpinnerInicioSesion = false;
     this.usuariosService.iniciarSesionSubject.next(true);
-    this.mostrarSpinner = false;
   }
 }
