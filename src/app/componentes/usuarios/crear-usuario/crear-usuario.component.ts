@@ -55,16 +55,7 @@ export class CrearUsuarioComponent implements OnInit {
     }      
     else
       this.esPeritoNoResponsable = false;
-  }
-
-  comprobarContrasenias(control: AbstractControl): {[key: string]: any} | null  {
-    if (control.value !== '' && (control.value !== control.parent?.get('contrasenia')?.value))
-      return {
-        contraseniasNoIguales: true
-      };    
-
-    return null;
-  }
+  }  
 
   public async enviar(): Promise<void> {
     if (!this.formCrearUsuario.valid)
