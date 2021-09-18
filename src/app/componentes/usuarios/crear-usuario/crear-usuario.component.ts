@@ -113,7 +113,7 @@ export class CrearUsuarioComponent implements OnInit {
     }     
   }
 
-  public comprobarLetraPulsada(e: any): void {
+  public permitirNumerosDecimales(e: KeyboardEvent): void {
     let caracteresPermitidos: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '.'];
     let teclaPulsada: string = e.key;
 
