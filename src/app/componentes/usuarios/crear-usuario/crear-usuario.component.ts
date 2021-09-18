@@ -77,35 +77,25 @@ export class CrearUsuarioComponent implements OnInit {
     let usuario = {
       nombre: nombre,
       idPermiso: idPermiso,
-      hashContrasenia: hashContrasenia
+      hashContrasenia: hashContrasenia,
+      impReparacionDanios: 0
     };
 
     let respuesta: boolean;    
 
-    if (idPermiso == 3) {
+    if (idPermiso === TipoPermiso.PeritoNoResponsable) {
       let impReparacionDanios: number = parseFloat(this.formCrearUsuario.get('impReparacionDanios')?.value);
       
-      let nuevoUsuario = {
-        ...usuario,
-        impReparacionDanios: impReparacionDanios
-      };
-
-      try {
-        respuesta = await this.usuariosService.crear(nuevoUsuario)
-                                              .toPromise();
-      } catch (error: any) {
-        Alerta.mostrarError(error);
-        return;
-      }      
+      usuario.impReparacionDanios = impReparacionDanios;           
     }
-    else
-      try {
-        respuesta = await this.usuariosService.crear(usuario)
-                                              .toPromise();
-      } catch (error: any) {
-        Alerta.mostrarError(error);
-        return;
-      }
+
+    try {
+      respuesta = await this.usuariosService.crear(usuario)
+                                            .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
+      return;
+    }
       
     if (respuesta) {
       let accion: SweetAlertResult = await Alerta.mostrarOkAsincrono('Usuario creado correctamente');      
