@@ -7,6 +7,7 @@ import { SweetAlertResult } from 'sweetalert2';
 import { Router } from '@angular/router';
 import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
 import { Alerta } from 'src/app/clases/Alerta';
+import { TipoPermiso } from 'src/app/enumeraciones/tipo-permiso.enum';
 
 @Component({
   selector: 'app-crear-usuario',
@@ -46,8 +47,9 @@ export class CrearUsuarioComponent implements OnInit {
 
   public permisoSeleccionado(e: any): void {
     this.formCrearUsuario.removeControl('impReparacionDanios');
-
-    if (e.target.value == 3) {    // Permiso Perito no responsable
+    let idPermisoSeleccionado: number = parseInt(e.target.value);
+    
+    if (idPermisoSeleccionado === TipoPermiso.PeritoNoResponsable) {
       this.esPeritoNoResponsable = true;
       this.formCrearUsuario.addControl('impReparacionDanios', new FormControl('', Validators.required));
     }      
