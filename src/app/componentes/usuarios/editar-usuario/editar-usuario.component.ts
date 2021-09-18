@@ -101,7 +101,8 @@ export class EditarUsuarioComponent implements OnInit {
     let usuario = {
       nombre: nombre,
       idPermiso: idPermiso,
-      hashContrasenia: hashContrasenia
+      hashContrasenia: hashContrasenia,
+      impReparacionDanios: 0
     };
 
     let respuesta: boolean;
@@ -109,27 +110,16 @@ export class EditarUsuarioComponent implements OnInit {
     if (idPermiso === TipoPermiso.PeritoNoResponsable) {
       let impReparacionDanios: number = parseFloat(this.formEditarUsuario.get('impReparacionDanios')?.value);
 
-      let nuevoUsuario = {
-        ...usuario,
-        impReparacionDanios: impReparacionDanios
-      };
-
-      try {
-        respuesta = await this.usuariosService.editar(nuevoUsuario, this.idUsuario)
-                                              .toPromise();
-      } catch (error: any) {
-        Alerta.mostrarError(error);
-        return;
-      }      
+      usuario.impReparacionDanios = impReparacionDanios;     
     }
-    else
-      try {
-        respuesta = await this.usuariosService.editar(usuario, this.idUsuario)
-                                              .toPromise();
-      } catch (error: any) {
-        Alerta.mostrarError(error);
-        return;
-      }      
+
+    try {
+      respuesta = await this.usuariosService.editar(usuario, this.idUsuario)
+                                            .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
+      return;
+    }      
 
     if (respuesta) {
       let accion: SweetAlertResult = await Alerta.mostrarOkAsincrono('Usuario editado correctamente');      
