@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
 import { Alerta } from 'src/app/clases/Alerta';
 import { TipoPermiso } from 'src/app/enumeraciones/tipo-permiso.enum';
+import { Validadores } from 'src/app/clases/validadores';
 
 @Component({
   selector: 'app-crear-usuario',
@@ -38,7 +39,7 @@ export class CrearUsuarioComponent implements OnInit {
     this.formCrearUsuario = new FormGroup({
       nombre: new FormControl('', Validators.required),
       contrasenia: new FormControl('', Validators.required),
-      repetirContrasenia: new FormControl('', [Validators.required, this.comprobarContrasenias]),
+      repetirContrasenia: new FormControl('', [Validators.required, Validadores.comprobarContraseniasSonIguales]),
       permiso: new FormControl(this.permisos[0].id)
     });
 
