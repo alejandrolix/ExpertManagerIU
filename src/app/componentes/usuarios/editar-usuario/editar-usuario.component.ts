@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
+import { TipoPermiso } from 'src/app/enumeraciones/tipo-permiso.enum';
 import { Permiso } from 'src/app/interfaces/permiso';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
@@ -58,7 +59,7 @@ export class EditarUsuarioComponent implements OnInit {
       return;
     }                 
 
-    if (usuario.idPermiso == 3) {    // Permiso Perito no responsable
+    if (usuario.idPermiso === TipoPermiso.PeritoNoResponsable) {
       this.esPeritoNoResponsable = true;
       this.formEditarUsuario.addControl('impReparacionDanios', new FormControl(usuario.impReparacionDanios, Validators.required));
     }      
@@ -71,7 +72,7 @@ export class EditarUsuarioComponent implements OnInit {
   public permisoSeleccionado(e: any): void {
     this.formEditarUsuario.removeControl('impReparacionDanios');
 
-    if (e.target.value == 3) {    // Permiso Perito no responsable
+    if (e.target.value === TipoPermiso.PeritoNoResponsable) {
       this.esPeritoNoResponsable = true;
       this.formEditarUsuario.addControl('impReparacionDanios', new FormControl('', Validators.required));
     }      
@@ -104,7 +105,7 @@ export class EditarUsuarioComponent implements OnInit {
 
     let respuesta: boolean;
 
-    if (idPermiso == 3) {
+    if (idPermiso === TipoPermiso.PeritoNoResponsable) {
       let impReparacionDanios: number = parseFloat(this.formEditarUsuario.get('impReparacionDanios')?.value);
 
       let nuevoUsuario = {
