@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
 import { Usuario } from 'src/app/interfaces/usuario';
+import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import { SweetAlertResult } from 'sweetalert2';
 
@@ -12,15 +13,15 @@ import { SweetAlertResult } from 'sweetalert2';
 })
 export class ListadoUsuariosComponent implements OnInit {
   public usuarios: Usuario[];
-  public mostrarSpinner: boolean;
 
-  constructor(private router: Router, private usuariosService: UsuariosService, private activatedRoute: ActivatedRoute) {
-    this.mostrarSpinner = true;
+  constructor(private router: Router, private usuariosService: UsuariosService, private activatedRoute: ActivatedRoute,
+              private spinnerService: SpinnerService) {
+
+    this.spinnerService.mostrarSpinner();
   }
 
   async ngOnInit(): Promise<void> {
-    await this.obtenerUsuarios();
-    this.mostrarSpinner = false;
+    await this.obtenerUsuarios();    
   }
 
   private async obtenerUsuarios(): Promise<void> {
@@ -30,6 +31,12 @@ export class ListadoUsuariosComponent implements OnInit {
     } catch (error: any) {
       Alerta.mostrarError(error);
     }
+
+    this.spinnerService.ocultarSpinner();
+  }
+
+  public mostrarSpinner(): boolean {
+    return this.spinnerService.mostrar;
   }
 
   public editar(id: number): void {

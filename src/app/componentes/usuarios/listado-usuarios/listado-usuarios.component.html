@@ -1,5 +1,4 @@
-<app-spinner *ngIf="mostrarSpinner"></app-spinner>
-<div *ngIf="!mostrarSpinner">
+<div *ngIf="!mostrarSpinner()">
     <h2 class="mb-4">Listado usuarios</h2>
     <div class="d-flex justify-content-end mb-3">
         <i title="Crear" (click)="crear()" class="fas fa-plus"></i>
