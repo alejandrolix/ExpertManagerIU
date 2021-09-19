@@ -19,7 +19,6 @@ import { CrearMensajeComponent } from './componentes/siniestros/crear-mensaje/cr
 import { InicioComponent } from './componentes/inicio/inicio.component';
 import { MenuNavegacionComponent } from './componentes/menu-navegacion/menu-navegacion.component';
 import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.component';
-import { SpinnerComponent } from './componentes/spinner/spinner.component';
 import { ApiRestTokenInterceptor } from './interceptor/api-rest-token.interceptor';
 import { SiniestrosComponent } from './componentes/siniestros/siniestros.component';
 import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
@@ -41,7 +40,6 @@ import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
     InicioComponent,
     MenuNavegacionComponent,
     PiePaginaComponent,
-    SpinnerComponent,
     SiniestrosComponent,
     UsuariosComponent
   ],

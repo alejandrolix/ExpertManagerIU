@@ -1,4 +1,3 @@
-<app-spinner *ngIf="mostrarSpinner"></app-spinner>
 <div *ngIf="!mostrarSpinner">
     <h2 class="mb-4">Crear siniestro</h2>
     <form *ngIf="formCrearSiniestro != undefined" [formGroup]="formCrearSiniestro" (ngSubmit)="enviar()">
