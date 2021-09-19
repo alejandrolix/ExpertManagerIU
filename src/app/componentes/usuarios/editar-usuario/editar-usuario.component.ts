@@ -8,6 +8,7 @@ import { Permiso } from 'src/app/interfaces/permiso';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';
+import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import { SweetAlertResult } from 'sweetalert2';
 
@@ -21,12 +22,11 @@ export class EditarUsuarioComponent implements OnInit {
   public permisos: Permiso[];
   private idUsuario: number;
   public esPeritoNoResponsable: boolean;
-  public mostrarSpinner: boolean;
 
   constructor(private permisosService: PermisosService, private usuariosService: UsuariosService, private router: Router, private route: ActivatedRoute,
-              private generarHashService: GenerarHashService) {
+              private generarHashService: GenerarHashService, private spinnerService: SpinnerService) {
 
-    this.mostrarSpinner = true;
+    this.spinnerService.mostrarSpinner();
   }
 
   async ngOnInit(): Promise<void> {
@@ -38,7 +38,7 @@ export class EditarUsuarioComponent implements OnInit {
                                           .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-      this.mostrarSpinner = false;
+      this.spinnerService.ocultarSpinner();
 
       return;
     }
@@ -55,7 +55,7 @@ export class EditarUsuarioComponent implements OnInit {
                                                 .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-      this.mostrarSpinner = false;
+      this.spinnerService.ocultarSpinner();
 
       return;
     }                 
@@ -67,7 +67,11 @@ export class EditarUsuarioComponent implements OnInit {
     else
       this.esPeritoNoResponsable = false;
 
-    this.mostrarSpinner = false;
+    this.spinnerService.ocultarSpinner();
+  }
+
+  public mostrarSpinner(): boolean {
+    return this.spinnerService.mostrar;
   }
 
   public permisoSeleccionado(e: any): void {
