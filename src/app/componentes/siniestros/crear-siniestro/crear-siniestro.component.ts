@@ -9,6 +9,7 @@ import { AseguradorasService } from 'src/app/servicios/aseguradoras.service';
 import { DaniosService } from 'src/app/servicios/danios.service';
 import { PeritosService } from 'src/app/servicios/peritos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
+import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import { SweetAlertResult } from 'sweetalert2';
 
@@ -22,15 +23,14 @@ export class CrearSiniestroComponent implements OnInit {
   public danios: Danio[];
   public peritos: Usuario[];
   public formCrearSiniestro: FormGroup;
-  public mostrarSpinner: boolean;
 
   constructor(private aseguradorasService: AseguradorasService, private daniosService: DaniosService, private peritosService: PeritosService, private siniestrosService: SiniestrosService,
-              private router: Router, private usuariosService: UsuariosService) {
+              private router: Router, private usuariosService: UsuariosService, private spinnerService: SpinnerService) {
                 
     this.aseguradoras = [];
     this.danios = [];
     this.peritos = [];
-    this.mostrarSpinner = true;
+    this.spinnerService.mostrarSpinner();
   }
 
   async ngOnInit(): Promise<void> {
@@ -39,7 +39,7 @@ export class CrearSiniestroComponent implements OnInit {
                                                         .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-      this.mostrarSpinner = false;
+      this.spinnerService.ocultarSpinner();
 
       return;
     }
@@ -49,7 +49,7 @@ export class CrearSiniestroComponent implements OnInit {
                                             .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-      this.mostrarSpinner = false;
+      this.spinnerService.ocultarSpinner();
 
       return;
     }
@@ -60,7 +60,7 @@ export class CrearSiniestroComponent implements OnInit {
     } catch (error: any) {
       Alerta.mostrarError(error);
 
-      this.mostrarSpinner = false;
+      this.spinnerService.ocultarSpinner();
       return;
     }    
 
@@ -73,7 +73,11 @@ export class CrearSiniestroComponent implements OnInit {
       perito: new FormControl(this.peritos[0].id)
     });
 
-    this.mostrarSpinner = false;
+    this.spinnerService.ocultarSpinner();
+  }
+
+  public mostrarSpinner(): boolean {
+    return this.spinnerService.mostrar;
   }
 
   public async enviar(): Promise<void> {
