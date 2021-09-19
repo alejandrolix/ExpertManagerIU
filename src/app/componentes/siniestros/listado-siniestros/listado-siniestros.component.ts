@@ -9,6 +9,7 @@ import { MensajesService } from 'src/app/servicios/mensajes.service';
 import { PeritosService } from 'src/app/servicios/peritos.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
+import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import { SweetAlertResult } from 'sweetalert2';
 
@@ -23,16 +24,15 @@ export class ListadoSiniestrosComponent implements OnInit {
   public aseguradoras: Aseguradora[];
   public idPeritoSeleccionado: number;
   public idAseguradoraSeleccionada: number;
-  public mostrarSpinner: boolean;
 
   constructor(private siniestrosService: SiniestrosService, private router: Router, private permisosService: PermisosService,
               private aseguradorasService: AseguradorasService, private usuariosService: UsuariosService, private peritosService: PeritosService,
-              private mensajesService: MensajesService, private activatedRoute: ActivatedRoute) {
+              private mensajesService: MensajesService, private activatedRoute: ActivatedRoute, private spinnerService: SpinnerService) {
 
     this.siniestros = [];
     this.idPeritoSeleccionado = 0;
     this.idAseguradoraSeleccionada = 0;
-    this.mostrarSpinner = true;
+    this.spinnerService.mostrarSpinner();
   }
 
   async ngOnInit(): Promise<void> {
@@ -41,6 +41,8 @@ export class ListadoSiniestrosComponent implements OnInit {
                                                         .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
+      this.spinnerService.ocultarSpinner();
+
       return;
     }
 
@@ -55,6 +57,8 @@ export class ListadoSiniestrosComponent implements OnInit {
                                               .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
+      this.spinnerService.ocultarSpinner();
+
       return;
     }
 
@@ -72,11 +76,15 @@ export class ListadoSiniestrosComponent implements OnInit {
     this.idPeritoSeleccionado = 0;
 
     this.filtrarSiniestros();             
-    this.mostrarSpinner = false;
+    this.spinnerService.ocultarSpinner();
   }
 
   public tienePermisoAdministracion(): boolean {
     return this.permisosService.tienePermisoAdministracion();
+  }
+
+  public mostrarSpinner(): boolean {
+    return this.spinnerService.mostrar;
   }
 
   public async cerrarSiniestro(idSiniestro: number): Promise<void> {
@@ -91,6 +99,8 @@ export class ListadoSiniestrosComponent implements OnInit {
                                                              .toPromise();
       } catch (error: any) {
         Alerta.mostrarError(error);  
+        this.spinnerService.ocultarSpinner();
+        
         return;
       }      
 
@@ -121,6 +131,7 @@ export class ListadoSiniestrosComponent implements OnInit {
                                     .toPromise(); 
         } catch (error: any) {
           Alerta.mostrarError(error);
+          this.spinnerService.ocultarSpinner();
         }        
       }
       else
@@ -141,6 +152,8 @@ export class ListadoSiniestrosComponent implements OnInit {
                                   .toPromise(); 
     } catch (error: any) {
       Alerta.mostrarError(error);
+      this.spinnerService.ocultarSpinner();
+
       return;
     }            
 
@@ -156,6 +169,7 @@ export class ListadoSiniestrosComponent implements OnInit {
                                                       .toPromise();
       } catch (error: any) {
         Alerta.mostrarError(error);
+        this.spinnerService.ocultarSpinner();
         vaciarSiniestros = true;
       }
     else {
@@ -167,6 +181,7 @@ export class ListadoSiniestrosComponent implements OnInit {
                                                         .toPromise();
         } catch (error: any) {
           Alerta.mostrarError(error);
+          this.spinnerService.ocultarSpinner();
           vaciarSiniestros = true;
         }
       else
@@ -175,6 +190,7 @@ export class ListadoSiniestrosComponent implements OnInit {
                                                         .toPromise();
         } catch (error: any) {
           Alerta.mostrarError(error);
+          this.spinnerService.ocultarSpinner();
           vaciarSiniestros = true;
         }       
     }
@@ -205,6 +221,8 @@ export class ListadoSiniestrosComponent implements OnInit {
                                   .toPromise();       
     } catch (error: any) {
       Alerta.mostrarError(error);
+      this.spinnerService.ocultarSpinner();
+
       return;
     }            
 
