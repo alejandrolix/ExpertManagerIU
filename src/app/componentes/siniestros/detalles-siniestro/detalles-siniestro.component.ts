@@ -10,6 +10,7 @@ import { ImagenesService } from 'src/app/servicios/imagenes.service';
 import { MensajesService } from 'src/app/servicios/mensajes.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
+import { SpinnerService } from 'src/app/servicios/spinner.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
@@ -22,13 +23,12 @@ export class DetallesSiniestroComponent implements OnInit {
   public documentaciones: Documentacion[];
   public imagenes: Imagen[];
   public mensajes: Mensaje[];
-  public mostrarSpinner: boolean;
 
   constructor(private route: ActivatedRoute, private siniestrosService: SiniestrosService, private documentacionesService: DocumentacionesService,
               private router: Router, private imagenesService: ImagenesService, private permisosService: PermisosService,
-              private mensajesService: MensajesService) {
+              private mensajesService: MensajesService, private spinnerService: SpinnerService) {
 
-    this.mostrarSpinner = true;
+    this.spinnerService.mostrarSpinner();
   }
 
   async ngOnInit(): Promise<void> {
@@ -39,7 +39,7 @@ export class DetallesSiniestroComponent implements OnInit {
                                                    .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-      this.mostrarSpinner = false;
+      this.spinnerService.ocultarSpinner();
       
       return;
     }
@@ -50,7 +50,7 @@ export class DetallesSiniestroComponent implements OnInit {
     } catch (error: any) {
       Alerta.mostrarError(error);
 
-      this.mostrarSpinner = false;
+      this.spinnerService.ocultarSpinner();
       return;
     }
 
@@ -60,12 +60,12 @@ export class DetallesSiniestroComponent implements OnInit {
     } catch (error: any) {
       Alerta.mostrarError(error);
 
-      this.mostrarSpinner = false;
+      this.spinnerService.ocultarSpinner();
       return;
     }
     
     await this.obtenerMensajes();
-    this.mostrarSpinner = false;
+    this.spinnerService.ocultarSpinner();
   }
 
   private async obtenerMensajes(): Promise<void> {
@@ -75,7 +75,7 @@ export class DetallesSiniestroComponent implements OnInit {
     } catch (error: any) {
       Alerta.mostrarError(error);
 
-      this.mostrarSpinner = false;
+      this.spinnerService.ocultarSpinner();
       return;
     }
   }
