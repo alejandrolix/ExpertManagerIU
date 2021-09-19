@@ -68,6 +68,10 @@ export class DetallesSiniestroComponent implements OnInit {
     this.spinnerService.ocultarSpinner();
   }
 
+  public mostrarSpinner(): boolean {
+    return this.spinnerService.mostrar;
+  }
+
   private async obtenerMensajes(): Promise<void> {
     try {
       this.mensajes = await this.mensajesService.obtenerTodosPorIdSiniestro(this.siniestro.id)

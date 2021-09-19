@@ -55,7 +55,10 @@ export class AppComponent implements OnInit, OnDestroy {
         });
 
     this.mostrarSpinnerSubscription = this.spinnerService.mostrarSpinnerSubject
-        .subscribe((mostrar: boolean) => this.mostrarSpinner = mostrar);
+        .subscribe((mostrar: boolean) => {
+          this.mostrarSpinner = mostrar;
+          this.spinnerService.mostrar = mostrar;
+        });
   }
 
   ngOnDestroy(): void {

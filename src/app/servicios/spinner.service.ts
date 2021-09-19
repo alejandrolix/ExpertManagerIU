@@ -6,9 +6,11 @@ import { Subject } from 'rxjs';
 })
 export class SpinnerService {
   public mostrarSpinnerSubject: Subject<boolean>;
+  public mostrar: boolean;
 
   constructor() {
     this.mostrarSpinnerSubject = new Subject<boolean>();
+    this.mostrar = false;
   }
 
   public mostrarSpinner(): void {
