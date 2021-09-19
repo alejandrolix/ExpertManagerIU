@@ -13,12 +13,10 @@ import { UsuariosService } from '../../servicios/usuarios.service';
 })
 export class InicioSesionComponent implements OnInit {
   public formInicioSesion: FormGroup;
-  public mostrarSpinnerInicioSesion: boolean;
 
   constructor(private usuariosService: UsuariosService, private router: Router, private generarHashService: GenerarHashService,
               private spinnerService: SpinnerService) {
 
-    this.mostrarSpinnerInicioSesion = false;
     this.spinnerService.ocultarSpinner();
   }
 
@@ -37,7 +35,6 @@ export class InicioSesionComponent implements OnInit {
   }  
 
   public async iniciarSesion(): Promise<void> {
-    this.mostrarSpinnerInicioSesion = true;
     this.spinnerService.mostrarSpinner();
     let nombre: string = this.formInicioSesion.get('usuario')?.value;
     let hashContrasenia: string = await this.generarHashService.generar(this.formInicioSesion.get('contrasenia')?.value);
@@ -54,7 +51,7 @@ export class InicioSesionComponent implements OnInit {
                             .toPromise(); 
     } catch (error: any) {
       Alerta.mostrarError(error); 
-      this.mostrarSpinnerInicioSesion = false;
+      this.spinnerService.ocultarSpinner();
 
       return;
     }    
@@ -65,7 +62,6 @@ export class InicioSesionComponent implements OnInit {
     localStorage.setItem('token', respuesta.token);
 
     this.spinnerService.ocultarSpinner();
-    this.mostrarSpinnerInicioSesion = false;
     this.usuariosService.iniciarSesionSubject.next(true);
   }
 }
