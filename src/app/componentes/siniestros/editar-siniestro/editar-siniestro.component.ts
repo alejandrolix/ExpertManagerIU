@@ -13,6 +13,7 @@ import { DaniosService } from 'src/app/servicios/danios.service';
 import { EstadosService } from 'src/app/servicios/estados.service';
 import { PeritosService } from 'src/app/servicios/peritos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
+import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { SweetAlertResult } from 'sweetalert2';
 
 @Component({
@@ -29,17 +30,16 @@ export class EditarSiniestroComponent implements OnInit {
   public siniestro: Siniestro;
   public mostrarImpValoracionDanios: boolean;
   private impValoracionDanios: string;
-  public mostrarSpinner: boolean;
 
   constructor(private aseguradorasService: AseguradorasService, private daniosService: DaniosService, private peritosService: PeritosService, private siniestrosService: SiniestrosService,
-              private router: Router, private estadosService: EstadosService, private route: ActivatedRoute) {
+              private router: Router, private estadosService: EstadosService, private route: ActivatedRoute, private spinnerService: SpinnerService) {
 
     this.aseguradoras = [];
     this.danios = [];
     this.peritos = [];
     this.mostrarImpValoracionDanios = false;
     this.impValoracionDanios = '';
-    this.mostrarSpinner = true;
+    this.spinnerService.mostrarSpinner();
   }
 
   async ngOnInit(): Promise<void> {
@@ -50,7 +50,7 @@ export class EditarSiniestroComponent implements OnInit {
                                                    .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-      this.mostrarSpinner = false;
+      this.spinnerService.ocultarSpinner();
 
       return;
     }
@@ -60,7 +60,7 @@ export class EditarSiniestroComponent implements OnInit {
                                               .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-      this.mostrarSpinner = false;
+      this.spinnerService.ocultarSpinner();
 
       return;
     }          
@@ -70,7 +70,7 @@ export class EditarSiniestroComponent implements OnInit {
                                                         .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-      this.mostrarSpinner = false;
+      this.spinnerService.ocultarSpinner();
 
       return;
     }
@@ -80,7 +80,7 @@ export class EditarSiniestroComponent implements OnInit {
                                             .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-      this.mostrarSpinner = false;
+      this.spinnerService.ocultarSpinner();
 
       return;
     }
@@ -90,7 +90,7 @@ export class EditarSiniestroComponent implements OnInit {
                                               .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-      this.mostrarSpinner = false;
+      this.spinnerService.ocultarSpinner();
 
       return;
     }
@@ -136,7 +136,11 @@ export class EditarSiniestroComponent implements OnInit {
       this.crearControlImpValoracionDanios();
     }     
     
-    this.mostrarSpinner = false;
+    this.spinnerService.ocultarSpinner();
+  }
+
+  public mostrarSpinner(): boolean {
+    return this.spinnerService.mostrar;
   }
 
   private crearControlImpValoracionDanios(): void {
