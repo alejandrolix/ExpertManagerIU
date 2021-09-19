@@ -1,4 +1,4 @@
-<div *ngIf="!mostrarSpinner">
+<div *ngIf="!mostrarSpinner()">
     <h2 class="mb-4">Crear usuario</h2>
     <form *ngIf="formCrearUsuario != undefined" [formGroup]="formCrearUsuario" (ngSubmit)="enviar()">
         <div class="row">

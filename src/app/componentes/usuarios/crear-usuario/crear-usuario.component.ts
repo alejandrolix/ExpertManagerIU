@@ -9,6 +9,7 @@ import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
 import { Alerta } from 'src/app/clases/Alerta';
 import { TipoPermiso } from 'src/app/enumeraciones/tipo-permiso.enum';
 import { Validadores } from 'src/app/clases/validadores';
+import { SpinnerService } from 'src/app/servicios/spinner.service';
 
 @Component({
   selector: 'app-crear-usuario',
@@ -19,10 +20,11 @@ export class CrearUsuarioComponent implements OnInit {
   public formCrearUsuario: FormGroup;
   public permisos: Permiso[];
   public esPeritoNoResponsable: boolean;
-  public mostrarSpinner: boolean;
 
-  constructor(private permisosService: PermisosService, private usuariosService: UsuariosService, private router: Router, private generarHashService: GenerarHashService) {
-    this.mostrarSpinner = true;
+  constructor(private permisosService: PermisosService, private usuariosService: UsuariosService, private router: Router, private generarHashService: GenerarHashService,
+              private spinnerService: SpinnerService) {
+
+    this.spinnerService.mostrarSpinner();
   }
 
   async ngOnInit(): Promise<void> {
@@ -31,7 +33,7 @@ export class CrearUsuarioComponent implements OnInit {
                                                 .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-      this.mostrarSpinner = false;
+      this.spinnerService.ocultarSpinner();
 
       return;
     }        
@@ -43,7 +45,11 @@ export class CrearUsuarioComponent implements OnInit {
       permiso: new FormControl(this.permisos[0].id)
     });
 
-    this.mostrarSpinner = false;
+    this.spinnerService.ocultarSpinner();
+  }
+
+  public mostrarSpinner(): boolean {
+    return this.spinnerService.mostrar;
   }
 
   public permisoSeleccionado(e: any): void {
