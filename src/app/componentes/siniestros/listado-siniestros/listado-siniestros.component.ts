@@ -173,7 +173,16 @@ export class ListadoSiniestrosComponent implements OnInit {
         vaciarSiniestros = true;
       }
     else {
-      let idPerito: number = this.usuariosService.obtenerIdUsuarioLogueado();
+      let idPerito: number = 0;
+
+      try {        
+        idPerito = this.usuariosService.obtenerIdUsuarioLogueado();
+      } catch (error: any) {
+        Alerta.mostrarError(error.message);
+        this.spinnerService.ocultarSpinner();
+
+        return;
+      }
 
       if (this.permisosService.tienePermisoPeritoResponsable())
         try {

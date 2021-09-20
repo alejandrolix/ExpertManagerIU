@@ -42,9 +42,10 @@ export class UsuariosService {
 
   public obtenerIdUsuarioLogueado(): number {
     let idUsuario: string | null = localStorage.getItem('idUsuario');
+    idUsuario = null;
 
     if (idUsuario == null)
-        return 0;
+        throw new Error('No existe usuario');
 
     let idUsuarioNumero: number = parseInt(idUsuario);
 
