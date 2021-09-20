@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PeticionHttp } from '../clases/PeticionHttp';
+import { TipoPermiso } from '../enumeraciones/tipo-permiso.enum';
 import { Permiso } from '../interfaces/permiso';
 
 @Injectable({
@@ -29,11 +30,8 @@ export class PermisosService {
   public tienePermisoPeritoNoResponsable(): boolean {
     let idPermiso: number = this.obtenerIdPermisoLogueado();
 
-    if (idPermiso != 0)
-      if (idPermiso == 3)
-        return true;
-      else
-        return false;
+    if (idPermiso !== 0 && idPermiso === TipoPermiso.PeritoNoResponsable)      
+      return true;
 
     return false;
   }
