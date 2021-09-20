@@ -28,9 +28,15 @@ export class PermisosService {
   }
 
   public tienePermisoPeritoNoResponsable(): boolean {
-    let idPermiso: number = this.obtenerIdPermisoLogueado();
+    let idPermiso: number;
 
-    if (idPermiso !== 0 && idPermiso === TipoPermiso.PeritoNoResponsable)      
+    try {      
+      idPermiso = this.obtenerIdPermisoLogueado();
+    } catch (error) {
+      throw error;
+    }
+
+    if (idPermiso === TipoPermiso.PeritoNoResponsable)      
       return true;
 
     return false;

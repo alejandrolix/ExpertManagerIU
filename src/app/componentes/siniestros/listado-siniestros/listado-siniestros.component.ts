@@ -88,7 +88,16 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   public async cerrarSiniestro(idSiniestro: number): Promise<void> {
-    let esPeritoNoResponsable: boolean = this.permisosService.tienePermisoPeritoNoResponsable();
+    let esPeritoNoResponsable: boolean = false;
+
+    try {      
+      esPeritoNoResponsable = this.permisosService.tienePermisoPeritoNoResponsable();
+    } catch (error: any) {
+      Alerta.mostrarError(error.message);  
+      this.spinnerService.ocultarSpinner();
+        
+      return;
+    }
 
     if (esPeritoNoResponsable) {
       let idPeritoLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
