@@ -184,7 +184,18 @@ export class ListadoSiniestrosComponent implements OnInit {
         return;
       }
 
-      if (this.permisosService.tienePermisoPeritoResponsable())
+      let tienePermisoPeritoResponsable: boolean = false;
+
+      try {
+        tienePermisoPeritoResponsable = this.permisosService.tienePermisoPeritoResponsable();
+      } catch (error: any) {
+        Alerta.mostrarError(error.message);
+        this.spinnerService.ocultarSpinner();
+
+        return;
+      }
+
+      if (tienePermisoPeritoResponsable)
         try {
           this.siniestros = await this.siniestrosService.obtenerPorPeritoResponsable(idPerito, this.idAseguradoraSeleccionada)
                                                         .toPromise();

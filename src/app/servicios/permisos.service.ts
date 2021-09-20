@@ -20,7 +20,7 @@ export class PermisosService {
     let idPermiso: string | null = localStorage.getItem('idPermiso');
 
     if (idPermiso == null)
-      return 0;
+      throw new Error('No existe permiso');
 
     let idPermisoNumero: number = parseInt(idPermiso);
 
@@ -37,13 +37,16 @@ export class PermisosService {
   }
 
   public tienePermisoPeritoResponsable(): boolean {
-    let idPermiso: number = this.obtenerIdPermisoLogueado();
+    let idPermiso: number;
 
-    if (idPermiso != 0)
-      if (idPermiso == 2)
-        return true;
-      else
-        return false;
+    try {      
+      idPermiso = this.obtenerIdPermisoLogueado();
+    } catch (error: any) {
+      throw error;
+    }    
+    
+    if (idPermiso === TipoPermiso.PeritoResponsable)
+      return true;      
 
     return false;
   }

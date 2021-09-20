@@ -42,7 +42,6 @@ export class UsuariosService {
 
   public obtenerIdUsuarioLogueado(): number {
     let idUsuario: string | null = localStorage.getItem('idUsuario');
-    idUsuario = null;
 
     if (idUsuario == null)
         throw new Error('No existe usuario');
