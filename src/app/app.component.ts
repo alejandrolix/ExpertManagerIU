@@ -17,11 +17,11 @@ export class AppComponent implements OnInit, OnDestroy {
   public mostrarSpinnerSubscription: Subscription;
   public mostrarSpinner: boolean;
 
-  constructor(private router: Router, private usuariosService: UsuariosService, private spinnerService: SpinnerService) {
-    this.mostrarSpinner = true;
-  }     
+  constructor(private router: Router, private usuariosService: UsuariosService, private spinnerService: SpinnerService) { }     
 
-  ngOnInit(): void {        
+  ngOnInit(): void { 
+    this.spinnerService.mostrarSpinner();
+    
     let idUsuarioLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
 
     if (idUsuarioLogueado == 0) {          
