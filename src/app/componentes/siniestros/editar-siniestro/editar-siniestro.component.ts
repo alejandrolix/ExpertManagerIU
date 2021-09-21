@@ -182,17 +182,12 @@ export class EditarSiniestroComponent implements OnInit {
       descripcion: descripcion,
       idDanio: idDanio,
       idSujetoAfectado: idSujetoAfectado,
-      idPerito: idPerito
+      idPerito: idPerito,
+      impValoracionDanios: 0
     };    
 
-    if (idEstado == TipoEstado.Valorado) {
-      let nuevoSiniestro = {
-        ...siniestro,
-        impValoracionDanios: this.formEditarSiniestro.get('impValoracionDanios')?.value
-      };
-
-      siniestro = nuevoSiniestro;
-    }
+    if (idEstado == TipoEstado.Valorado)
+      siniestro.impValoracionDanios = this.formEditarSiniestro.get('impValoracionDanios')?.value;    
 
     let respuesta: boolean;
 
