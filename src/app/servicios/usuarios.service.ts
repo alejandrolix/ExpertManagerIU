@@ -44,7 +44,7 @@ export class UsuariosService {
     let idUsuario: string | null = localStorage.getItem('idUsuario');
 
     if (idUsuario == null)
-        throw new Error('No existe usuario');
+        return 0;
 
     let idUsuarioNumero: number = parseInt(idUsuario);
 
