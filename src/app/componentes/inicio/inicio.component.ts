@@ -16,12 +16,12 @@ export class InicioComponent implements OnInit {
   public tieneUsuarioPermisoAdministracion: boolean;
 
   constructor(private inicioService: InicioService, private usuariosService: UsuariosService, private permisosService: PermisosService,
-              private spinnerService: SpinnerService) { }
-
-  async ngOnInit(): Promise<void> {
-    // En el constructor no se oculta el spinner porque provoca el error ExpressionChangedAfterItHasBeenCheckedError.
-
+              private spinnerService: SpinnerService) { 
+                
     this.spinnerService.mostrarSpinner();
+  }
+
+  async ngOnInit(): Promise<void> {    
     let idUsuarioLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
     this.tieneUsuarioPermisoAdministracion = this.permisosService.tienePermisoAdministracion();
 
