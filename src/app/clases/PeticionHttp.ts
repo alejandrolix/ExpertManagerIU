@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
@@ -11,6 +11,31 @@ export class PeticionHttp {
 
     public hacerPeticionGet<T>(url: string): Observable<T> {
         return this.http.get<T>(url)
+                        .pipe(
+                            catchError((error: any) => {                    
+                                if (error.error === 'no token')
+                                    return throwError('No existe token. Por favor, inicie sesión');
+                                else if (error.status === 0)                    
+                                    return throwError('No funciona la API REST');
+                                
+                                return throwError(error.error);
+                            })
+                        );
+    }
+
+    public hacerPeticionGetConOpciones(url: string, opciones: {
+        headers?: HttpHeaders | {
+            [header: string]: string | string[];
+        };
+        observe?: 'body';
+        params?: HttpParams | {
+            [param: string]: string | string[];
+        };
+        reportProgress?: boolean;
+        responseType: 'blob';
+        withCredentials?: boolean;
+    }): Observable<Blob> {
+        return this.http.get(url, opciones)
                         .pipe(
                             catchError((error: any) => {                    
                                 if (error.error === 'no token')

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { PeticionHttp } from '../clases/PeticionHttp';
 import { Archivo } from '../interfaces/archivo';
 
 @Injectable({
@@ -10,21 +11,21 @@ import { Archivo } from '../interfaces/archivo';
 })
 export class DocumentacionesService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private peticionHttp: PeticionHttp) { }
 
   public obtenerPorIdSiniestro(id: number): Observable<Archivo[]> {
-    return this.http.get<Archivo[]>(`${environment.urlApi}/Documentaciones/ObtenerPorIdSiniestro/${id}`);
+    return this.peticionHttp.hacerPeticionGet<Archivo[]>(`${environment.urlApi}/Documentaciones/ObtenerPorIdSiniestro/${id}`);
   }
 
   public obtener(id: number): Observable<Blob> {
     let headers = new HttpHeaders();
     headers = headers.set('Accept', 'application/pdf');
 
-    return this.http.get(`${environment.urlApi}/Documentaciones/${id}`, { headers: headers, responseType: 'blob' })
-                    .pipe(
-                          map(res => {
-                            return new Blob([res], { type: 'application/pdf' })
-                          })
+    return this.peticionHttp.hacerPeticionGetConOpciones(`${environment.urlApi}/Documentaciones/${id}`, { headers: headers, responseType: 'blob' })
+                            .pipe(
+                                  map((res: any) => {
+                                    return new Blob([res], { type: 'application/pdf' })
+                                  })
     );
   }
 
