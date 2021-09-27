@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { Archivo } from '../interfaces/archivo';
 })
 export class DocumentacionesService {
 
-  constructor(private http: HttpClient, private peticionHttp: PeticionHttp) { }
+  constructor(private peticionHttp: PeticionHttp) { }
 
   public obtenerPorIdSiniestro(id: number): Observable<Archivo[]> {
     return this.peticionHttp.hacerPeticionGet<Archivo[]>(`${environment.urlApi}/Documentaciones/ObtenerPorIdSiniestro/${id}`);
@@ -35,10 +35,10 @@ export class DocumentacionesService {
     formData.append("IdSiniestro", documentacion.idSiniestro); 
     formData.append("Archivo", documentacion.archivo, documentacion.archivo.name);
       
-    return this.http.post<boolean>(`${environment.urlApi}/Documentaciones`, formData);
+    return this.peticionHttp.hacerPeticionPost<boolean>(`${environment.urlApi}/Documentaciones`, formData);
   }
 
   public eliminar(idDocumentacion: number): Observable<boolean> {
-    return this.http.delete<boolean>(`${environment.urlApi}/Documentaciones/${idDocumentacion}`);
+    return this.peticionHttp.hacerPeticionDelete<boolean>(`${environment.urlApi}/Documentaciones/${idDocumentacion}`);
   }
 }
