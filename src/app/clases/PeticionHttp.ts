@@ -48,6 +48,31 @@ export class PeticionHttp {
                         );
     }
 
+    public hacerPeticionGetConOpcionesString(url: string, opciones: {
+        headers?: HttpHeaders | {
+            [header: string]: string | string[];
+        };
+        observe?: 'body';
+        params?: HttpParams | {
+            [param: string]: string | string[];
+        };
+        reportProgress?: boolean;
+        responseType: 'text';
+        withCredentials?: boolean;
+    }): Observable<string> {
+        return this.http.get(url, opciones)
+                        .pipe(
+                            catchError((error: any) => {                    
+                                if (error.error === 'no token')
+                                    return throwError('No existe token. Por favor, inicie sesión');
+                                else if (error.status === 0)                    
+                                    return throwError('No funciona la API REST');
+                                
+                                return throwError(error.error);
+                            })
+                        );
+    }
+
     public hacerPeticionPost<T>(url: string, datos: any): Observable<T> {
         return this.http.post<T>(url, datos)
                         .pipe(

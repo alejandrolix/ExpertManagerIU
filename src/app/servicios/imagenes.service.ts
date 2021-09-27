@@ -39,14 +39,14 @@ export class ImagenesService {
     );
   }
 
-  public obtenerContentType(idImagen: number): Observable<any> {
+  public obtenerContentType(idImagen: number): Observable<string> {
     const headers = new HttpHeaders()
     headers.set('Content-Type', 'text/plain; charset=utf-8');
 
-    return this.http.get(`${environment.urlApi}/Imagenes/ObtenerContentType/${idImagen}`, { headers: headers, responseType: 'text' });
+    return this.peticionHttp.hacerPeticionGetConOpcionesString(`${environment.urlApi}/Imagenes/ObtenerContentType/${idImagen}`, { headers: headers, responseType: 'text' });
   }
 
   public eliminar(idImagen: number): Observable<boolean> {
-    return this.http.delete<boolean>(`${environment.urlApi}/Imagenes/${idImagen}`);
+    return this.peticionHttp.hacerPeticionDelete<boolean>(`${environment.urlApi}/Imagenes/${idImagen}`);
   }
 }
