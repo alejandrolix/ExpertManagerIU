@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
 import { Archivo } from 'src/app/interfaces/archivo';
-import { Documentacion } from 'src/app/interfaces/documentacion';
-import { Imagen } from 'src/app/interfaces/imagen';
 import { Mensaje } from 'src/app/interfaces/mensaje';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { DocumentacionesService } from 'src/app/servicios/documentaciones.service';
@@ -22,7 +20,7 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
 export class DetallesSiniestroComponent implements OnInit {
   public siniestro: Siniestro;
   public documentaciones: Archivo[];
-  public imagenes: Imagen[];
+  public imagenes: Archivo[];
   public mensajes: Mensaje[];
 
   constructor(private route: ActivatedRoute, private siniestrosService: SiniestrosService, private documentacionesService: DocumentacionesService,
