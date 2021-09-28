@@ -46,14 +46,7 @@ export class PeticionHttp {
     public hacerPeticionPost<T>(url: string, datos: any): Observable<T> {
         return this.http.post<T>(url, datos)
                         .pipe(
-                            catchError((error: any) => {
-                                if (error.error === 'no token')
-                                    return throwError('No existe token. Por favor, inicie sesión');
-                                else if (error.status === 0)                    
-                                    return throwError('No funciona la API REST');
-                                
-                                return throwError(error.error);
-                            })
+                            catchError((error: any) => this.obtenerMensajeError(error))
                         );
     }
 
