@@ -22,6 +22,7 @@ import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.componen
 import { ApiRestTokenInterceptor } from './interceptor/api-rest-token.interceptor';
 import { SiniestrosComponent } from './componentes/siniestros/siniestros.component';
 import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
+import { SubirArchivoComponent } from './componentes/siniestros/subir-archivo/subir-archivo.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
     MenuNavegacionComponent,
     PiePaginaComponent,
     SiniestrosComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    SubirArchivoComponent
   ],
   imports: [
     BrowserModule,
