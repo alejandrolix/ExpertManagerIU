@@ -113,10 +113,11 @@ export class DetallesSiniestroComponent implements OnInit {
   }
 
   async verImagen(id: number): Promise<void> {
-    let pdf: Blob;
+    let imagen: Blob;
 
     try {
-      pdf = await (await this.imagenesService.obtener(id)).toPromise();
+      imagen = await this.imagenesService.obtener(id)
+                                         .toPromise();
     } catch (error) {
       await Swal.fire({
         title: 'Ha habido un error al obtener la imagen. Inténtelo de nuevo',
@@ -133,8 +134,8 @@ export class DetallesSiniestroComponent implements OnInit {
       return;
     }    
     
-    let urlPdf = URL.createObjectURL(pdf);
-    window.open(urlPdf, '_blank');
+    let urlImagen = URL.createObjectURL(imagen);
+    window.open(urlImagen, '_blank');
   }
 
   public subirDocumentacion(idSiniestro: number): void {
