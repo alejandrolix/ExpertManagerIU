@@ -60,14 +60,7 @@ export class PeticionHttp {
     public hacerPeticionDelete<T>(url: string): Observable<T> {
         return this.http.delete<T>(url)
                         .pipe(
-                            catchError((error: any) => {                    
-                                if (error.error === 'no token')
-                                    return throwError('No existe token. Por favor, inicie sesión');
-                                else if (error.status === 0)                    
-                                    return throwError('No funciona la API REST');
-                                
-                                return throwError(error.error);
-                            })
+                            catchError((error: any) => this.obtenerMensajeError(error))
                         );
     }
 }
