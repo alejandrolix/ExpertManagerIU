@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
+import { TipoArchivo } from 'src/app/enumeraciones/tipo-archivo.enum';
 import { Archivo } from 'src/app/interfaces/archivo';
 import { Mensaje } from 'src/app/interfaces/mensaje';
 import { Siniestro } from 'src/app/interfaces/siniestro';
@@ -138,8 +139,12 @@ export class DetallesSiniestroComponent implements OnInit {
     window.open(urlImagen, '_blank');
   }
 
-  public subirDocumentacion(idSiniestro: number): void {
-    this.router.navigate(['/subirDocumentacion', idSiniestro]);
+  public subirDocumentacion(): void {
+    this.router.navigate(['/siniestros/documentaciones/subir', this.siniestro.id], {
+      queryParams: {
+        tipoArchivo: TipoArchivo.Documento
+      }
+    });
   }
 
   public async eliminarDocumentacion(idDocumentacion: number): Promise<void> {

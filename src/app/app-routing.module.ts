@@ -8,6 +8,7 @@ import { DetallesSiniestroComponent } from './componentes/siniestros/detalles-si
 import { EditarSiniestroComponent } from './componentes/siniestros/editar-siniestro/editar-siniestro.component';
 import { ListadoSiniestrosComponent } from './componentes/siniestros/listado-siniestros/listado-siniestros.component';
 import { SiniestrosComponent } from './componentes/siniestros/siniestros.component';
+import { SubirArchivoComponent } from './componentes/siniestros/subir-archivo/subir-archivo.component';
 import { SubirDocumentacionComponent } from './componentes/siniestros/subir-documentacion/subir-documentacion.component';
 import { SubirImagenComponent } from './componentes/siniestros/subir-imagen/subir-imagen.component';
 import { CrearUsuarioComponent } from './componentes/usuarios/crear-usuario/crear-usuario.component';
@@ -42,6 +43,10 @@ const routes: Routes = [
       {
         path: 'detalles/:id',
         component: DetallesSiniestroComponent
+      },
+      {
+        path: 'documentaciones/subir/:id',
+        component: SubirArchivoComponent
       }
     ]
   },
