@@ -12,16 +12,15 @@ import { UsuariosService } from './servicios/usuarios.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   public estaSesionIniciada: boolean;
-  public iniciarSesionSubscription: Subscription;
-  public cerrarSesionSubscription: Subscription;
-  public mostrarSpinnerSubscription: Subscription;
+  private iniciarSesionSubscription: Subscription;
+  private cerrarSesionSubscription: Subscription;
+  private mostrarSpinnerSubscription: Subscription;
   public mostrarSpinner: boolean;
 
-  constructor(private router: Router, private usuariosService: UsuariosService, private spinnerService: SpinnerService) {
-    this.mostrarSpinner = true;
-  }     
+  constructor(private router: Router, private usuariosService: UsuariosService, private spinnerService: SpinnerService) { }     
 
   ngOnInit(): void {       
+    this.spinnerService.mostrarSpinner();
     let idUsuarioLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
 
     if (idUsuarioLogueado === 0) {          
@@ -32,33 +31,33 @@ export class AppComponent implements OnInit, OnDestroy {
       this.estaSesionIniciada = true;
     
     this.iniciarSesionSubscription = this.usuariosService.iniciarSesionSubject
-        .pipe(
-          filter((respuesta: boolean) => respuesta)
-        )    
-        .subscribe(() => {
-          this.estaSesionIniciada = true;
-          this.router.navigateByUrl('/inicio');
-        });
+                                                         .pipe(
+                                                            filter((respuesta: boolean) => respuesta)
+                                                         )    
+                                                         .subscribe(() => {
+                                                            this.estaSesionIniciada = true;
+                                                            this.router.navigateByUrl('/inicio');
+                                                         });
 
     this.cerrarSesionSubscription = this.usuariosService.cerrarSesionSubject
-        .pipe(
-          filter((respuesta: boolean) => respuesta)
-        )    
-        .subscribe(() => {      
-          localStorage.removeItem('idUsuario');
-          localStorage.removeItem('usuario');
-          localStorage.removeItem('idPermiso');
-          localStorage.removeItem('token');
+                                                        .pipe(
+                                                          filter((respuesta: boolean) => respuesta)
+                                                        )    
+                                                        .subscribe(() => {      
+                                                          localStorage.removeItem('idUsuario');
+                                                          localStorage.removeItem('usuario');
+                                                          localStorage.removeItem('idPermiso');
+                                                          localStorage.removeItem('token');
 
-          this.estaSesionIniciada = false;
-          this.router.navigateByUrl('/inicioSesion');
-        });
+                                                          this.estaSesionIniciada = false;
+                                                          this.router.navigateByUrl('/inicioSesion');
+                                                        });
 
     this.mostrarSpinnerSubscription = this.spinnerService.mostrarSpinnerSubject
-        .subscribe((mostrar: boolean) => {
-          this.mostrarSpinner = mostrar;
-          this.spinnerService.mostrar = mostrar;
-        });
+                                                         .subscribe((mostrar: boolean) => {
+                                                            this.mostrarSpinner = mostrar;
+                                                            this.spinnerService.mostrar = mostrar;
+                                                         });
   }
 
   ngOnDestroy(): void {
