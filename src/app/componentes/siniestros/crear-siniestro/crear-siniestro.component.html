@@ -1,4 +1,4 @@
-<div *ngIf="!mostrarSpinner()">
+<div>
     <h2 class="mb-4">Crear siniestro</h2>
     <form *ngIf="formCrearSiniestro != undefined" [formGroup]="formCrearSiniestro" (ngSubmit)="enviar()">
         <div class="row">
@@ -38,3 +38,4 @@
         <button type="submit" [disabled]="!formCrearSiniestro.valid" class="btn btn-primary mt-5">Crear</button>
     </form>
 </div>
+<app-spinner></app-spinner>

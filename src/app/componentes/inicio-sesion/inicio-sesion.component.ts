@@ -15,12 +15,10 @@ export class InicioSesionComponent implements OnInit {
   public formInicioSesion: FormGroup;
 
   constructor(private usuariosService: UsuariosService, private router: Router, private generarHashService: GenerarHashService,
-              private spinnerService: SpinnerService) {
+              private spinnerService: SpinnerService) { }
 
-    this.spinnerService.ocultarSpinner();
-  }
-
-  ngOnInit(): void {       
+  ngOnInit(): void {           
+    this.spinnerService.ocultarSpinner();    
     let idUsuarioLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
 
     if (idUsuarioLogueado === 0)      

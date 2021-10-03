@@ -26,12 +26,10 @@ export class DetallesSiniestroComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private siniestrosService: SiniestrosService, private documentacionesService: DocumentacionesService,
               private router: Router, private imagenesService: ImagenesService, private permisosService: PermisosService,
-              private mensajesService: MensajesService, private spinnerService: SpinnerService) {
-
-    this.spinnerService.mostrarSpinner();
-  }
+              private mensajesService: MensajesService, private spinnerService: SpinnerService) { }
 
   async ngOnInit(): Promise<void> {
+    this.spinnerService.mostrarSpinner();
     let idSiniestro: number = Number(this.route.snapshot.paramMap.get('id'));
 
     try {
@@ -49,8 +47,8 @@ export class DetallesSiniestroComponent implements OnInit {
                                                               .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-
       this.spinnerService.ocultarSpinner();
+      
       return;
     }
 
@@ -59,17 +57,13 @@ export class DetallesSiniestroComponent implements OnInit {
                                                 .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-
       this.spinnerService.ocultarSpinner();
+      
       return;
     }
     
     await this.obtenerMensajes();
     this.spinnerService.ocultarSpinner();
-  }
-
-  public mostrarSpinner(): boolean {
-    return this.spinnerService.mostrar;
   }
 
   private async obtenerMensajes(): Promise<void> {
@@ -78,8 +72,8 @@ export class DetallesSiniestroComponent implements OnInit {
                                                 .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-
       this.spinnerService.ocultarSpinner();
+
       return;
     }
   }

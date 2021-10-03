@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { first, pluck } from 'rxjs/operators';
 import { Alerta } from 'src/app/clases/Alerta';
 import { TipoArchivo } from 'src/app/enumeraciones/tipo-archivo.enum';
-import { SpinnerService } from 'src/app/servicios/spinner.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -20,10 +19,9 @@ export class SubirArchivoComponent implements OnInit {
   public esImagen: boolean;
   public formatosArchivoASubir: string;
 
-  constructor(private route: ActivatedRoute, private spinnerService: SpinnerService) { }
+  constructor(private route: ActivatedRoute) { }
 
   async ngOnInit(): Promise<void> {
-    this.spinnerService.mostrarSpinner();
     this.idSiniestro = Number(this.route.snapshot
                                         .paramMap
                                         .get('id'));
@@ -58,8 +56,7 @@ export class SubirArchivoComponent implements OnInit {
       descripcion: new FormControl('', Validators.required)
     });
 
-    this.hayArchivoSeleccionado = true;      
-    this.spinnerService.ocultarSpinner();
+    this.hayArchivoSeleccionado = true;  
   }
 
   public irAtras(): void {

@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpinnerService {
-  public mostrarSpinnerSubject: Subject<boolean>;
+  private mostrarSpinnerSubject: BehaviorSubject<boolean>;
   public mostrar: boolean;
+  public mostrarSpinnerObs: Observable<boolean>;
 
-  constructor() {
-    this.mostrarSpinnerSubject = new Subject<boolean>();
-    this.mostrar = false;
+  constructor() {    
+    this.mostrarSpinnerSubject = new BehaviorSubject<boolean>(false);
+    this.mostrarSpinnerObs = this.mostrarSpinnerSubject.asObservable();
   }
 
   public mostrarSpinner(): void {

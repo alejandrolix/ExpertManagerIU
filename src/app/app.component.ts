@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { SpinnerService } from './servicios/spinner.service';
 import { UsuariosService } from './servicios/usuarios.service';
 
 @Component({
@@ -13,14 +12,11 @@ import { UsuariosService } from './servicios/usuarios.service';
 export class AppComponent implements OnInit, OnDestroy {
   public estaSesionIniciada: boolean;
   private iniciarSesionSubscription: Subscription;
-  private cerrarSesionSubscription: Subscription;
-  private mostrarSpinnerSubscription: Subscription;
-  public mostrarSpinner: boolean;
+  private cerrarSesionSubscription: Subscription;  
 
-  constructor(private router: Router, private usuariosService: UsuariosService, private spinnerService: SpinnerService) { }     
+  constructor(private router: Router, private usuariosService: UsuariosService) { }     
 
   ngOnInit(): void {       
-    this.spinnerService.mostrarSpinner();
     let idUsuarioLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
 
     if (idUsuarioLogueado === 0) {          
@@ -52,17 +48,10 @@ export class AppComponent implements OnInit, OnDestroy {
                                                           this.estaSesionIniciada = false;
                                                           this.router.navigateByUrl('/inicioSesion');
                                                         });
-
-    this.mostrarSpinnerSubscription = this.spinnerService.mostrarSpinnerSubject
-                                                         .subscribe((mostrar: boolean) => {
-                                                            this.mostrarSpinner = mostrar;
-                                                            this.spinnerService.mostrar = mostrar;
-                                                         });
   }
 
   ngOnDestroy(): void {
     this.iniciarSesionSubscription.unsubscribe();
-    this.cerrarSesionSubscription.unsubscribe();
-    this.mostrarSpinnerSubscription.unsubscribe();
+    this.cerrarSesionSubscription.unsubscribe();    
   }
 }

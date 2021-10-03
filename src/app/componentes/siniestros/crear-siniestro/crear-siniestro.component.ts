@@ -11,7 +11,6 @@ import { PeritosService } from 'src/app/servicios/peritos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
-import { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-crear-siniestro',
@@ -29,8 +28,7 @@ export class CrearSiniestroComponent implements OnInit {
                 
     this.aseguradoras = [];
     this.danios = [];
-    this.peritos = [];
-    this.spinnerService.mostrarSpinner();
+    this.peritos = [];    
   }
 
   async ngOnInit(): Promise<void> {
@@ -39,8 +37,6 @@ export class CrearSiniestroComponent implements OnInit {
                                                         .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
-
       return;
     }
 
@@ -49,8 +45,6 @@ export class CrearSiniestroComponent implements OnInit {
                                             .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
-
       return;
     }
     
@@ -59,8 +53,6 @@ export class CrearSiniestroComponent implements OnInit {
                                               .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-
-      this.spinnerService.ocultarSpinner();
       return;
     }    
 
@@ -76,13 +68,11 @@ export class CrearSiniestroComponent implements OnInit {
     this.spinnerService.ocultarSpinner();
   }
 
-  public mostrarSpinner(): boolean {
-    return this.spinnerService.mostrar;
-  }
-
   public async enviar(): Promise<void> {
     if (!this.formCrearSiniestro.valid)
       return;
+
+    this.spinnerService.mostrarSpinner();
 
     let idUsuarioAlta: number = this.usuariosService.obtenerIdUsuarioLogueado();
     let idAseguradora: number = parseInt(this.formCrearSiniestro.get('aseguradora')?.value);
@@ -109,15 +99,16 @@ export class CrearSiniestroComponent implements OnInit {
                                               .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
+      this.spinnerService.ocultarSpinner();
 
       return;
     }    
 
-    if (respuesta) {
-      let accion: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono('Siniestro creado correctamente');
+    this.spinnerService.ocultarSpinner();
 
-      if (accion.isConfirmed)
-        this.router.navigateByUrl('/siniestros');
+    if (respuesta) {
+      await Alerta.mostrarOkAsincrono('Siniestro creado correctamente');
+      this.router.navigateByUrl('/siniestros');
     }     
     else
       Alerta.mostrarError('Ha habido un error al crear el siniestro');

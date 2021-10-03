@@ -32,10 +32,10 @@ export class ListadoSiniestrosComponent implements OnInit {
     this.siniestros = [];
     this.idPeritoSeleccionado = 0;
     this.idAseguradoraSeleccionada = 0;
-    this.spinnerService.mostrarSpinner();
   }
 
   async ngOnInit(): Promise<void> {
+    this.spinnerService.mostrarSpinner();
     try {
       this.aseguradoras = await this.aseguradorasService.obtenerTodas()
                                                         .toPromise();
@@ -83,10 +83,6 @@ export class ListadoSiniestrosComponent implements OnInit {
     return this.permisosService.tienePermisoAdministracion();
   }
 
-  public mostrarSpinner(): boolean {
-    return this.spinnerService.mostrar;
-  }
-
   public async cerrarSiniestro(idSiniestro: number): Promise<void> {
     let esPeritoNoResponsable: boolean = false;
 
@@ -120,9 +116,8 @@ export class ListadoSiniestrosComponent implements OnInit {
         return;
       }
 
-      let impValDaniosCadena: string = siniestroActual.impValoracionDanios
-                                                      .replace(',', '.')
-                                                      .replace(' €', '');
+      let impValDaniosCadena: string = siniestroActual.impValoracionDanios.replace(',', '.')
+                                                                          .replace(' €', '');
 
       let impValoracionDaniosSiniestro: number = Number(impValDaniosCadena);
 

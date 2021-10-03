@@ -39,10 +39,10 @@ export class EditarSiniestroComponent implements OnInit {
     this.peritos = [];
     this.mostrarImpValoracionDanios = false;
     this.impValoracionDanios = '';
-    this.spinnerService.mostrarSpinner();
   }
 
   async ngOnInit(): Promise<void> {
+    this.spinnerService.mostrarSpinner();
     let idSiniestro: number = Number(this.route.snapshot.paramMap.get('id'));  
     
     try {
@@ -137,10 +137,6 @@ export class EditarSiniestroComponent implements OnInit {
     }     
     
     this.spinnerService.ocultarSpinner();
-  }
-
-  public mostrarSpinner(): boolean {
-    return this.spinnerService.mostrar;
   }
 
   private crearControlImpValoracionDanios(): void {

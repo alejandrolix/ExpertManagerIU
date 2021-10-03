@@ -1,13 +1,6 @@
 <app-menu-navegacion *ngIf="estaSesionIniciada"></app-menu-navegacion>
 <div class="container-fluid mt-4">
-    <div class="container margenAbajo">
-
-        <!-- Spinner -->
-        <div class="text-center" *ngIf="mostrarSpinner">
-            <div class="spinner-border" role="status">
-                <span class="visually-hidden"></span>
-            </div>
-        </div>
+    <div class="container margenAbajo">        
         <router-outlet></router-outlet>
     </div>    
 

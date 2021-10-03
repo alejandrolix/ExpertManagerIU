@@ -24,7 +24,7 @@ export class CrearUsuarioComponent implements OnInit {
   constructor(private permisosService: PermisosService, private usuariosService: UsuariosService, private router: Router, private generarHashService: GenerarHashService,
               private spinnerService: SpinnerService) {
 
-    this.spinnerService.mostrarSpinner();
+    
   }
 
   async ngOnInit(): Promise<void> {
@@ -33,7 +33,7 @@ export class CrearUsuarioComponent implements OnInit {
                                                 .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
+      
 
       return;
     }        
@@ -45,7 +45,7 @@ export class CrearUsuarioComponent implements OnInit {
       permiso: new FormControl(this.permisos[0].id)
     });
 
-    this.spinnerService.ocultarSpinner();
+    
   }
 
   public mostrarSpinner(): boolean {

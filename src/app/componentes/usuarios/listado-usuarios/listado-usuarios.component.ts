@@ -17,7 +17,7 @@ export class ListadoUsuariosComponent implements OnInit {
   constructor(private router: Router, private usuariosService: UsuariosService, private activatedRoute: ActivatedRoute,
               private spinnerService: SpinnerService) {
 
-    this.spinnerService.mostrarSpinner();
+    
   }
 
   async ngOnInit(): Promise<void> {
@@ -32,7 +32,7 @@ export class ListadoUsuariosComponent implements OnInit {
       Alerta.mostrarError(error);
     }
 
-    this.spinnerService.ocultarSpinner();
+    
   }
 
   public mostrarSpinner(): boolean {

@@ -26,7 +26,7 @@ export class EditarUsuarioComponent implements OnInit {
   constructor(private permisosService: PermisosService, private usuariosService: UsuariosService, private router: Router, private route: ActivatedRoute,
               private generarHashService: GenerarHashService, private spinnerService: SpinnerService) {
 
-    this.spinnerService.mostrarSpinner();
+    
   }
 
   async ngOnInit(): Promise<void> {
@@ -38,7 +38,7 @@ export class EditarUsuarioComponent implements OnInit {
                                           .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
+      
 
       return;
     }
@@ -55,7 +55,7 @@ export class EditarUsuarioComponent implements OnInit {
                                                 .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
+      
 
       return;
     }                 
@@ -67,7 +67,7 @@ export class EditarUsuarioComponent implements OnInit {
     else
       this.esPeritoNoResponsable = false;
 
-    this.spinnerService.ocultarSpinner();
+    
   }
 
   public mostrarSpinner(): boolean {

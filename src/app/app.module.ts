@@ -23,6 +23,7 @@ import { ApiRestTokenInterceptor } from './interceptor/api-rest-token.intercepto
 import { SiniestrosComponent } from './componentes/siniestros/siniestros.component';
 import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
 import { SubirArchivoComponent } from './componentes/siniestros/subir-archivo/subir-archivo.component';
+import { SpinnerComponent } from './componentes/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { SubirArchivoComponent } from './componentes/siniestros/subir-archivo/su
     PiePaginaComponent,
     SiniestrosComponent,
     UsuariosComponent,
-    SubirArchivoComponent
+    SubirArchivoComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
