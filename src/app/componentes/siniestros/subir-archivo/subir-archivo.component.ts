@@ -1,10 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { first, pluck } from 'rxjs/operators';
 import { Alerta } from 'src/app/clases/Alerta';
 import { TipoArchivo } from 'src/app/enumeraciones/tipo-archivo.enum';
-import Swal from 'sweetalert2';
+import { DocumentacionesService } from 'src/app/servicios/documentaciones.service';
+import { ImagenesService } from 'src/app/servicios/imagenes.service';
+import { SpinnerService } from 'src/app/servicios/spinner.service';
 
 @Component({
   selector: 'app-subir-archivo',
@@ -14,14 +16,17 @@ import Swal from 'sweetalert2';
 export class SubirArchivoComponent implements OnInit {
   public formSubirArchivo: FormGroup;
   public hayArchivoSeleccionado: boolean;
-  @ViewChild("archivo") archivo: ElementRef;
+  @ViewChild("archivo") archivo: ElementRef<HTMLInputElement>;
   private idSiniestro: number;
   public esImagen: boolean;
   public formatosArchivoASubir: string;
+  private tipoArchivo: TipoArchivo;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private spinnerService: SpinnerService, private documentacionesService: DocumentacionesService, private imagenesService: ImagenesService,
+              private router: Router) { }
 
   async ngOnInit(): Promise<void> {
+    this.spinnerService.mostrarSpinner();
     this.idSiniestro = Number(this.route.snapshot
                                         .paramMap
                                         .get('id'));
@@ -31,19 +36,19 @@ export class SubirArchivoComponent implements OnInit {
       this.irAtras();
     }
 
-    let tipoArchivo: TipoArchivo = Number(await this.route.queryParamMap
-                                                          .pipe(
-                                                            first(),
-                                                            pluck('params'),
-                                                            pluck('tipoArchivo')
-                                                          )
-                                                          .toPromise());
-    if (isNaN(tipoArchivo)) {
+    this.tipoArchivo = Number(await this.route.queryParamMap
+                                              .pipe(
+                                                first(),
+                                                pluck('params'),
+                                                pluck('tipoArchivo')
+                                              )
+                                              .toPromise());
+    if (isNaN(this.tipoArchivo)) {
       Alerta.mostrarError('El tipo de archivo es incorrecto');
       this.irAtras();
     }    
 
-    if (tipoArchivo === TipoArchivo.Documento) {
+    if (this.tipoArchivo === TipoArchivo.Documento) {
       this.esImagen = false;    
       this.formatosArchivoASubir = "application/pdf";
     }
@@ -57,6 +62,7 @@ export class SubirArchivoComponent implements OnInit {
     });
 
     this.hayArchivoSeleccionado = true;  
+    this.spinnerService.ocultarSpinner();
   }
 
   public irAtras(): void {
@@ -64,86 +70,68 @@ export class SubirArchivoComponent implements OnInit {
   }
 
   public async enviar(): Promise<void> {
+    if (!this.formSubirArchivo.valid)
+      return;
+
+    let descripcion: string = this.formSubirArchivo.get('descripcion')?.value;
+
+    if (descripcion == undefined) {
+      Alerta.mostrarError('La descripción está vacía');
+      return;
+    }
+
     let nombreArchivoSeleccionado: string = this.archivo.nativeElement.value;
 
-    if (nombreArchivoSeleccionado === '')
+    if (nombreArchivoSeleccionado.length === 0) {
       this.hayArchivoSeleccionado = false;
-    else
-      this.hayArchivoSeleccionado = true;
+      return;
+    }    
 
-    if (this.formSubirArchivo.valid && this.hayArchivoSeleccionado) {
-      let archivo: any = this.archivo.nativeElement.files[0];
+    let archivo: any = this.archivo.nativeElement.files?.[0];
+    let archivoASubir = {
+      descripcion: descripcion,
+      idSiniestro: this.idSiniestro,
+      archivo: archivo
+    };
+    let respuesta: boolean = true;      
 
-      let documentacion = {
-        descripcion: this.formSubirArchivo.get('descripcion')?.value,
-        idSiniestro: this.idSiniestro,
-        archivo: archivo
-      };
+    if (this.tipoArchivo === TipoArchivo.Documento)
+      try {
+        respuesta = await this.documentacionesService.subirDocumentacion(archivoASubir)
+                                                      .toPromise();
+      } catch (error: any) {
+        Alerta.mostrarError(error);
 
-      let respuesta: boolean = true;
-
-      // try {
-      //   respuesta = await this.documentacionesService.subirDocumentacion(documentacion).toPromise();
-      // } catch (error) {
-      //   await Swal.fire({
-      //     title: 'Ha habido un error al crear la documentación. Inténtelo de nuevo',
-      //     icon: 'error',          
-      //     confirmButtonColor: '#3085d6',          
-      //     confirmButtonText: 'Aceptar',          
-      //   });
-
-      //   return;
-      // }      
-
-      if (respuesta) {
-        let accion = await Swal.fire({
-          title: 'Archivo subido correctamente',
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-          },
-          icon: 'success',
-          confirmButtonText: 'Aceptar'
-        });
-
-        // if (accion.isConfirmed)
-        //   this.router.navigate(['/detallesSiniestro', this.idSiniestro]);
+        return;
       }
-      else
-        Swal.fire({
-          title: 'Ha habido un error al subir el archivo',
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-          },
-          icon: 'error',
-          confirmButtonText: 'Aceptar'
-        });
-    }
+    else
+      try {
+        respuesta = await this.imagenesService.subirImagen(archivoASubir)
+                                              .toPromise();
+      } catch (error: any) {
+        Alerta.mostrarError(error);
+
+        return;
+      }
+
+    if (respuesta) {
+      await Alerta.mostrarOkAsincrono('Archivo subido correctamente');        
+      this.router.navigate(['/siniestros/detalles', this.idSiniestro]);
+    }    
   }
 
   public async comprobarArchivo(): Promise<void> {
-    let nombreArchivo: string = this.archivo.nativeElement.files[0].name;
-    let partesNombreArchivo: string[] = nombreArchivo.split('.');
-    let extensionArchivo: string = partesNombreArchivo[partesNombreArchivo.length - 1];
+    if (this.archivo.nativeElement.files?.length === 0) {
+      await Alerta.mostrarErrorAsincrono('Seleccione un archivo');
+      return;
+    }
+
+    let nombreArchivo: string | undefined = this.archivo.nativeElement.files?.[0].name;
+    let partesNombreArchivo: string[] | undefined = nombreArchivo?.split('.');
+    let extensionArchivo: string | undefined = partesNombreArchivo?.[partesNombreArchivo.length - 1];
 
     if (extensionArchivo !== 'pdf') {
-      await Swal.fire({
-        title: 'El archivo seleccionado tiene que ser pdf',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
-
+      await Alerta.mostrarErrorAsincrono('El archivo seleccionado tiene que ser pdf');
       this.archivo.nativeElement.value = "";
     }
     else

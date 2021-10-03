@@ -1,3 +1,4 @@
+<app-spinner></app-spinner>
 <h2 class="mb-4" *ngIf="!esImagen">Subir Documento</h2>
 <h2 class="mb-4" *ngIf="esImagen">Subir Imagen</h2>
 <form enctype="multipart/form-data" *ngIf="formSubirArchivo != undefined" [formGroup]="formSubirArchivo" (ngSubmit)="enviar()">
