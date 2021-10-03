@@ -10,7 +10,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditarSiniestroComponent } from './componentes/siniestros/editar-siniestro/editar-siniestro.component';
 import { DetallesSiniestroComponent } from './componentes/siniestros/detalles-siniestro/detalles-siniestro.component';
 import { SubirDocumentacionComponent } from './componentes/siniestros/subir-documentacion/subir-documentacion.component';
-import { SubirImagenComponent } from './componentes/siniestros/subir-imagen/subir-imagen.component';
 import { ListadoUsuariosComponent } from './componentes/usuarios/listado-usuarios/listado-usuarios.component';
 import { CrearUsuarioComponent } from './componentes/usuarios/crear-usuario/crear-usuario.component';
 import { EditarUsuarioComponent } from './componentes/usuarios/editar-usuario/editar-usuario.component';
@@ -32,7 +31,6 @@ import { SpinnerComponent } from './componentes/spinner/spinner.component';
     EditarSiniestroComponent,
     DetallesSiniestroComponent,
     SubirDocumentacionComponent,
-    SubirImagenComponent,
     ListadoUsuariosComponent,
     CrearUsuarioComponent,
     EditarUsuarioComponent,

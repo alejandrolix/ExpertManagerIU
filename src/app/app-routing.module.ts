@@ -10,7 +10,6 @@ import { ListadoSiniestrosComponent } from './componentes/siniestros/listado-sin
 import { SiniestrosComponent } from './componentes/siniestros/siniestros.component';
 import { SubirArchivoComponent } from './componentes/siniestros/subir-archivo/subir-archivo.component';
 import { SubirDocumentacionComponent } from './componentes/siniestros/subir-documentacion/subir-documentacion.component';
-import { SubirImagenComponent } from './componentes/siniestros/subir-imagen/subir-imagen.component';
 import { CrearUsuarioComponent } from './componentes/usuarios/crear-usuario/crear-usuario.component';
 import { EditarUsuarioComponent } from './componentes/usuarios/editar-usuario/editar-usuario.component';
 import { ListadoUsuariosComponent } from './componentes/usuarios/listado-usuarios/listado-usuarios.component';
@@ -62,11 +61,6 @@ const routes: Routes = [
   {
     path: 'subirDocumentacion/:id',
     component: SubirDocumentacionComponent,
-    canActivate: [AccederRutaGuard]
-  },
-  {
-    path: 'subirImagen/:id',
-    component: SubirImagenComponent,
     canActivate: [AccederRutaGuard]
   },
   {
