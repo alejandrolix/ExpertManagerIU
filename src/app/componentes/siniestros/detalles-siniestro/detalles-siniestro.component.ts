@@ -11,7 +11,7 @@ import { MensajesService } from 'src/app/servicios/mensajes.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
-import Swal, { SweetAlertResult } from 'sweetalert2';
+import { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-detalles-siniestro',
@@ -30,8 +30,9 @@ export class DetallesSiniestroComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.spinnerService.mostrarSpinner();
-    let idSiniestro: number = Number(this.route.snapshot.paramMap.get('id'));
-
+    let idSiniestro: number = Number(this.route.snapshot
+                                               .paramMap
+                                               .get('id'));
     try {
       this.siniestro = await this.siniestrosService.obtenerPorId(idSiniestro)
                                                    .toPromise();
@@ -86,20 +87,10 @@ export class DetallesSiniestroComponent implements OnInit {
     let pdf: Blob;
 
     try {
-      pdf = await this.documentacionesService.obtener(id).toPromise(); 
-    } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al obtener la documentación. Inténtelo de nuevo',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
-
+      pdf = await this.documentacionesService.obtener(id)
+                                             .toPromise(); 
+    } catch (error: any) {
+      Alerta.mostrarError(error);
       return;
     }    
     
@@ -113,19 +104,8 @@ export class DetallesSiniestroComponent implements OnInit {
     try {
       imagen = await this.imagenesService.obtener(id)
                                          .toPromise();
-    } catch (error) {
-      await Swal.fire({
-        title: 'Ha habido un error al obtener la imagen. Inténtelo de nuevo',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        },
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
-
+    } catch (error: any) {
+      Alerta.mostrarError(error);
       return;
     }    
     
@@ -142,71 +122,29 @@ export class DetallesSiniestroComponent implements OnInit {
   }
 
   public async eliminarDocumentacion(idDocumentacion: number): Promise<void> {
-    let accion: SweetAlertResult = await Swal.fire({
-      title: `¿Está seguro que desea eliminar la documentación con id ${idDocumentacion}?`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
-    });
+    let accion: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono(`¿Está seguro que desea eliminar la documentación con id ${idDocumentacion}?`);
 
     if (accion.isConfirmed) {   
       let respuesta: boolean;
 
       try {
-        respuesta = await this.documentacionesService.eliminar(idDocumentacion).toPromise(); 
-      } catch (error) {
-        await Swal.fire({
-          title: 'Ha habido un error al obtener eliminar la documentación. Inténtelo de nuevo',
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-          },
-          icon: 'error',
-          confirmButtonText: 'Aceptar'
-        });
-  
+        respuesta = await this.documentacionesService.eliminar(idDocumentacion)
+                                                     .toPromise(); 
+      } catch (error: any) {
+        Alerta.mostrarError(error);
         return;
       }      
 
       if (respuesta) {
-        await Swal.fire({
-          title: 'Documentación eliminada',
-          icon: 'success',
-          showCancelButton: false,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Aceptar',
-          cancelButtonText: 'Cancelar'
-        });
+        await Alerta.mostrarOkAsincrono('Documentación eliminada');
 
         try {
-          this.documentaciones = await this.documentacionesService.obtenerPorIdSiniestro(this.siniestro.id).toPromise(); 
-        } catch (error) {
-          await Swal.fire({
-            title: 'Ha habido un error al obtener las documentaciones del siniestro. Inténtelo de nuevo',
-            showClass: {
-              popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOutUp'
-            },
-            icon: 'error',
-            confirmButtonText: 'Aceptar'
-          });
+          this.documentaciones = await this.documentacionesService.obtenerPorIdSiniestro(this.siniestro.id)
+                                                                  .toPromise(); 
+        } catch (error: any) {
+          Alerta.mostrarError(error);
         }        
       }        
-      else
-        Swal.fire({
-          title: `Ha habido un problema al eliminar la documentación con id ${idDocumentacion}`,
-          icon: 'error',          
-          confirmButtonColor: '#3085d6',          
-          confirmButtonText: 'Aceptar',          
-        });
     }
   }
 
@@ -245,71 +183,29 @@ export class DetallesSiniestroComponent implements OnInit {
   }
 
   public async eliminarImagen(idImagen: number): Promise<void> {
-    let accion: SweetAlertResult = await Swal.fire({
-      title: `¿Está seguro que desea eliminar la imagen con id ${idImagen}?`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
-    });
+    let accion: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono(`¿Está seguro que desea eliminar la imagen con id ${idImagen}?`);
 
     if (accion.isConfirmed) {     
       let respuesta: boolean;
 
       try {
-        respuesta = await this.imagenesService.eliminar(idImagen).toPromise();
-      } catch (error) {
-        await Swal.fire({
-          title: 'Ha habido un error al eliminar la imagen. Inténtelo de nuevo',
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-          },
-          icon: 'error',
-          confirmButtonText: 'Aceptar'
-        });
-  
+        respuesta = await this.imagenesService.eliminar(idImagen)
+                                              .toPromise();
+      } catch (error: any) {
+        Alerta.mostrarError(error);
         return;
       }      
 
       if (respuesta) {
-        await Swal.fire({
-          title: 'Imagen eliminada',
-          icon: 'success',
-          showCancelButton: false,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Aceptar',
-          cancelButtonText: 'Cancelar'
-        });
+        await Alerta.mostrarOkAsincrono('Imagen eliminada');
 
         try {
-          this.imagenes = await this.imagenesService.obtenerPorIdSiniestro(this.siniestro.id).toPromise(); 
-        } catch (error) {
-          Swal.fire({
-            title: 'Ha habido un error al obtener las imágenes. Inténtelo de nuevo',
-            showClass: {
-              popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOutUp'
-            },
-            icon: 'error',
-            confirmButtonText: 'Aceptar'
-          });
+          this.imagenes = await this.imagenesService.obtenerPorIdSiniestro(this.siniestro.id)
+                                                    .toPromise(); 
+        } catch (error: any) {
+          Alerta.mostrarError(error);
         }        
       }        
-      else
-        Swal.fire({
-          title: `Ha habido un problema al eliminar la imagen con id ${idImagen}`,
-          icon: 'error',          
-          confirmButtonColor: '#3085d6',          
-          confirmButtonText: 'Aceptar',          
-        });
     }
   }
 }
