@@ -21,7 +21,7 @@ export class ImagenesService {
     const formData = new FormData();    
     formData.append("Descripcion", envioImagen.descripcion); 
     formData.append("IdSiniestro", envioImagen.idSiniestro); 
-    formData.append("Archivo", envioImagen.imagen, envioImagen.imagen.name);
+    formData.append("Archivo", envioImagen.archivo);
       
     return this.peticionHttp.hacerPeticionPost<boolean>(`${environment.urlApi}/Imagenes`, formData);
   }

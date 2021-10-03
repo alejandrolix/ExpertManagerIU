@@ -232,8 +232,12 @@ export class DetallesSiniestroComponent implements OnInit {
     }
   }
 
-  public subirImagen(idSiniestro: number): void {
-    this.router.navigate(['/subirImagen', idSiniestro]);
+  public subirImagen(): void {
+    this.router.navigate(['/siniestros/imagenes/subir', this.siniestro.id], {
+      queryParams: {
+        tipoArchivo: TipoArchivo.Imagen
+      }
+    });
   }
 
   public crearMensaje(idSiniestro: number): void {

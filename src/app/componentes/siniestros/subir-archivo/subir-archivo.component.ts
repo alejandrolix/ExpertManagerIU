@@ -17,10 +17,10 @@ export class SubirArchivoComponent implements OnInit {
   public formSubirArchivo: FormGroup;
   public hayArchivoSeleccionado: boolean;
   @ViewChild("archivo") archivo: ElementRef<HTMLInputElement>;
-  private idSiniestro: number;
-  public esImagen: boolean;
+  private idSiniestro: number;  
   public formatosArchivoASubir: string;
-  private tipoArchivo: TipoArchivo;
+  public tipoArchivoEnum: typeof TipoArchivo = TipoArchivo;
+  public tipoArchivo: TipoArchivo;  
 
   constructor(private route: ActivatedRoute, private spinnerService: SpinnerService, private documentacionesService: DocumentacionesService, private imagenesService: ImagenesService,
               private router: Router) { }
@@ -48,14 +48,10 @@ export class SubirArchivoComponent implements OnInit {
       this.irAtras();
     }    
 
-    if (this.tipoArchivo === TipoArchivo.Documento) {
-      this.esImagen = false;    
-      this.formatosArchivoASubir = "application/pdf";
-    }
-    else {
-      this.esImagen = true;
-      this.formatosArchivoASubir = "image/png, image/jpeg, image/jpg";
-    }
+    if (this.tipoArchivo === TipoArchivo.Documento)        
+      this.formatosArchivoASubir = "application/pdf";    
+    else      
+      this.formatosArchivoASubir = "image/png, image/jpeg, image/jpg";    
 
     this.formSubirArchivo = new FormGroup({
       descripcion: new FormControl('', Validators.required)
@@ -69,7 +65,7 @@ export class SubirArchivoComponent implements OnInit {
     history.back();
   }
 
-  public async enviar(): Promise<void> {
+  public async enviar(): Promise<void> {    
     if (!this.formSubirArchivo.valid)
       return;
 
@@ -89,9 +85,9 @@ export class SubirArchivoComponent implements OnInit {
 
     let archivo: any = this.archivo.nativeElement.files?.[0];
     let archivoASubir = {
-      descripcion: descripcion,
+      descripcion,
       idSiniestro: this.idSiniestro,
-      archivo: archivo
+      archivo
     };
     let respuesta: boolean = true;      
 
@@ -120,19 +116,24 @@ export class SubirArchivoComponent implements OnInit {
     }    
   }
 
-  public async comprobarArchivo(): Promise<void> {
-    if (this.archivo.nativeElement.files?.length === 0) {
+  public async comprobarArchivo(): Promise<void> {    
+    if (!this.archivo.nativeElement.files) {
       await Alerta.mostrarErrorAsincrono('Seleccione un archivo');
       return;
     }
 
-    let nombreArchivo: string | undefined = this.archivo.nativeElement.files?.[0].name;
+    let formatosArchivos: string[] = ['pdf', 'jpg', 'jpeg', 'png'];
+    let nombreArchivo: string | undefined = this.archivo.nativeElement.files[0].name;
     let partesNombreArchivo: string[] | undefined = nombreArchivo?.split('.');
     let extensionArchivo: string | undefined = partesNombreArchivo?.[partesNombreArchivo.length - 1];
 
-    if (extensionArchivo !== 'pdf') {
-      await Alerta.mostrarErrorAsincrono('El archivo seleccionado tiene que ser pdf');
-      this.archivo.nativeElement.value = "";
+    if (extensionArchivo == undefined) {
+      await Alerta.mostrarErrorAsincrono('La extensión del archivo no es correcta');
+      return;
+    }
+
+    if (!formatosArchivos.includes(extensionArchivo)) {
+      await Alerta.mostrarErrorAsincrono(`El archivo seleccionado tiene que ser ${formatosArchivos.join(', ')}`);      
     }
     else
       this.hayArchivoSeleccionado = true;

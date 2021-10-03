@@ -47,6 +47,10 @@ const routes: Routes = [
       {
         path: 'documentaciones/subir/:id',
         component: SubirArchivoComponent
+      },
+      {
+        path: 'imagenes/subir/:id',
+        component: SubirArchivoComponent
       }
     ]
   },
