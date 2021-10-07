@@ -7,7 +7,7 @@ import { PermisosService } from '../servicios/permisos.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AccederRutaGuard implements CanActivate {
+export class ComprobarPermisoGuard implements CanActivate {
   
   constructor(private permisosService: PermisosService) { }
 

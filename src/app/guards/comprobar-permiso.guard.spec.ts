@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AccederRutaGuard } from './acceder-ruta.guard';
+import { ComprobarPermisoGuard } from './comprobar-permiso.guard';
 
 describe('AccederRutaGuard', () => {
-  let guard: AccederRutaGuard;
+  let guard: ComprobarPermisoGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    guard = TestBed.inject(AccederRutaGuard);
+    guard = TestBed.inject(ComprobarPermisoGuard);
   });
 
   it('should be created', () => {

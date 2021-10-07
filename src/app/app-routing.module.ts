@@ -13,7 +13,7 @@ import { CrearUsuarioComponent } from './componentes/usuarios/crear-usuario/crea
 import { EditarUsuarioComponent } from './componentes/usuarios/editar-usuario/editar-usuario.component';
 import { ListadoUsuariosComponent } from './componentes/usuarios/listado-usuarios/listado-usuarios.component';
 import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
-import { AccederRutaGuard } from './guards/acceder-ruta.guard';
+import { ComprobarPermisoGuard } from './guards/comprobar-permiso.guard';
 
 const routes: Routes = [
   {
@@ -31,12 +31,12 @@ const routes: Routes = [
       {
         path: 'crear',
         component: CrearSiniestroComponent,
-        canActivate: [AccederRutaGuard]
+        canActivate: [ComprobarPermisoGuard]
       },
       {
         path: 'editar/:id',
         component: EditarSiniestroComponent,
-        canActivate: [AccederRutaGuard]
+        canActivate: [ComprobarPermisoGuard]
       },
       {
         path: 'detalles/:id',
@@ -55,27 +55,27 @@ const routes: Routes = [
   {
     path: 'crearMensaje/:id',
     component: CrearMensajeComponent,
-    canActivate: [AccederRutaGuard]
+    canActivate: [ComprobarPermisoGuard]
   },
   {
     path: 'usuarios',
     component: UsuariosComponent,
-    canActivate: [AccederRutaGuard],
+    canActivate: [ComprobarPermisoGuard],
     children: [
       {
         path: '',
         component: ListadoUsuariosComponent,
-        canActivate: [AccederRutaGuard]
+        canActivate: [ComprobarPermisoGuard]
       },
       {
         path: 'crear',
         component: CrearUsuarioComponent,
-        canActivate: [AccederRutaGuard]
+        canActivate: [ComprobarPermisoGuard]
       },
       {
         path: 'editar/:id',
         component: EditarUsuarioComponent,
-        canActivate: [AccederRutaGuard]
+        canActivate: [ComprobarPermisoGuard]
       }
     ]
   },    
