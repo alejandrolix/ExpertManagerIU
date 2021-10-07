@@ -1,10 +1,10 @@
-<app-menu-navegacion *ngIf="estaSesionIniciada"></app-menu-navegacion>
+<app-menu-navegacion *ngIf="estaLogueadoUsuario"></app-menu-navegacion>
 <div class="container-fluid mt-4">
     <div class="container margenAbajo">        
         <router-outlet></router-outlet>
     </div>    
 
-    <footer class="footer fixed-bottom bg-dark" *ngIf="estaSesionIniciada">
+    <footer class="footer fixed-bottom bg-dark" *ngIf="estaLogueadoUsuario">
         <p class="mt-2 text-center">Expert Manager ha sido desarrollado por ViewAx. Copyright &copy; 2020-2021</p>
     </footer>
 </div>
