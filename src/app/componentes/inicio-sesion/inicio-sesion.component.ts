@@ -21,15 +21,14 @@ export class InicioSesionComponent implements OnInit {
 
   ngOnInit(): void {           
     this.spinnerService.ocultarSpinner();    
-    let idUsuarioLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
 
-    if (idUsuarioLogueado === 0)      
+    if (this.autenticacionService.estaLogueadoUsuario)
+      this.router.navigateByUrl('/inicio');
+    else
       this.formInicioSesion = new FormGroup({
         usuario: new FormControl('', Validators.required),
         contrasenia: new FormControl('', Validators.required)
-      });    
-    else
-      this.router.navigateByUrl('/inicio');
+      });
   }  
 
   public async iniciarSesion(): Promise<void> {
