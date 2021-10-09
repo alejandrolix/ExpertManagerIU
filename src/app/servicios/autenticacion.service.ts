@@ -2,7 +2,6 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { Usuario } from '../interfaces/usuario';
-import { UsuariosService } from './usuarios.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +13,25 @@ export class AutenticacionService implements OnDestroy {
   private iniciarSesionSubject: Subject<void>;
   private cerrarSesionSubject: Subject<void>;
 
-  constructor(private usuariosService: UsuariosService, private router: Router) {
-    let idUsuarioLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
+  constructor(private router: Router) {
+    let idUsuario: number = this.obtenerIdUsuario();
 
-    if (idUsuarioLogueado === 0)    
+    if (idUsuario === 0)    
       this._estaLogueadoUsuario = false;
     else
       this._estaLogueadoUsuario = true;
 
     this.iniciarSubjects();
+  }
+
+  public obtenerIdUsuario(): number {
+    let idUsuario: string = localStorage.getItem('idUsuario') ?? '';
+
+    if (idUsuario.length === 0)
+      return 0;
+
+    let idUsuarioNumero: number = parseInt(idUsuario);
+    return idUsuarioNumero;
   }
 
   public get estaLogueadoUsuario(): boolean {
