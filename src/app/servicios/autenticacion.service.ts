@@ -39,6 +39,8 @@ export class AutenticacionService implements OnDestroy {
     this.cerrarSesionSubject = new Subject<void>();
     this.cerrarSesionSubscription = this.cerrarSesionSubject.subscribe(() => {      
       this.eliminarCredencialesUsuario();
+      this._estaLogueadoUsuario = false;
+      this.router.navigateByUrl('/inicioSesion');
     });
   }
 
