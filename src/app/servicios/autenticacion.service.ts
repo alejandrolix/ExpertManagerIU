@@ -38,10 +38,7 @@ export class AutenticacionService implements OnDestroy {
 
     this.cerrarSesionSubject = new Subject<void>();
     this.cerrarSesionSubscription = this.cerrarSesionSubject.subscribe(() => {      
-      localStorage.removeItem('idUsuario');
-      localStorage.removeItem('usuario');
-      localStorage.removeItem('idPermiso');
-      localStorage.removeItem('token');
+      this.eliminarCredencialesUsuario();
     });
   }
 
@@ -50,6 +47,13 @@ export class AutenticacionService implements OnDestroy {
     localStorage.setItem('usuario', usuario.nombre);
     localStorage.setItem('idPermiso', usuario.idPermiso.toString());
     localStorage.setItem('token', usuario.token);
+  }
+
+  private eliminarCredencialesUsuario(): void {
+    localStorage.removeItem('idUsuario');
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('idPermiso');
+    localStorage.removeItem('token');
   }
 
   public cerrarSesion(): void {
