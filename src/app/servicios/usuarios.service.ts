@@ -8,11 +8,9 @@ import { Usuario } from '../interfaces/usuario';
   providedIn: 'root'
 })
 export class UsuariosService {
-  public iniciarSesionSubject: Subject<boolean>;
   public cerrarSesionSubject: Subject<boolean>;
 
   constructor(private peticionHttp: PeticionHttp) {
-    this.iniciarSesionSubject = new Subject<boolean>();
     this.cerrarSesionSubject = new Subject<boolean>();
   }
 

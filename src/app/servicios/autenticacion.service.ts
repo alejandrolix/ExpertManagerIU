@@ -13,6 +13,7 @@ export class AutenticacionService implements OnDestroy {
   private cerrarSesionSubscription: Subscription; 
   private redirigirInicioSesionSubscription: Subscription;
   private redirigirInicioSesion: Subject<void>;
+  private iniciarSesionSubject: Subject<void>;
 
   constructor(private usuariosService: UsuariosService, private router: Router) {
     let idUsuarioLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
@@ -30,14 +31,11 @@ export class AutenticacionService implements OnDestroy {
   }
 
   private iniciarSubjects(): void {
-    this.iniciarSesionSubscription = this.usuariosService.iniciarSesionSubject
-                                                         .pipe(
-                                                            filter((respuesta: boolean) => respuesta)
-                                                         )    
-                                                         .subscribe(() => {
-                                                            this._estaLogueadoUsuario = true;
-                                                            this.router.navigateByUrl('/inicio');
-                                                         });
+    this.iniciarSesionSubject = new Subject<void>();
+    this.iniciarSesionSubscription = this.iniciarSesionSubject.subscribe(() => {
+      this._estaLogueadoUsuario = true;
+      this.router.navigateByUrl('/inicio');
+    });
 
     this.cerrarSesionSubscription = this.usuariosService.cerrarSesionSubject
                                                         .pipe(
@@ -54,13 +52,13 @@ export class AutenticacionService implements OnDestroy {
 
     this.redirigirInicioSesion = new Subject<void>();
     this.redirigirInicioSesionSubscription = this.redirigirInicioSesion.subscribe(() => {
-      this.mostrarInicioSesion();
+      this._estaLogueadoUsuario = false;
+      this.router.navigateByUrl('/inicioSesion');
     });
   }
 
-  private mostrarInicioSesion(): void {
-    this._estaLogueadoUsuario = false;
-    this.router.navigateByUrl('/inicioSesion');
+  public iniciarSesion(): void {
+    this.iniciarSesionSubject.next();
   }
 
   ngOnDestroy(): void {

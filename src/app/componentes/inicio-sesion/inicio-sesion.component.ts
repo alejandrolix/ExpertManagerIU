@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
+import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { UsuariosService } from '../../servicios/usuarios.service';
@@ -15,7 +16,7 @@ export class InicioSesionComponent implements OnInit {
   public formInicioSesion: FormGroup;
 
   constructor(private usuariosService: UsuariosService, private router: Router, private generarHashService: GenerarHashService,
-              private spinnerService: SpinnerService) { }
+              private spinnerService: SpinnerService, private autenticacionService: AutenticacionService) { }
 
   ngOnInit(): void {           
     this.spinnerService.ocultarSpinner();    
@@ -58,6 +59,6 @@ export class InicioSesionComponent implements OnInit {
     localStorage.setItem('token', respuesta.token);
 
     this.spinnerService.ocultarSpinner();
-    this.usuariosService.iniciarSesionSubject.next(true);
+    this.autenticacionService.iniciarSesion();
   }
 }
