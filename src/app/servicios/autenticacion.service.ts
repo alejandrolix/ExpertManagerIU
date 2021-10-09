@@ -66,6 +66,11 @@ export class AutenticacionService implements OnDestroy {
     this.iniciarSesionSubject.next();
   }
 
+  public obtenerNombreUsuario(): string {
+    let nombre: string = localStorage.getItem('usuario') ?? '';
+    return nombre;
+  }
+
   ngOnDestroy(): void {
     this.iniciarSesionSubscription.unsubscribe();
     this.cerrarSesionSubscription.unsubscribe();

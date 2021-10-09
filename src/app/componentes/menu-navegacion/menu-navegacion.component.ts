@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Alerta } from 'src/app/clases/Alerta';
 import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 import { PermisosService } from '../../servicios/permisos.service';
 
@@ -16,11 +17,15 @@ export class MenuNavegacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (localStorage.getItem('usuario') == null)
+    let nombreUsuario: string = this.autenticacionService.obtenerNombreUsuario();
+    
+    if (nombreUsuario.length === 0) {
       this.mostrarUsuario = false;
+      Alerta.mostrarError('El nombre de usuario no existe');
+    }
     else {
       this.mostrarUsuario = true;
-      this.usuario = localStorage.getItem('usuario') ?? '';
+      this.usuario = nombreUsuario;
     }    
   }
 
