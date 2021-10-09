@@ -12,7 +12,7 @@ export class AutenticacionService implements OnDestroy {
   private iniciarSesionSubscription: Subscription;
   private cerrarSesionSubscription: Subscription; 
   private redirigirInicioSesionSubscription: Subscription;
-  private redirigirInicioSesion: Subject<boolean>;
+  private redirigirInicioSesion: Subject<void>;
 
   constructor(private usuariosService: UsuariosService, private router: Router) {
     let idUsuarioLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
@@ -49,14 +49,18 @@ export class AutenticacionService implements OnDestroy {
                                                           localStorage.removeItem('idPermiso');
                                                           localStorage.removeItem('token');
 
-                                                          this.redirigirInicioSesion.next(false);
+                                                          this.redirigirInicioSesion.next();
                                                         });
 
-    this.redirigirInicioSesion = new Subject<boolean>();
-    this.redirigirInicioSesionSubscription = this.redirigirInicioSesion.subscribe((valor: boolean) => {      
-      this._estaLogueadoUsuario = valor;
-      this.router.navigateByUrl('/inicioSesion');
+    this.redirigirInicioSesion = new Subject<void>();
+    this.redirigirInicioSesionSubscription = this.redirigirInicioSesion.subscribe(() => {
+      this.mostrarInicioSesion();
     });
+  }
+
+  private mostrarInicioSesion(): void {
+    this._estaLogueadoUsuario = false;
+    this.router.navigateByUrl('/inicioSesion');
   }
 
   ngOnDestroy(): void {
