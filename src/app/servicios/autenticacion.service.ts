@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
+import { Usuario } from '../interfaces/usuario';
 import { UsuariosService } from './usuarios.service';
 
 @Injectable({
@@ -42,6 +43,13 @@ export class AutenticacionService implements OnDestroy {
       localStorage.removeItem('idPermiso');
       localStorage.removeItem('token');
     });
+  }
+
+  public guardarCredencialesUsuario(usuario: Usuario): void {
+    localStorage.setItem('idUsuario', usuario.id.toString());
+    localStorage.setItem('usuario', usuario.nombre);
+    localStorage.setItem('idPermiso', usuario.idPermiso.toString());
+    localStorage.setItem('token', usuario.token);
   }
 
   public cerrarSesion(): void {

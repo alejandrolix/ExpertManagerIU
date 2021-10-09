@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
+import { Usuario } from 'src/app/interfaces/usuario';
 import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
@@ -36,16 +37,16 @@ export class InicioSesionComponent implements OnInit {
     let nombre: string = this.formInicioSesion.get('usuario')?.value;
     let hashContrasenia: string = await this.generarHashService.generar(this.formInicioSesion.get('contrasenia')?.value);
 
-    let credenciales = {
-      nombre: nombre,
-      hashContrasenia: hashContrasenia
+    let credenciales: { nombre: string, hashContrasenia: string } = {
+      nombre,
+      hashContrasenia
     };
 
-    let respuesta: any;
+    let usuario: Usuario;
 
     try {
-      respuesta = await this.usuariosService.iniciarSesion(credenciales)
-                            .toPromise(); 
+      usuario = await this.usuariosService.iniciarSesion(credenciales)
+                                            .toPromise(); 
     } catch (error: any) {
       Alerta.mostrarError(error); 
       this.spinnerService.ocultarSpinner();
@@ -53,11 +54,7 @@ export class InicioSesionComponent implements OnInit {
       return;
     }    
 
-    localStorage.setItem('idUsuario', respuesta.id);
-    localStorage.setItem('usuario', credenciales.nombre);
-    localStorage.setItem('idPermiso', respuesta.idPermiso);
-    localStorage.setItem('token', respuesta.token);
-
+    this.autenticacionService.guardarCredencialesUsuario(usuario);
     this.spinnerService.ocultarSpinner();
     this.autenticacionService.iniciarSesion();
   }
