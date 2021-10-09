@@ -10,8 +10,6 @@ export class AutenticacionService implements OnDestroy {
   private _estaLogueadoUsuario: boolean;
   private iniciarSesionSubscription: Subscription;
   private cerrarSesionSubscription: Subscription; 
-  private redirigirInicioSesionSubscription: Subscription;
-  private redirigirInicioSesion: Subject<void>;
   private iniciarSesionSubject: Subject<void>;
   private cerrarSesionSubject: Subject<void>;
 
@@ -43,14 +41,6 @@ export class AutenticacionService implements OnDestroy {
       localStorage.removeItem('usuario');
       localStorage.removeItem('idPermiso');
       localStorage.removeItem('token');
-
-      this.redirigirInicioSesion.next();
-    });
-
-    this.redirigirInicioSesion = new Subject<void>();
-    this.redirigirInicioSesionSubscription = this.redirigirInicioSesion.subscribe(() => {
-      this._estaLogueadoUsuario = false;
-      this.router.navigateByUrl('/inicioSesion');
     });
   }
 
@@ -65,6 +55,5 @@ export class AutenticacionService implements OnDestroy {
   ngOnDestroy(): void {
     this.iniciarSesionSubscription.unsubscribe();
     this.cerrarSesionSubscription.unsubscribe();
-    this.redirigirInicioSesionSubscription.unsubscribe();
   }
 }
