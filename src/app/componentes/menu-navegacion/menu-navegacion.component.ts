@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuariosService } from 'src/app/servicios/usuarios.service';
+import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 import { PermisosService } from '../../servicios/permisos.service';
 
 @Component({
@@ -11,7 +11,7 @@ export class MenuNavegacionComponent implements OnInit {
   public usuario: string;
   public mostrarUsuario: boolean;
 
-  constructor(private permisosService: PermisosService, private usuariosService: UsuariosService) {
+  constructor(private permisosService: PermisosService, private autenticacionService: AutenticacionService) {
     this.mostrarUsuario = false;
   }
 
@@ -29,6 +29,6 @@ export class MenuNavegacionComponent implements OnInit {
   }
 
   public cerrarSesion(): void {        
-    this.usuariosService.cerrarSesionSubject.next(true);
+    this.autenticacionService.cerrarSesion();
   }
 }

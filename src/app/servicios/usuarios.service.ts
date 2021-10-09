@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PeticionHttp } from '../clases/PeticionHttp';
 import { Usuario } from '../interfaces/usuario';
@@ -8,11 +8,7 @@ import { Usuario } from '../interfaces/usuario';
   providedIn: 'root'
 })
 export class UsuariosService {
-  public cerrarSesionSubject: Subject<boolean>;
-
-  constructor(private peticionHttp: PeticionHttp) {
-    this.cerrarSesionSubject = new Subject<boolean>();
-  }
+  constructor(private peticionHttp: PeticionHttp) {}
 
   public obtenerTodos(): Observable<Usuario[]> {    
     return this.peticionHttp.hacerPeticionGet<Usuario[]>(`${environment.urlApi}/Usuarios`);

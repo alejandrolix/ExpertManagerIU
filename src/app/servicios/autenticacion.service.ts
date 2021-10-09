@@ -1,7 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
 import { UsuariosService } from './usuarios.service';
 
 @Injectable({
@@ -14,6 +13,7 @@ export class AutenticacionService implements OnDestroy {
   private redirigirInicioSesionSubscription: Subscription;
   private redirigirInicioSesion: Subject<void>;
   private iniciarSesionSubject: Subject<void>;
+  private cerrarSesionSubject: Subject<void>;
 
   constructor(private usuariosService: UsuariosService, private router: Router) {
     let idUsuarioLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
@@ -37,24 +37,25 @@ export class AutenticacionService implements OnDestroy {
       this.router.navigateByUrl('/inicio');
     });
 
-    this.cerrarSesionSubscription = this.usuariosService.cerrarSesionSubject
-                                                        .pipe(
-                                                          filter((respuesta: boolean) => respuesta)
-                                                        )    
-                                                        .subscribe(() => {      
-                                                          localStorage.removeItem('idUsuario');
-                                                          localStorage.removeItem('usuario');
-                                                          localStorage.removeItem('idPermiso');
-                                                          localStorage.removeItem('token');
+    this.cerrarSesionSubject = new Subject<void>();
+    this.cerrarSesionSubscription = this.cerrarSesionSubject.subscribe(() => {      
+      localStorage.removeItem('idUsuario');
+      localStorage.removeItem('usuario');
+      localStorage.removeItem('idPermiso');
+      localStorage.removeItem('token');
 
-                                                          this.redirigirInicioSesion.next();
-                                                        });
+      this.redirigirInicioSesion.next();
+    });
 
     this.redirigirInicioSesion = new Subject<void>();
     this.redirigirInicioSesionSubscription = this.redirigirInicioSesion.subscribe(() => {
       this._estaLogueadoUsuario = false;
       this.router.navigateByUrl('/inicioSesion');
     });
+  }
+
+  public cerrarSesion(): void {
+    this.cerrarSesionSubject.next();
   }
 
   public iniciarSesion(): void {
