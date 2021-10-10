@@ -34,6 +34,12 @@ export class AutenticacionService implements OnDestroy {
     return idUsuarioNumero;
   }
 
+  public obtenerToken(): string {
+    let token: string = localStorage.getItem('token') ?? '';
+
+    return token;
+  }
+
   public get estaLogueadoUsuario(): boolean {
     return this._estaLogueadoUsuario;
   }
@@ -46,7 +52,7 @@ export class AutenticacionService implements OnDestroy {
     });
 
     this.cerrarSesionSubject = new Subject<void>();
-    this.cerrarSesionSubscription = this.cerrarSesionSubject.subscribe(() => {      
+    this.cerrarSesionSubscription = this.cerrarSesionSubject.subscribe(() => {    
       this.eliminarCredencialesUsuario();
       this._estaLogueadoUsuario = false;
       this.router.navigateByUrl('/inicioSesion');

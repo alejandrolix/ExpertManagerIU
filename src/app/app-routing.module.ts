@@ -14,11 +14,13 @@ import { EditarUsuarioComponent } from './componentes/usuarios/editar-usuario/ed
 import { ListadoUsuariosComponent } from './componentes/usuarios/listado-usuarios/listado-usuarios.component';
 import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
 import { ComprobarPermisoGuard } from './guards/comprobar-permiso.guard';
+import { InicioSesionGuard } from './guards/inicio-sesion.guard';
 
 const routes: Routes = [
   {
     path: 'inicio',
-    component: InicioComponent    
+    component: InicioComponent,
+    canActivate: [InicioSesionGuard]   
   },
   {
     path: 'siniestros',
