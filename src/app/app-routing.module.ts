@@ -28,12 +28,13 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: ListadoSiniestrosComponent
+        component: ListadoSiniestrosComponent,
+        canActivate: [InicioSesionGuard]
       },
       {
         path: 'crear',
         component: CrearSiniestroComponent,
-        canActivate: [ComprobarPermisoGuard]
+        canActivate: [InicioSesionGuard, ComprobarPermisoGuard]
       },
       {
         path: 'editar/:id',
