@@ -55,7 +55,7 @@ const routes: Routes = [
         component: SubirArchivoComponent
       },
       {
-        path: 'imagenes/subir/:id',
+        path: ':id/imagenes/subir',
         component: SubirArchivoComponent
       }
     ]

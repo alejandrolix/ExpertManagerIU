@@ -171,7 +171,7 @@ export class DetallesSiniestroComponent implements OnInit {
   }
 
   public subirImagen(): void {
-    this.router.navigate(['/siniestros/imagenes/subir', this.siniestro.id], {
+    this.router.navigate(['/siniestros', this.siniestro.id, 'imagenes', 'subir'], {
       queryParams: {
         tipoArchivo: TipoArchivo.Imagen
       }
