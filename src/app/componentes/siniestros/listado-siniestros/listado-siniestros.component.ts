@@ -5,12 +5,12 @@ import { Aseguradora } from 'src/app/interfaces/aseguradora';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AseguradorasService } from 'src/app/servicios/aseguradoras.service';
+import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 import { MensajesService } from 'src/app/servicios/mensajes.service';
 import { PeritosService } from 'src/app/servicios/peritos.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
-import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import { SweetAlertResult } from 'sweetalert2';
 
 @Component({
@@ -26,7 +26,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   public idAseguradoraSeleccionada: number;
 
   constructor(private siniestrosService: SiniestrosService, private router: Router, private permisosService: PermisosService,
-              private aseguradorasService: AseguradorasService, private usuariosService: UsuariosService, private peritosService: PeritosService,
+              private aseguradorasService: AseguradorasService, private autenticacionService: AutenticacionService, private peritosService: PeritosService,
               private mensajesService: MensajesService, private activatedRoute: ActivatedRoute, private spinnerService: SpinnerService) {
 
     this.siniestros = [];
@@ -96,7 +96,7 @@ export class ListadoSiniestrosComponent implements OnInit {
     }
 
     if (esPeritoNoResponsable) {
-      let idPeritoLogueado: number = this.usuariosService.obtenerIdUsuarioLogueado();
+      let idPeritoLogueado: number = this.autenticacionService.obtenerIdUsuario();
       let impReparacionDaniosPerito: number;
 
       try {
@@ -124,7 +124,7 @@ export class ListadoSiniestrosComponent implements OnInit {
       if (impValoracionDaniosSiniestro > impReparacionDaniosPerito) {
         await Alerta.mostrarErrorAsincrono('No puede cerrar el siniestro porque el importe de valoración de daños supera el establecido al perito');
 
-        let idUsuarioCreado: number = this.usuariosService.obtenerIdUsuarioLogueado();
+        let idUsuarioCreado: number = this.autenticacionService.obtenerIdUsuario();
         let mensaje = {
           idUsuarioCreado: idUsuarioCreado,
           idSiniestro: idSiniestro
@@ -180,7 +180,7 @@ export class ListadoSiniestrosComponent implements OnInit {
       let idPerito: number = 0;
 
       try {        
-        idPerito = this.usuariosService.obtenerIdUsuarioLogueado();
+        idPerito = this.autenticacionService.obtenerIdUsuario();
       } catch (error: any) {
         Alerta.mostrarError(error.message);
         this.spinnerService.ocultarSpinner();
