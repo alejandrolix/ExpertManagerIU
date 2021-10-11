@@ -14,12 +14,10 @@ export class InicioSesionGuard implements CanActivate {
     let tokenUsuario: string = this.autenticacionService.obtenerToken();
 
     if (tokenUsuario.length === 0)
-      return new Observable(() => {
-        Alerta.mostrarErrorAsincrono('No ha iniciado sesión. Por favor, inicie sesión').then(() => {
-          this.autenticacionService.cerrarSesion();
-          return false;
-        });
-      }); 
+      return Alerta.mostrarErrorAsincrono('No ha iniciado sesión. Por favor, inicie sesión').then(() => {
+        this.autenticacionService.cerrarSesion();
+        return false;
+      });
     
     return true;
   }
