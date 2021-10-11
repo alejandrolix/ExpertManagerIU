@@ -178,8 +178,8 @@ export class DetallesSiniestroComponent implements OnInit {
     });
   }
 
-  public crearMensaje(idSiniestro: number): void {
-    this.router.navigate(['/crearMensaje', idSiniestro]);
+  public crearMensaje(): void {
+    this.router.navigate(['/siniestros', this.siniestro.id, 'mensajes', 'crear']);
   }
 
   public async eliminarImagen(idImagen: number): Promise<void> {

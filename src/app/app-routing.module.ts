@@ -57,14 +57,13 @@ const routes: Routes = [
       {
         path: ':id/imagenes/subir',
         component: SubirArchivoComponent
+      },
+      {
+        path: ':id/mensajes/crear',
+        component: CrearMensajeComponent
       }
     ]
-  },
-  {
-    path: 'crearMensaje/:id',
-    component: CrearMensajeComponent,
-    canActivate: [ComprobarPermisoGuard]
-  },
+  },  
   {
     path: 'usuarios',
     component: UsuariosComponent,
