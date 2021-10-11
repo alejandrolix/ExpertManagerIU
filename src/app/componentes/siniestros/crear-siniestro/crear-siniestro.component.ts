@@ -6,11 +6,11 @@ import { Aseguradora } from 'src/app/interfaces/aseguradora';
 import { Danio } from 'src/app/interfaces/danio';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AseguradorasService } from 'src/app/servicios/aseguradoras.service';
+import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 import { DaniosService } from 'src/app/servicios/danios.service';
 import { PeritosService } from 'src/app/servicios/peritos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
-import { UsuariosService } from 'src/app/servicios/usuarios.service';
 
 @Component({
   selector: 'app-crear-siniestro',
@@ -24,7 +24,7 @@ export class CrearSiniestroComponent implements OnInit {
   public formCrearSiniestro: FormGroup;
 
   constructor(private aseguradorasService: AseguradorasService, private daniosService: DaniosService, private peritosService: PeritosService, private siniestrosService: SiniestrosService,
-              private router: Router, private usuariosService: UsuariosService, private spinnerService: SpinnerService) {
+              private router: Router, private autenticacionService: AutenticacionService, private spinnerService: SpinnerService) {
                 
     this.aseguradoras = [];
     this.danios = [];
@@ -74,22 +74,21 @@ export class CrearSiniestroComponent implements OnInit {
 
     this.spinnerService.mostrarSpinner();
 
-    let idUsuarioAlta: number = this.usuariosService.obtenerIdUsuarioLogueado();
+    let idUsuarioAlta: number = this.autenticacionService.obtenerIdUsuario();
     let idAseguradora: number = parseInt(this.formCrearSiniestro.get('aseguradora')?.value);
     let direccion: string = this.formCrearSiniestro.get('direccion')?.value;
     let descripcion: string = this.formCrearSiniestro.get('descripcion')?.value;
     let idDanio: number = parseInt(this.formCrearSiniestro.get('danio')?.value);
     let idSujetoAfectado: number = parseInt(this.formCrearSiniestro.get('sujetoAfectado')?.value);
     let idPerito: number = parseInt(this.formCrearSiniestro.get('perito')?.value);
-
-    let siniestro = {
-      idUsuarioAlta: idUsuarioAlta,
-      idAseguradora: idAseguradora,
-      direccion: direccion,
-      descripcion: descripcion,
-      idDanio: idDanio,
-      idSujetoAfectado: idSujetoAfectado,
-      idPerito: idPerito
+    let siniestro: { idUsuarioAlta: number, idAseguradora: number, direccion: string, descripcion: string, idDanio: number, idSujetoAfectado: number, idPerito: number } = {
+      idUsuarioAlta,
+      idAseguradora,
+      direccion,
+      descripcion,
+      idDanio,
+      idSujetoAfectado,
+      idPerito
     };
 
     let respuesta: boolean;
