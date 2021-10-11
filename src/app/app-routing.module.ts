@@ -30,6 +30,10 @@ const routes: Routes = [
       {
         path: '',
         component: ListadoSiniestrosComponent
+      },
+      {
+        path: ':id/detalles',
+        component: DetallesSiniestroComponent
       }
     ]   
   },
@@ -45,11 +49,7 @@ const routes: Routes = [
       {
         path: ':id/editar',
         component: EditarSiniestroComponent
-      },
-      {
-        path: ':id/detalles',
-        component: DetallesSiniestroComponent
-      },
+      },      
       {
         path: ':id/documentaciones/subir',
         component: SubirArchivoComponent
