@@ -259,6 +259,6 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   public verDetalles(id: number): void {
-    this.router.navigate(['detalles', id], { relativeTo: this.activatedRoute });
+    this.router.navigate([id, 'detalles'], { relativeTo: this.activatedRoute });
   }
 }

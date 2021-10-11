@@ -47,7 +47,7 @@ const routes: Routes = [
         component: EditarSiniestroComponent
       },
       {
-        path: 'detalles/:id',
+        path: ':id/detalles',
         component: DetallesSiniestroComponent
       },
       {
