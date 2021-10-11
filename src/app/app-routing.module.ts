@@ -24,13 +24,9 @@ const routes: Routes = [
   },
   {
     path: 'siniestros',
-    component: SiniestrosComponent,
+    component: ListadoSiniestrosComponent,
+    canActivate: [InicioSesionGuard],
     children: [
-      {
-        path: '',
-        component: ListadoSiniestrosComponent,
-        canActivate: [InicioSesionGuard]
-      },
       {
         path: 'crear',
         component: CrearSiniestroComponent,
