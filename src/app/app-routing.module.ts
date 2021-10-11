@@ -24,13 +24,23 @@ const routes: Routes = [
   },
   {
     path: 'siniestros',
-    component: ListadoSiniestrosComponent,
+    component: SiniestrosComponent,
     canActivate: [InicioSesionGuard],
     children: [
       {
+        path: '',
+        component: ListadoSiniestrosComponent
+      }
+    ]   
+  },
+  {
+    path: 'siniestros',
+    canActivate: [InicioSesionGuard],
+    canActivateChild: [ComprobarPermisoGuard],
+    children: [
+      {
         path: 'crear',
-        component: CrearSiniestroComponent,
-        canActivate: [InicioSesionGuard, ComprobarPermisoGuard]
+        component: CrearSiniestroComponent
       },
       {
         path: 'editar/:id',
