@@ -33,15 +33,4 @@ export class UsuariosService {
   public iniciarSesion(credenciales: any): Observable<Usuario> {
     return this.peticionHttp.hacerPeticionPost<Usuario>(`${environment.urlApi}/Usuarios/IniciarSesion`, credenciales);
   }
-
-  public obtenerIdUsuarioLogueado(): number {
-    let idUsuario: string | null = localStorage.getItem('idUsuario');
-
-    if (idUsuario == null)
-        return 0;
-
-    let idUsuarioNumero: number = parseInt(idUsuario);
-
-    return idUsuarioNumero;
-  }
 }
