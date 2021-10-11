@@ -114,7 +114,7 @@ export class DetallesSiniestroComponent implements OnInit {
   }
 
   public subirDocumentacion(): void {
-    this.router.navigate(['/siniestros/documentaciones/subir', this.siniestro.id], {
+    this.router.navigate(['/siniestros', this.siniestro.id, 'documentaciones', 'subir'], {
       queryParams: {
         tipoArchivo: TipoArchivo.Documento
       }

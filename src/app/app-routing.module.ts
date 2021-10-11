@@ -51,7 +51,7 @@ const routes: Routes = [
         component: DetallesSiniestroComponent
       },
       {
-        path: 'documentaciones/subir/:id',
+        path: ':id/documentaciones/subir',
         component: SubirArchivoComponent
       },
       {
