@@ -44,8 +44,7 @@ const routes: Routes = [
       },
       {
         path: 'editar/:id',
-        component: EditarSiniestroComponent,
-        canActivate: [ComprobarPermisoGuard]
+        component: EditarSiniestroComponent
       },
       {
         path: 'detalles/:id',
