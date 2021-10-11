@@ -1,13 +1,13 @@
 <app-spinner></app-spinner>
-<div class="row" *ngIf="estadisticas !== undefined">
+<div class="row">
   <div class="col-12 col-md-6">
     <div class="card">
       <div class="card-header">
         Total Siniestros
       </div>
       <div class="card-body">
-        <h5 *ngIf="estadisticas.numSiniestros >= 2 || estadisticas.numSiniestros == 0">{{ estadisticas.numSiniestros }} siniestros totales</h5>
-        <h5 *ngIf="estadisticas.numSiniestros == 1">{{ estadisticas.numSiniestros }} siniestro total</h5>        
+        <h5 *ngIf="estadistica.numSiniestros >= 2 || estadistica.numSiniestros == 0">{{ estadistica.numSiniestros }} siniestros totales</h5>
+        <h5 *ngIf="estadistica.numSiniestros == 1">{{ estadistica.numSiniestros }} siniestro total</h5>        
       </div>
     </div>
   </div>
@@ -17,7 +17,7 @@
         Total Siniestros por Aseguradora
       </div>
       <div class="card-body">
-        <div class="d-flex justify-content-between" *ngFor="let nsPorAseguradora of estadisticas.numSiniestrosPorAseguradora">
+        <div class="d-flex justify-content-between" *ngFor="let nsPorAseguradora of estadistica.numSiniestrosPorAseguradora">
           <div>{{ nsPorAseguradora.nombreAseguradora }}</div>
           <div>{{ nsPorAseguradora.numSiniestros }}</div>
         </div>
@@ -30,7 +30,7 @@
         Siniestros para Cerrar
       </div>
       <div class="card-body">
-        <div class="d-flex justify-content-between" *ngFor="let nsCerrarPorAseguradora of estadisticas.numSiniestrosCerrarPorAseguradora">
+        <div class="d-flex justify-content-between" *ngFor="let nsCerrarPorAseguradora of estadistica.numSiniestrosCerrarPorAseguradora">
           <div>{{ nsCerrarPorAseguradora.nombreAseguradora }}</div>
           <div>{{ nsCerrarPorAseguradora.numSiniestros }}</div>
         </div>
