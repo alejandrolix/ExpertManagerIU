@@ -231,7 +231,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   public editar(id: number): void {
-    this.router.navigate(['editar', id], { relativeTo: this.activatedRoute });
+    this.router.navigate([id, 'editar'], { relativeTo: this.activatedRoute });
   }
 
   public async eliminar(id: number): Promise<void> { 
