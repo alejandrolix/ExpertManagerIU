@@ -17,10 +17,9 @@ export class InicioComponent implements OnInit {
 
   ngOnInit(): void {  
     this.spinnerService.mostrarSpinner();
-    this.route.data.subscribe(resultado => {
-      this.estadistica = resultado.estadistica;
-      this.tieneUsuarioPermisoAdministracion = this.permisosService.tienePermisoAdministracion();    
-      this.spinnerService.ocultarSpinner();
-    });    
+
+    this.estadistica = this.route.snapshot.data.estadistica;
+    this.tieneUsuarioPermisoAdministracion = this.permisosService.tienePermisoAdministracion();    
+    this.spinnerService.ocultarSpinner();   
   }
 }
