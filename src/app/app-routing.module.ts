@@ -23,7 +23,7 @@ const routes: Routes = [
     component: InicioComponent,
     canActivate: [InicioSesionGuard],
     resolve: {
-      estadistica: ObtenerEstadisticaResolver
+      respuesta: ObtenerEstadisticaResolver
     }
   },
   {

@@ -4,7 +4,8 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Estadistica } from '../interfaces/estadistica';
 import { AutenticacionService } from '../servicios/autenticacion.service';
 import { InicioService } from '../servicios/inicio.service';
@@ -15,8 +16,23 @@ import { InicioService } from '../servicios/inicio.service';
 export class ObtenerEstadisticaResolver implements Resolve<Estadistica> {
   constructor(private autenticacionService: AutenticacionService, private inicioService: InicioService) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Estadistica> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     let idUsuario: number = this.autenticacionService.obtenerIdUsuario();
-    return this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuario);
+
+    return this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuario)
+                             .pipe(
+                                map((estadistica: Estadistica) => {
+                                  return {
+                                    estadistica,
+                                    error: null
+                                  };
+                                }),
+                                catchError((mensaje: string) => {                                  
+                                  return of({
+                                    estadistica: null,
+                                    error: mensaje
+                                  });
+                                })
+                             );
   }
 }
