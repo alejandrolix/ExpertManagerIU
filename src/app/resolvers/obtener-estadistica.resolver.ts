@@ -13,10 +13,10 @@ import { InicioService } from '../servicios/inicio.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ObtenerEstadisticaResolver implements Resolve<Estadistica> {
+export class ObtenerEstadisticaResolver implements Resolve<{estadistica: null | Estadistica, error: null | string}> {
   constructor(private autenticacionService: AutenticacionService, private inicioService: InicioService) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {        
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{estadistica: null | Estadistica, error: null | string}> {        
     let idUsuario: number = this.autenticacionService.obtenerIdUsuario();    
 
     return this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuario)
