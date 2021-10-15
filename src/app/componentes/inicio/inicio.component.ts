@@ -17,7 +17,6 @@ export class InicioComponent implements OnInit {
   constructor(private permisosService: PermisosService, private spinnerService: SpinnerService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {  
-    this.spinnerService.mostrarSpinner();   
     let mensajeError: string =  this.route.snapshot.data.respuesta.error;
 
     if (mensajeError) {
@@ -26,7 +25,6 @@ export class InicioComponent implements OnInit {
     }
     
     this.estadistica = this.route.snapshot.data.respuesta.estadistica;        
-    this.tieneUsuarioPermisoAdministracion = this.permisosService.tienePermisoAdministracion();    
-    this.spinnerService.ocultarSpinner();   
+    this.tieneUsuarioPermisoAdministracion = this.permisosService.tienePermisoAdministracion();        
   }
 }

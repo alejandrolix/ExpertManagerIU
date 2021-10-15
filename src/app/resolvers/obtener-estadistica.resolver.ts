@@ -16,8 +16,8 @@ import { InicioService } from '../servicios/inicio.service';
 export class ObtenerEstadisticaResolver implements Resolve<Estadistica> {
   constructor(private autenticacionService: AutenticacionService, private inicioService: InicioService) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    let idUsuario: number = this.autenticacionService.obtenerIdUsuario();
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {        
+    let idUsuario: number = this.autenticacionService.obtenerIdUsuario();    
 
     return this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuario)
                              .pipe(

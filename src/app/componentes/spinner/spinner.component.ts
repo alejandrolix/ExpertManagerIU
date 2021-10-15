@@ -16,8 +16,6 @@ export class SpinnerComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinnerService.mostrarSpinnerObs
-                       .subscribe((mostrar: boolean) => {                                                     
-                         this.spinnerService.mostrar = mostrar;
-                       });
+                       .subscribe((mostrar: boolean) => this.spinnerService.mostrar = mostrar);
   }
 }
