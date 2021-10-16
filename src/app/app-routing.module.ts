@@ -15,16 +15,12 @@ import { ListadoUsuariosComponent } from './componentes/usuarios/listado-usuario
 import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
 import { ComprobarPermisoGuard } from './guards/comprobar-permiso.guard';
 import { InicioSesionGuard } from './guards/inicio-sesion.guard';
-import { ObtenerEstadisticaResolver } from './resolvers/obtener-estadistica.resolver';
 
 const routes: Routes = [
   {
     path: 'inicio',
     component: InicioComponent,
-    canActivate: [InicioSesionGuard],
-    resolve: {
-      respuesta: ObtenerEstadisticaResolver
-    }
+    canActivate: [InicioSesionGuard]
   },
   {
     path: 'siniestros',
