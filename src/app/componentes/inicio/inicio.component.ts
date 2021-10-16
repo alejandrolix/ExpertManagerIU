@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
 import { Estadistica } from 'src/app/interfaces/estadistica';
+import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
+import { InicioService } from 'src/app/servicios/inicio.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
 
@@ -14,17 +15,21 @@ export class InicioComponent implements OnInit {
   public estadistica: Estadistica;
   public tieneUsuarioPermisoAdministracion: boolean;
 
-  constructor(private permisosService: PermisosService, private spinnerService: SpinnerService, private route: ActivatedRoute) { }
+  constructor(private autenticacionService: AutenticacionService, private permisosService: PermisosService, private spinnerService: SpinnerService, private inicioService: InicioService) { }
 
-  ngOnInit(): void {  
-    let mensajeError: string =  this.route.snapshot.data.respuesta.error;
+  async ngOnInit(): Promise<void> {  
+    let idUsuario: number = this.autenticacionService.obtenerIdUsuario();
 
-    if (mensajeError) {
-      Alerta.mostrarError(mensajeError);
-      return;
+    this.spinnerService.mostrarSpinner();    
+    this.tieneUsuarioPermisoAdministracion = this.permisosService.tienePermisoAdministracion();
+
+    try {
+      this.estadistica = await this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuario)
+                                                 .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
     }
     
-    this.estadistica = this.route.snapshot.data.respuesta.estadistica;        
-    this.tieneUsuarioPermisoAdministracion = this.permisosService.tienePermisoAdministracion();        
+    this.spinnerService.ocultarSpinner();   
   }
 }
