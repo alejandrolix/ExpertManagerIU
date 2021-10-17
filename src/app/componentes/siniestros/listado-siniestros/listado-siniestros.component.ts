@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
+import { AccionFormulario } from 'src/app/enumeraciones/accion-formulario.enum';
 import { Aseguradora } from 'src/app/interfaces/aseguradora';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { Usuario } from 'src/app/interfaces/usuario';
@@ -231,7 +232,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   public editar(id: number): void {
-    this.router.navigate([id, 'editar'], { relativeTo: this.activatedRoute });
+    this.router.navigate([id, 'editar'], { relativeTo: this.activatedRoute, queryParams: { tipoAccion: AccionFormulario.Editar } });
   }
 
   public async eliminar(id: number): Promise<void> { 
@@ -255,7 +256,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   } 
 
   public crear(): void {
-    this.router.navigate(['crear'], { relativeTo: this.activatedRoute });
+    this.router.navigate(['crear'], { relativeTo: this.activatedRoute, queryParams: { tipoAccion: AccionFormulario.Crear } });
   }
 
   public verDetalles(id: number): void {

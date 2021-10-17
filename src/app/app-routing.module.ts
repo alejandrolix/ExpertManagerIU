@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InicioSesionComponent } from './componentes/inicio-sesion/inicio-sesion.component';
 import { InicioComponent } from './componentes/inicio/inicio.component';
+import { CrearEditarSiniestroComponent } from './componentes/siniestros/crear-editar-siniestro/crear-editar-siniestro.component';
 import { CrearMensajeComponent } from './componentes/siniestros/crear-mensaje/crear-mensaje.component';
 import { CrearSiniestroComponent } from './componentes/siniestros/crear-siniestro/crear-siniestro.component';
 import { DetallesSiniestroComponent } from './componentes/siniestros/detalles-siniestro/detalles-siniestro.component';
@@ -44,11 +45,11 @@ const routes: Routes = [
     children: [
       {
         path: 'crear',
-        component: CrearSiniestroComponent
+        component: CrearEditarSiniestroComponent
       },
       {
         path: ':id/editar',
-        component: EditarSiniestroComponent
+        component: CrearEditarSiniestroComponent
       },      
       {
         path: ':id/documentaciones/subir',

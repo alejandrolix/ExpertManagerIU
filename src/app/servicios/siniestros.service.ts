@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { CrearSiniestroDto } from '../clases/crear-siniestro-dto';
+import { EditarSiniestroDto } from '../clases/editar-siniestro-dto';
 import { PeticionHttp } from '../clases/PeticionHttp';
 import { Siniestro } from '../interfaces/siniestro';
 
@@ -27,11 +29,11 @@ export class SiniestrosService {
     return this.peticionHttp.hacerPeticionGet<Siniestro>(`${environment.urlApi}/Siniestros/${id}`);
   }
 
-  public crear(siniestro: any): Observable<boolean> {    
+  public crear(siniestro: CrearSiniestroDto): Observable<boolean> {    
     return this.peticionHttp.hacerPeticionPost<boolean>(`${environment.urlApi}/Siniestros`, siniestro);
   }
 
-  public editar(siniestro: any, id: number): Observable<boolean> {    
+  public editar(siniestro: EditarSiniestroDto, id: number): Observable<boolean> {    
     return this.peticionHttp.hacerPeticionPut<boolean>(`${environment.urlApi}/Siniestros/${id}`, siniestro);
   }
 

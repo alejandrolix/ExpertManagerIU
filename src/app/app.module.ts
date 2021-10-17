@@ -21,6 +21,7 @@ import { SiniestrosComponent } from './componentes/siniestros/siniestros.compone
 import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
 import { SubirArchivoComponent } from './componentes/siniestros/subir-archivo/subir-archivo.component';
 import { SpinnerComponent } from './componentes/spinner/spinner.component';
+import { CrearEditarSiniestroComponent } from './componentes/siniestros/crear-editar-siniestro/crear-editar-siniestro.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { SpinnerComponent } from './componentes/spinner/spinner.component';
     SiniestrosComponent,
     UsuariosComponent,
     SubirArchivoComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    CrearEditarSiniestroComponent
   ],
   imports: [
     BrowserModule,
