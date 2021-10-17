@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { ListadoSiniestrosComponent } from './componentes/siniestros/listado-siniestros/listado-siniestros.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EditarSiniestroComponent } from './componentes/siniestros/editar-siniestro/editar-siniestro.component';
 import { DetallesSiniestroComponent } from './componentes/siniestros/detalles-siniestro/detalles-siniestro.component';
 import { ListadoUsuariosComponent } from './componentes/usuarios/listado-usuarios/listado-usuarios.component';
 import { CrearUsuarioComponent } from './componentes/usuarios/crear-usuario/crear-usuario.component';
@@ -26,7 +25,6 @@ import { CrearEditarSiniestroComponent } from './componentes/siniestros/crear-ed
   declarations: [
     AppComponent,    
     ListadoSiniestrosComponent,
-    EditarSiniestroComponent,
     DetallesSiniestroComponent,
     ListadoUsuariosComponent,
     CrearUsuarioComponent,
