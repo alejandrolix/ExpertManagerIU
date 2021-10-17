@@ -15,13 +15,12 @@ export class ListadoUsuariosComponent implements OnInit {
   public usuarios: Usuario[];
 
   constructor(private router: Router, private usuariosService: UsuariosService, private activatedRoute: ActivatedRoute,
-              private spinnerService: SpinnerService) {
-
-    
-  }
+              private spinnerService: SpinnerService) { }
 
   async ngOnInit(): Promise<void> {
+    this.spinnerService.mostrarSpinner();
     await this.obtenerUsuarios();    
+    this.spinnerService.ocultarSpinner();
   }
 
   private async obtenerUsuarios(): Promise<void> {
@@ -31,13 +30,7 @@ export class ListadoUsuariosComponent implements OnInit {
     } catch (error: any) {
       Alerta.mostrarError(error);
     }
-
-    
-  }
-
-  public mostrarSpinner(): boolean {
-    return this.spinnerService.mostrar;
-  }
+  }  
 
   public editar(id: number): void {
     this.router.navigate(['editar', id], { relativeTo: this.activatedRoute });
