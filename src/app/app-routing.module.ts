@@ -8,8 +8,7 @@ import { DetallesSiniestroComponent } from './componentes/siniestros/detalles-si
 import { ListadoSiniestrosComponent } from './componentes/siniestros/listado-siniestros/listado-siniestros.component';
 import { SiniestrosComponent } from './componentes/siniestros/siniestros.component';
 import { SubirArchivoComponent } from './componentes/siniestros/subir-archivo/subir-archivo.component';
-import { CrearUsuarioComponent } from './componentes/usuarios/crear-usuario/crear-usuario.component';
-import { EditarUsuarioComponent } from './componentes/usuarios/editar-usuario/editar-usuario.component';
+import { CrearEditarUsuarioComponent } from './componentes/usuarios/crear-editar-usuario/crear-editar-usuario.component';
 import { ListadoUsuariosComponent } from './componentes/usuarios/listado-usuarios/listado-usuarios.component';
 import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
 import { ComprobarPermisoGuard } from './guards/comprobar-permiso.guard';
@@ -75,12 +74,12 @@ const routes: Routes = [
       },
       {
         path: 'crear',
-        component: CrearUsuarioComponent,
+        component: CrearEditarUsuarioComponent,
         canActivate: [ComprobarPermisoGuard]
       },
       {
-        path: 'editar/:id',
-        component: EditarUsuarioComponent,
+        path: ':id/editar',
+        component: CrearEditarUsuarioComponent,
         canActivate: [ComprobarPermisoGuard]
       }
     ]

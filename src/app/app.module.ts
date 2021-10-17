@@ -8,8 +8,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DetallesSiniestroComponent } from './componentes/siniestros/detalles-siniestro/detalles-siniestro.component';
 import { ListadoUsuariosComponent } from './componentes/usuarios/listado-usuarios/listado-usuarios.component';
-import { CrearUsuarioComponent } from './componentes/usuarios/crear-usuario/crear-usuario.component';
-import { EditarUsuarioComponent } from './componentes/usuarios/editar-usuario/editar-usuario.component';
 import { InicioSesionComponent } from './componentes/inicio-sesion/inicio-sesion.component';
 import { CrearMensajeComponent } from './componentes/siniestros/crear-mensaje/crear-mensaje.component';
 import { InicioComponent } from './componentes/inicio/inicio.component';
@@ -20,6 +18,7 @@ import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
 import { SubirArchivoComponent } from './componentes/siniestros/subir-archivo/subir-archivo.component';
 import { SpinnerComponent } from './componentes/spinner/spinner.component';
 import { CrearEditarSiniestroComponent } from './componentes/siniestros/crear-editar-siniestro/crear-editar-siniestro.component';
+import { CrearEditarUsuarioComponent } from './componentes/usuarios/crear-editar-usuario/crear-editar-usuario.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +26,6 @@ import { CrearEditarSiniestroComponent } from './componentes/siniestros/crear-ed
     ListadoSiniestrosComponent,
     DetallesSiniestroComponent,
     ListadoUsuariosComponent,
-    CrearUsuarioComponent,
-    EditarUsuarioComponent,
     InicioSesionComponent,
     CrearMensajeComponent,
     InicioComponent,
@@ -37,7 +34,8 @@ import { CrearEditarSiniestroComponent } from './componentes/siniestros/crear-ed
     UsuariosComponent,
     SubirArchivoComponent,
     SpinnerComponent,
-    CrearEditarSiniestroComponent
+    CrearEditarSiniestroComponent,
+    CrearEditarUsuarioComponent
   ],
   imports: [
     BrowserModule,

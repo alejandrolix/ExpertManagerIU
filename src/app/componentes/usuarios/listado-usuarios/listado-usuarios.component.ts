@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
+import { AccionFormulario } from 'src/app/enumeraciones/accion-formulario.enum';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
@@ -33,7 +34,7 @@ export class ListadoUsuariosComponent implements OnInit {
   }  
 
   public editar(id: number): void {
-    this.router.navigate(['editar', id], { relativeTo: this.activatedRoute });
+    this.router.navigate([id, 'editar'], { relativeTo: this.activatedRoute, queryParams: { tipoAccion: AccionFormulario.Editar } });
   }
 
   public async eliminar(id: number): Promise<void> {    
@@ -63,6 +64,6 @@ export class ListadoUsuariosComponent implements OnInit {
   }
 
   public crear(): void {
-    this.router.navigate(['crear'], { relativeTo: this.activatedRoute });
+    this.router.navigate(['crear'], { relativeTo: this.activatedRoute, queryParams: { tipoAccion: AccionFormulario.Crear } });
   }
 }
