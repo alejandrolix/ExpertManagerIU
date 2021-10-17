@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { CrearSiniestroDto } from '../clases/crear-siniestro-dto';
-import { EditarSiniestroDto } from '../clases/editar-siniestro-dto';
+import { CrearSiniestroDto } from '../clases/DTOs/crear-siniestro-dto';
+import { EditarSiniestroDto } from '../clases/DTOs/editar-siniestro-dto';
 import { PeticionHttp } from '../clases/PeticionHttp';
 import { Siniestro } from '../interfaces/siniestro';
 
