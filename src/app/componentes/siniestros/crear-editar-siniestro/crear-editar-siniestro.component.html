@@ -53,5 +53,6 @@
         </div>
     
         <button type="submit" *ngIf="accionFormulario == accionFormularioEnum.Editar" [disabled]="!formCrearEditarSiniestro.valid" class="btn btn-primary mt-5">Guardar</button>
+        <button type="submit" *ngIf="accionFormulario == accionFormularioEnum.Crear" [disabled]="!formCrearEditarSiniestro.valid" class="btn btn-primary mt-5">Crear</button>
     </form>
 </div>
