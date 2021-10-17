@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListadoSiniestrosComponent } from './componentes/siniestros/listado-siniestros/listado-siniestros.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CrearSiniestroComponent } from './componentes/siniestros/crear-siniestro/crear-siniestro.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditarSiniestroComponent } from './componentes/siniestros/editar-siniestro/editar-siniestro.component';
 import { DetallesSiniestroComponent } from './componentes/siniestros/detalles-siniestro/detalles-siniestro.component';
@@ -27,7 +26,6 @@ import { CrearEditarSiniestroComponent } from './componentes/siniestros/crear-ed
   declarations: [
     AppComponent,    
     ListadoSiniestrosComponent,
-    CrearSiniestroComponent,
     EditarSiniestroComponent,
     DetallesSiniestroComponent,
     ListadoUsuariosComponent,

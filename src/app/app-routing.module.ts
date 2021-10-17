@@ -4,7 +4,6 @@ import { InicioSesionComponent } from './componentes/inicio-sesion/inicio-sesion
 import { InicioComponent } from './componentes/inicio/inicio.component';
 import { CrearEditarSiniestroComponent } from './componentes/siniestros/crear-editar-siniestro/crear-editar-siniestro.component';
 import { CrearMensajeComponent } from './componentes/siniestros/crear-mensaje/crear-mensaje.component';
-import { CrearSiniestroComponent } from './componentes/siniestros/crear-siniestro/crear-siniestro.component';
 import { DetallesSiniestroComponent } from './componentes/siniestros/detalles-siniestro/detalles-siniestro.component';
 import { EditarSiniestroComponent } from './componentes/siniestros/editar-siniestro/editar-siniestro.component';
 import { ListadoSiniestrosComponent } from './componentes/siniestros/listado-siniestros/listado-siniestros.component';
