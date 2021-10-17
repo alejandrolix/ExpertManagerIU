@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Event, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { first, pluck } from 'rxjs/operators';
 import { Alerta } from 'src/app/clases/Alerta';
 import { CrearSiniestroDto } from 'src/app/clases/DTOs/crear-siniestro-dto';
