@@ -39,22 +39,27 @@ export class ListadoUsuariosComponent implements OnInit {
   public async eliminar(id: number): Promise<void> {    
     let accion: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono(`¿Está seguro que desea eliminar el usuario con id ${id}?`);
 
-    if (accion.isConfirmed) {
-      let respuesta: boolean;
+    if (!accion.isConfirmed)
+      return;
 
-      try {
-        respuesta = await this.usuariosService.eliminar(id)
-                                              .toPromise();        
-      } catch (error: any) {
-        Alerta.mostrarError(error);
-        return;
-      }
-      
-      if (respuesta) {
-        await Alerta.mostrarOkAsincrono('Usuario eliminado correctamente');        
-        await this.obtenerUsuarios();
-      }
+    this.spinnerService.mostrarSpinner();
+    
+    try {
+      await this.usuariosService.eliminar(id)
+                                .toPromise();        
+    } catch (error: any) {
+      Alerta.mostrarError(error);
+      this.spinnerService.ocultarSpinner();
+
+      return;
     }
+    
+    this.spinnerService.ocultarSpinner();
+    await Alerta.mostrarOkAsincrono('Usuario eliminado correctamente');        
+
+    this.spinnerService.mostrarSpinner();
+    await this.obtenerUsuarios();  
+    this.spinnerService.ocultarSpinner();
   }
 
   public crear(): void {
