@@ -65,13 +65,19 @@ const routes: Routes = [
   {
     path: 'usuarios',
     component: UsuariosComponent,
-    canActivate: [ComprobarPermisoGuard],
+    canActivate: [InicioSesionGuard],
     children: [
       {
         path: '',
-        component: ListadoUsuariosComponent,
-        canActivate: [ComprobarPermisoGuard]
-      },
+        component: ListadoUsuariosComponent        
+      }
+    ]
+  },
+  {
+    path: 'usuarios',
+    component: UsuariosComponent,
+    canActivate: [ComprobarPermisoGuard],
+    children: [
       {
         path: 'crear',
         component: CrearEditarUsuarioComponent,
