@@ -16,7 +16,7 @@ export class ApiRestTokenInterceptor implements HttpInterceptor {
     if (request.url.includes('api/Usuarios/IniciarSesion'))   // Ignoramos la ruta de iniciar sesión. Es decir, no se comprueba si existe token.
       return next.handle(request);
 
-    let token: string | null = localStorage.getItem('token');
+    let token: string | null = sessionStorage.getItem('token');
 
     if (token) {
       let peticionToken: HttpRequest<unknown> = request.clone({
@@ -26,7 +26,7 @@ export class ApiRestTokenInterceptor implements HttpInterceptor {
       });
 
       return next.handle(peticionToken);
-    }   
+    }
 
     return next.handle(request);
   }

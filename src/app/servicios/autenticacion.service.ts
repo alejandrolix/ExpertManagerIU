@@ -9,14 +9,14 @@ import { Usuario } from '../interfaces/usuario';
 export class AutenticacionService implements OnDestroy {
   private _estaLogueadoUsuario: boolean;
   private iniciarSesionSubscription: Subscription;
-  private cerrarSesionSubscription: Subscription; 
+  private cerrarSesionSubscription: Subscription;
   private iniciarSesionSubject: Subject<void>;
   private cerrarSesionSubject: Subject<void>;
 
   constructor(private router: Router) {
     let idUsuario: number = this.obtenerIdUsuario();
 
-    if (idUsuario === 0)    
+    if (idUsuario === 0)
       this._estaLogueadoUsuario = false;
     else
       this._estaLogueadoUsuario = true;
@@ -25,7 +25,7 @@ export class AutenticacionService implements OnDestroy {
   }
 
   public obtenerIdUsuario(): number {
-    let idUsuario: string = localStorage.getItem('idUsuario') ?? '';
+    let idUsuario: string = sessionStorage.getItem('idUsuario') ?? '';
 
     if (idUsuario.length === 0)
       return 0;
@@ -35,7 +35,7 @@ export class AutenticacionService implements OnDestroy {
   }
 
   public obtenerToken(): string {
-    let token: string = localStorage.getItem('token') ?? '';
+    let token: string = sessionStorage.getItem('token') ?? '';
 
     return token;
   }
@@ -52,7 +52,7 @@ export class AutenticacionService implements OnDestroy {
     });
 
     this.cerrarSesionSubject = new Subject<void>();
-    this.cerrarSesionSubscription = this.cerrarSesionSubject.subscribe(() => {    
+    this.cerrarSesionSubscription = this.cerrarSesionSubject.subscribe(() => {
       this.eliminarCredencialesUsuario();
       this._estaLogueadoUsuario = false;
       this.router.navigateByUrl('/inicioSesion');
@@ -60,17 +60,17 @@ export class AutenticacionService implements OnDestroy {
   }
 
   public guardarCredencialesUsuario(usuario: Usuario): void {
-    localStorage.setItem('idUsuario', usuario.id.toString());
-    localStorage.setItem('usuario', usuario.nombre);
-    localStorage.setItem('idPermiso', usuario.idPermiso.toString());
-    localStorage.setItem('token', usuario.token);
+    sessionStorage.setItem('idUsuario', usuario.id.toString());
+    sessionStorage.setItem('usuario', usuario.nombre);
+    sessionStorage.setItem('idPermiso', usuario.idPermiso.toString());
+    sessionStorage.setItem('token', usuario.token);
   }
 
   private eliminarCredencialesUsuario(): void {
-    localStorage.removeItem('idUsuario');
-    localStorage.removeItem('usuario');
-    localStorage.removeItem('idPermiso');
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('idUsuario');
+    sessionStorage.removeItem('usuario');
+    sessionStorage.removeItem('idPermiso');
+    sessionStorage.removeItem('token');
   }
 
   public cerrarSesion(): void {
@@ -82,7 +82,7 @@ export class AutenticacionService implements OnDestroy {
   }
 
   public obtenerNombreUsuario(): string {
-    let nombre: string = localStorage.getItem('usuario') ?? '';
+    let nombre: string = sessionStorage.getItem('usuario') ?? '';
     return nombre;
   }
 
