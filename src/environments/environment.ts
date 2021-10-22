@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  urlApi: 'https://localhost:44345/api'
+  urlApi: 'https://localhost:44345/api',
+  urlHub: 'https://localhost:44345/mensajes'
 };
 
 /*
