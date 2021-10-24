@@ -28,12 +28,12 @@ import { SpinnerService } from 'src/app/servicios/spinner.service';
 })
 export class CrearEditarSiniestroComponent implements OnInit {
   public accionFormularioEnum: typeof AccionFormulario = AccionFormulario;
-  public accionFormulario: AccionFormulario; 
+  public accionFormulario: AccionFormulario;
   public estados: Estado[];
   public aseguradoras: Aseguradora[];
   public danios: Danio[];
   public peritos: Usuario[];
-  public formCrearEditarSiniestro: FormGroup;  
+  public formCrearEditarSiniestro: FormGroup;
   public mostrarCampoImpValDanios: boolean;
   private impValoracionDanios: string;
   private idSiniestro: number;
@@ -42,7 +42,7 @@ export class CrearEditarSiniestroComponent implements OnInit {
               private aseguradorasService: AseguradorasService, private daniosService: DaniosService, private peritosService: PeritosService, private autenticacionService: AutenticacionService,
               private router: Router) { }
 
-  async ngOnInit(): Promise<void> {    
+  async ngOnInit(): Promise<void> {
     this.spinnerService.mostrarSpinner();
     this.accionFormulario = Number(await this.route.queryParamMap
                                                    .pipe(
@@ -63,7 +63,7 @@ export class CrearEditarSiniestroComponent implements OnInit {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
       return;
-    }          
+    }
 
     try {
       this.aseguradoras = await this.aseguradorasService.obtenerTodas()
@@ -126,8 +126,8 @@ export class CrearEditarSiniestroComponent implements OnInit {
       let idAseguradoraSeleccionada: number | undefined = this.aseguradoras.find(aseguradora => aseguradora.id === siniestro.idAseguradora)?.id;
 
       if (idAseguradoraSeleccionada == undefined) {
-        Alerta.mostrarError('No se ha encontrado la aseguradora del siniestro'); 
-        this.spinnerService.ocultarSpinner();       
+        Alerta.mostrarError('No se ha encontrado la aseguradora del siniestro');
+        this.spinnerService.ocultarSpinner();
         return;
       }
 
@@ -137,7 +137,7 @@ export class CrearEditarSiniestroComponent implements OnInit {
         Alerta.mostrarError('No se ha encontrado el daño del siniestro');
         this.spinnerService.ocultarSpinner();
         return;
-      }        
+      }
 
       let idSujetoAfecSeleccionado: number = siniestro.idSujetoAfectado;
       let idPeritoSeleccionado: number | undefined = this.peritos.find(perito => perito.id === siniestro.idPerito)?.id;
@@ -147,7 +147,7 @@ export class CrearEditarSiniestroComponent implements OnInit {
         this.spinnerService.ocultarSpinner();
         return;
       }
-      
+
       this.formCrearEditarSiniestro = new FormGroup({
         estado: new FormControl(idEstadoSeleccionado),
         aseguradora: new FormControl(idAseguradoraSeleccionada),
@@ -165,7 +165,7 @@ export class CrearEditarSiniestroComponent implements OnInit {
                                             .trim();
 
         this.crearControlImpValoracionDanios();
-      }      
+      }
     }
     else {
       this.formCrearEditarSiniestro = new FormGroup({
@@ -190,13 +190,13 @@ export class CrearEditarSiniestroComponent implements OnInit {
 
     this.formCrearEditarSiniestro.addControl('impValoracionDanios', control);
   }
-  
+
   public async enviar(): Promise<void> {
     if (!this.formCrearEditarSiniestro.valid)
       return;
 
       this.spinnerService.mostrarSpinner();
-      
+
       let idUsuarioAlta: number = this.autenticacionService.obtenerIdUsuario();
       let idAseguradora: number = parseInt(this.formCrearEditarSiniestro.get('aseguradora')?.value);
       let direccion: string = this.formCrearEditarSiniestro.get('direccion')?.value;
@@ -221,7 +221,7 @@ export class CrearEditarSiniestroComponent implements OnInit {
           idSujetoAfectado,
           idPerito,
           idEstado,
-          impValoracionDanios        
+          impValoracionDanios
         };
 
         try {
@@ -231,7 +231,7 @@ export class CrearEditarSiniestroComponent implements OnInit {
           debugger
           Alerta.mostrarError(error);
           this.spinnerService.ocultarSpinner();
-  
+
           return;
         }
 
@@ -245,7 +245,7 @@ export class CrearEditarSiniestroComponent implements OnInit {
           descripcion,
           idDanio,
           idSujetoAfectado,
-          idPerito,          
+          idPerito,
         };
 
         try {
@@ -254,24 +254,24 @@ export class CrearEditarSiniestroComponent implements OnInit {
         } catch (error: any) {
           Alerta.mostrarError(error);
           this.spinnerService.ocultarSpinner();
-    
+
           return;
         }
 
         await Alerta.mostrarOkAsincrono('Siniestro creado correctamente');
-      }                        
-  
+      }
+
       this.spinnerService.ocultarSpinner();
       this.router.navigateByUrl('/siniestros');
   }
 
-  public comprobarEstadoSeleccionado(e: any): void {    
-    let idEstado: number = parseInt(e.value);
+  public comprobarEstadoSeleccionado(): void {
+    let idEstado: number = parseInt(this.formCrearEditarSiniestro.get('estado')?.value);
 
     if (idEstado == TipoEstado.Valorado) {
       this.crearControlImpValoracionDanios();
       this.mostrarCampoImpValDanios = true;
-    }      
+    }
     else {
       this.formCrearEditarSiniestro.removeControl('impValoracionDanios');
       this.mostrarCampoImpValDanios = false;
