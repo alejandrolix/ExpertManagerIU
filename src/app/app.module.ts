@@ -19,10 +19,11 @@ import { SubirArchivoComponent } from './componentes/siniestros/subir-archivo/su
 import { SpinnerComponent } from './componentes/spinner/spinner.component';
 import { CrearEditarSiniestroComponent } from './componentes/siniestros/crear-editar-siniestro/crear-editar-siniestro.component';
 import { CrearEditarUsuarioComponent } from './componentes/usuarios/crear-editar-usuario/crear-editar-usuario.component';
+import { NumerosDecimalesDirective } from './directivas/numeros-decimales.directive';
 
 @NgModule({
   declarations: [
-    AppComponent,    
+    AppComponent,
     ListadoSiniestrosComponent,
     DetallesSiniestroComponent,
     ListadoUsuariosComponent,
@@ -35,7 +36,8 @@ import { CrearEditarUsuarioComponent } from './componentes/usuarios/crear-editar
     SubirArchivoComponent,
     SpinnerComponent,
     CrearEditarSiniestroComponent,
-    CrearEditarUsuarioComponent
+    CrearEditarUsuarioComponent,
+    NumerosDecimalesDirective
   ],
   imports: [
     BrowserModule,

@@ -44,7 +44,7 @@
 
                 <div *ngIf="accionFormulario == accionFormularioEnum.Editar && mostrarCampoImpValDanios">
                     <label class="form-label mt-4">Importe valoración daños</label>
-                    <input type="text" class="form-control anchuraMitad" formControlName="impValoracionDanios">
+                    <input type="text" class="form-control anchuraMitad" formControlName="impValoracionDanios" appNumerosDecimales>
                     <div class="invalid-feedback" *ngIf="formCrearEditarSiniestro.get('impValoracionDanios')?.touched && !formCrearEditarSiniestro.get('impValoracionDanios')?.valid">
                         El importe de valoración de daños es obligatorio
                     </div>
