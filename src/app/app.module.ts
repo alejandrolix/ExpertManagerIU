@@ -12,7 +12,7 @@ import { InicioSesionComponent } from './componentes/inicio-sesion/inicio-sesion
 import { CrearMensajeComponent } from './componentes/siniestros/crear-mensaje/crear-mensaje.component';
 import { InicioComponent } from './componentes/inicio/inicio.component';
 import { MenuNavegacionComponent } from './componentes/menu-navegacion/menu-navegacion.component';
-import { ApiRestTokenInterceptor } from './interceptors/api-rest-token.interceptor';
+import { ApiRestTokenInterceptor } from './interceptor/api-rest-token.interceptor';
 import { SiniestrosComponent } from './componentes/siniestros/siniestros.component';
 import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
 import { SubirArchivoComponent } from './componentes/siniestros/subir-archivo/subir-archivo.component';

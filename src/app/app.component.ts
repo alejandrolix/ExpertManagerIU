@@ -8,16 +8,16 @@ import { SpinnerService } from './servicios/spinner.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {  
+export class AppComponent implements OnInit {
   constructor(private autenticacionService: AutenticacionService, private router: Router, private spinnerService: SpinnerService) { }
 
   ngOnInit(): void {
     this.router.events.subscribe((evento: Event) => {
-      if (evento instanceof NavigationStart)
-        this.spinnerService.mostrarSpinner();      
+      // if (evento instanceof NavigationStart)
+      //   this.spinnerService.mostrarSpinner();
 
-      if (evento instanceof NavigationEnd || evento instanceof NavigationCancel || evento instanceof NavigationError)
-        setTimeout(() => this.spinnerService.ocultarSpinner(), 1000);      
+      // if (evento instanceof NavigationEnd || evento instanceof NavigationCancel || evento instanceof NavigationError)
+      //   setTimeout(() => this.spinnerService.ocultarSpinner(), 1000);
     });
   }
 

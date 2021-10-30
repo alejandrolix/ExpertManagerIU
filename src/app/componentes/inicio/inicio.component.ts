@@ -20,16 +20,16 @@ export class InicioComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     let idUsuario: number = this.autenticacionService.obtenerIdUsuario();
 
-    this.spinnerService.mostrarSpinner();
+    // this.spinnerService.mostrarSpinner();
     this.tieneUsuarioPermisoAdministracion = this.permisosService.tienePermisoAdministracion();
 
-    try {
+    // try {
       this.estadistica = await this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuario)
                                                  .toPromise();
-    } catch (error: any) {
-      Alerta.mostrarError(error);
-    }
+    // } catch (error: any) {
+    //   Alerta.mostrarError(error);
+    // }
 
-    this.spinnerService.ocultarSpinner();
+    // this.spinnerService.ocultarSpinner();
   }
 }
