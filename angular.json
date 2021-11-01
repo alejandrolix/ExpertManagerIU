@@ -35,10 +35,9 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.css"
             ],
-            "scripts": [              
+            "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/sweetalert2/dist/sweetalert2.all.min.js",
-              "node_modules/@microsoft/signalr/dist/browser/signalr.min.js"
+              "node_modules/sweetalert2/dist/sweetalert2.all.min.js"
             ]
           },
           "configurations": {
