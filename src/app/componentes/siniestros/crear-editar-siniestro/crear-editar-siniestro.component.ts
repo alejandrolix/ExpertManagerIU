@@ -228,7 +228,6 @@ export class CrearEditarSiniestroComponent implements OnInit {
           await this.siniestrosService.editar(siniestro, this.idSiniestro)
                                       .toPromise();
         } catch (error: any) {
-          debugger
           Alerta.mostrarError(error);
           this.spinnerService.ocultarSpinner();
 
