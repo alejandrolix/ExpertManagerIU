@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivateChild } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -8,8 +9,8 @@ import { PermisosService } from '../servicios/permisos.service';
   providedIn: 'root'
 })
 export class ComprobarPermisoGuard implements CanActivate, CanActivateChild {
-  
-  constructor(private permisosService: PermisosService) { }
+
+  constructor(private permisosService: PermisosService, private location: Location) { }
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     return this.canActivate(childRoute, state);
@@ -20,6 +21,7 @@ export class ComprobarPermisoGuard implements CanActivate, CanActivateChild {
       return true;
 
     return Alerta.mostrarErrorAsincrono('No puede acceder a esta sección porque no tiene el permiso adecuado').then(() => {
+      this.location.back();
       return false;
     });
   }
