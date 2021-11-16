@@ -4,34 +4,22 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
   selector: '[appNumerosDecimales]'
 })
 export class NumerosDecimalesDirective {
-  constructor(private campoTexto: ElementRef<HTMLInputElement>) { }
+  private expresionNumerosDecimales: RegExp;
+  private teclasPermitidas: string[];
 
-  @HostListener('keydown', ['$event']) comprobarTeclaPulsada(evento: KeyboardEvent): void {
+  constructor(private campoTexto: ElementRef<HTMLInputElement>) {
+    this.expresionNumerosDecimales = new RegExp(/^\d+([,.])?(\d{1,2})?$/);
+    this.teclasPermitidas = ["ArrowLeft", "ArrowRight", "Delete", "Backspace", "Home", "End"];
+  }
+
+  @HostListener("keydown", ["$event"]) comprobarTeclaPulsada(evento: KeyboardEvent): void {
     let teclaPulsada: string = evento.key;
-    let caracteresPermitidos: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'Backspace', ',', '.'];
+    let textoCampoMasTeclaPulsada: string = `${this.campoTexto.nativeElement.value}${teclaPulsada}`;
 
-    if (!caracteresPermitidos.includes(teclaPulsada))
+    if (this.expresionNumerosDecimales.test(textoCampoMasTeclaPulsada))
+      return;
+
+    if (!this.teclasPermitidas.includes(teclaPulsada))
       evento.preventDefault();
-
-    let valorCampoTexto: string = this.campoTexto.nativeElement.value;
-
-    if (valorCampoTexto.includes(',') || valorCampoTexto.includes('.')) {
-      let separadorNumerosDecimales: string = ',';
-
-      if (valorCampoTexto.includes('.'))
-        separadorNumerosDecimales = '.';
-
-      let cantidadComasOPuntos: number = valorCampoTexto.split(separadorNumerosDecimales).length;
-
-      if (cantidadComasOPuntos >= 3) {
-        evento.preventDefault();
-        return;
-      }
-
-      let parteDecimal: string = valorCampoTexto.split(separadorNumerosDecimales)[1];
-
-      if (parteDecimal.length >= 2)
-        evento.preventDefault();
-    }
   }
 }
