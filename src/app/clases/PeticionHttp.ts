@@ -17,10 +17,12 @@ export class PeticionHttp {
     }
 
     private obtenerMensajeError(error: any): Observable<never> {
-        if (error.status === 0)                    
+        if (error.status === 0)
             return throwError('No funciona la API REST');
-    
-        return throwError(error.error);
+        else if (error.error)
+            return throwError(error.error);
+
+        return throwError(error);
     }
 
     public hacerPeticionGetConOpciones(url: string, opciones: {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
+import { CerrarSiniestroDto } from 'src/app/clases/DTOs/cerrar-siniestro-dto';
 import { AccionFormulario } from 'src/app/enumeraciones/accion-formulario.enum';
 import { Aseguradora } from 'src/app/interfaces/aseguradora';
 import { Siniestro } from 'src/app/interfaces/siniestro';
@@ -76,7 +77,7 @@ export class ListadoSiniestrosComponent implements OnInit {
     });
     this.idPeritoSeleccionado = 0;
 
-    this.filtrarSiniestros();             
+    this.filtrarSiniestros();
     this.spinnerService.ocultarSpinner();
   }
 
@@ -85,87 +86,34 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   public async cerrarSiniestro(idSiniestro: number): Promise<void> {
-    let esPeritoNoResponsable: boolean = false;
-
-    try {      
-      esPeritoNoResponsable = this.permisosService.tienePermisoPeritoNoResponsable();
-    } catch (error: any) {
-      Alerta.mostrarError(error.message);  
-      this.spinnerService.ocultarSpinner();
-        
-      return;
-    }
-
-    if (esPeritoNoResponsable) {
-      let idPeritoLogueado: number = this.autenticacionService.obtenerIdUsuario();
-      let impReparacionDaniosPerito: number;
-
-      try {
-        impReparacionDaniosPerito = await this.peritosService.obtenerImpReparacionDaniosPorIdPerito(idPeritoLogueado)
-                                                             .toPromise();
-      } catch (error: any) {
-        Alerta.mostrarError(error);  
-        this.spinnerService.ocultarSpinner();
-        
-        return;
-      }      
-
-      let siniestroActual: Siniestro | undefined = this.siniestros.find(siniestro => siniestro.id == idSiniestro);
-
-      if (siniestroActual === undefined) {
-        Alerta.mostrarError(`No se ha encontrado el siniestro con id ${idSiniestro}`);
-        return;
-      }
-
-      let impValDaniosCadena: string = siniestroActual.impValoracionDanios.replace(',', '.')
-                                                                          .replace(' €', '');
-
-      let impValoracionDaniosSiniestro: number = Number(impValDaniosCadena);
-
-      if (impValoracionDaniosSiniestro > impReparacionDaniosPerito) {
-        await Alerta.mostrarErrorAsincrono('No puede cerrar el siniestro porque el importe de valoración de daños supera el establecido al perito');
-
-        let idUsuarioCreado: number = this.autenticacionService.obtenerIdUsuario();
-        let mensaje = {
-          idUsuarioCreado: idUsuarioCreado,
-          idSiniestro: idSiniestro
-        };
-
-        try {
-          await this.mensajesService.crearMensajeRevisarCierre(mensaje)
-                                    .toPromise(); 
-        } catch (error: any) {
-          Alerta.mostrarError(error);
-          this.spinnerService.ocultarSpinner();
-        }        
-      }
-      else
-        this.mostrarAlertaCerrarSiniestro(idSiniestro);
-    } 
-    else
-      this.mostrarAlertaCerrarSiniestro(idSiniestro);  
-  }
-
-  private async mostrarAlertaCerrarSiniestro(idSiniestro: number): Promise<void> {
     let accionPregunta: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono(`¿Está seguro que desea cerrar el siniestro con id ${idSiniestro}?`);
 
     if (!accionPregunta.isConfirmed)
       return;
- 
+
+    let idPermiso: number = this.permisosService.obtenerIdPermisoLogueado();
+    let idUsuario: number = this.autenticacionService.obtenerIdUsuario();
+    let cerrarSiniestroDto: CerrarSiniestroDto = {
+      idSiniestro,
+      idPermiso,
+      idUsuario
+    };
+
     try {
-      await this.siniestrosService.cerrar(idSiniestro)
-                                  .toPromise(); 
+      await this.siniestrosService.cerrar(cerrarSiniestroDto)
+                                  .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
 
       return;
-    }            
+    }
 
+    await Alerta.mostrarOkAsincrono('Siniestro cerrado correctamente');
     this.filtrarSiniestros();
   }
 
-  public async filtrarSiniestros(): Promise<void> {    
+  public async filtrarSiniestros(): Promise<void> {
     let vaciarSiniestros: boolean = false;
 
     if (this.permisosService.tienePermisoAdministracion())
@@ -180,7 +128,7 @@ export class ListadoSiniestrosComponent implements OnInit {
     else {
       let idPerito: number = 0;
 
-      try {        
+      try {
         idPerito = this.autenticacionService.obtenerIdUsuario();
       } catch (error: any) {
         Alerta.mostrarError(error.message);
@@ -217,7 +165,7 @@ export class ListadoSiniestrosComponent implements OnInit {
           Alerta.mostrarError(error);
           this.spinnerService.ocultarSpinner();
           vaciarSiniestros = true;
-        }       
+        }
     }
 
     if (vaciarSiniestros)
@@ -227,7 +175,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   public eliminarFiltros(): void {
     this.idPeritoSeleccionado = 0;
     this.idAseguradoraSeleccionada = 0;
-    
+
     this.filtrarSiniestros();
   }
 
@@ -235,25 +183,25 @@ export class ListadoSiniestrosComponent implements OnInit {
     this.router.navigate([id, 'editar'], { relativeTo: this.activatedRoute, queryParams: { tipoAccion: AccionFormulario.Editar } });
   }
 
-  public async eliminar(id: number): Promise<void> { 
-    let accionPregunta: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono(`¿Está seguro que desea eliminar el siniestro con id ${id}?`);   
-    
+  public async eliminar(id: number): Promise<void> {
+    let accionPregunta: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono(`¿Está seguro que desea eliminar el siniestro con id ${id}?`);
+
     if (!accionPregunta.isConfirmed)
       return;
 
     try {
       await this.siniestrosService.eliminar(id)
-                                  .toPromise();       
+                                  .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
 
       return;
-    }            
+    }
 
     await Alerta.mostrarOkAsincrono('Siniestro eliminado correctamente');
     this.filtrarSiniestros();
-  } 
+  }
 
   public crear(): void {
     this.router.navigate(['crear'], { relativeTo: this.activatedRoute, queryParams: { tipoAccion: AccionFormulario.Crear } });
