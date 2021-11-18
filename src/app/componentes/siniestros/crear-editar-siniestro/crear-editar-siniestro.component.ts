@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first, pluck } from 'rxjs/operators';
 import { Alerta } from 'src/app/clases/Alerta';
-import { CrearSiniestroDto } from 'src/app/clases/DTOs/crear-siniestro-dto';
+import { CrearSiniestroDto } from 'src/app/interfaces/DTOs/crear-siniestro-dto';
 import { EditarSiniestroDto } from 'src/app/clases/DTOs/editar-siniestro-dto';
 import { AccionFormulario } from 'src/app/enumeraciones/accion-formulario.enum';
 import { TipoEstado } from 'src/app/enumeraciones/tipo-estado.enum';
