@@ -4,6 +4,8 @@ import { Alerta } from 'src/app/clases/Alerta';
 import { CerrarSiniestroDto } from 'src/app/clases/DTOs/cerrar-siniestro-dto';
 import { AccionFormulario } from 'src/app/enumeraciones/accion-formulario.enum';
 import { Aseguradora } from 'src/app/interfaces/aseguradora';
+import { CrearMensajeRevisarCierreDto } from 'src/app/interfaces/DTOs/crear-mensaje-revisar-cierre-dto';
+import { ImpValoracionDaniosSiniestroDto } from 'src/app/interfaces/imp-valoracion-danios-siniestro-dto';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AseguradorasService } from 'src/app/servicios/aseguradoras.service';
@@ -91,8 +93,51 @@ export class ListadoSiniestrosComponent implements OnInit {
     if (!accionPregunta.isConfirmed)
       return;
 
-    let idPermiso: number = this.permisosService.obtenerIdPermisoLogueado();
     let idUsuario: number = this.autenticacionService.obtenerIdUsuario();
+    let impValoracionDaniosSiniestroDto: ImpValoracionDaniosSiniestroDto = {
+      idSiniestro,
+      idPerito: idUsuario
+    };
+    let esImpValoracionDaniosSiniestroMayorQuePerito: boolean;
+
+    try {
+      esImpValoracionDaniosSiniestroMayorQuePerito = await this.siniestrosService.esImpValoracionDaniosSiniestroMayorQuePerito(impValoracionDaniosSiniestroDto)
+                                                                                 .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
+      this.spinnerService.ocultarSpinner();
+
+      return;
+    }
+
+    if (esImpValoracionDaniosSiniestroMayorQuePerito) {
+      let accionPregunta: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono('Se va a crear un mensaje para revisar el cierre porque el importe de valoración de daños supera el establecido al perito. ¿Desea continuar?');
+
+      if (!accionPregunta.isConfirmed)
+        return;
+
+      let crearMensajeRevisarCierreDto: CrearMensajeRevisarCierreDto = {
+        idPerito: idUsuario,
+        idSiniestro
+      };
+
+      try {
+        await this.mensajesService.crearMensajeRevisarCierre(crearMensajeRevisarCierreDto)
+                                  .toPromise();
+      } catch (error: any) {
+        Alerta.mostrarError(error);
+        this.spinnerService.ocultarSpinner();
+
+        return;
+      }
+
+      await Alerta.mostrarOkAsincrono('Mensaje revisar cierre creado correctamente');
+      this.filtrarSiniestros();
+
+      return;
+    }
+
+    let idPermiso: number = this.permisosService.obtenerIdPermisoLogueado();
     let cerrarSiniestroDto: CerrarSiniestroDto = {
       idSiniestro,
       idPermiso,

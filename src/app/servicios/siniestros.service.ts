@@ -1,3 +1,4 @@
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -5,6 +6,7 @@ import { CerrarSiniestroDto } from '../clases/DTOs/cerrar-siniestro-dto';
 import { CrearSiniestroDto } from '../clases/DTOs/crear-siniestro-dto';
 import { EditarSiniestroDto } from '../clases/DTOs/editar-siniestro-dto';
 import { PeticionHttp } from '../clases/PeticionHttp';
+import { ImpValoracionDaniosSiniestroDto } from '../interfaces/imp-valoracion-danios-siniestro-dto';
 import { Siniestro } from '../interfaces/siniestro';
 
 @Injectable({
@@ -44,5 +46,15 @@ export class SiniestrosService {
 
   public cerrar(cerrarSiniestroDto: CerrarSiniestroDto): Observable<boolean> {
     return this.peticionHttp.hacerPeticionPut<boolean>(`${environment.urlApi}/Siniestros/Cerrar`, cerrarSiniestroDto);
+  }
+
+  public esImpValoracionDaniosSiniestroMayorQuePerito(impValoracionDaniosSiniestroDto: ImpValoracionDaniosSiniestroDto): Observable<boolean> {
+    let parametros: HttpParams = new HttpParams();
+    parametros = parametros.set('idPerito', impValoracionDaniosSiniestroDto.idPerito.toString());
+    parametros = parametros.set('idSiniestro', impValoracionDaniosSiniestroDto.idSiniestro.toString());
+
+    return this.peticionHttp.hacerPeticionGetConOpcionesJson<boolean>(`${environment.urlApi}/Siniestros/EsImpValoracionDaniosSiniestroMayorQuePerito`, {
+      params: parametros
+    });
   }
 }

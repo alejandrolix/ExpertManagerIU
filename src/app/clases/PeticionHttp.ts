@@ -43,6 +43,24 @@ export class PeticionHttp {
                         );
     }
 
+    public hacerPeticionGetConOpcionesJson<T>(url: string, opciones?: {
+        headers?: HttpHeaders | {
+            [header: string]: string | string[];
+        };
+        observe?: 'body';
+        params?: HttpParams | {
+            [param: string]: string | string[];
+        };
+        reportProgress?: boolean;
+        responseType?: 'json';
+        withCredentials?: boolean;
+    }): Observable<T> {
+        return this.http.get<T>(url, opciones)
+                        .pipe(
+                            catchError((error: any) => this.obtenerMensajeError(error))
+                        );
+    }
+
     public hacerPeticionPost<T>(url: string, datos: any): Observable<T> {
         return this.http.post<T>(url, datos)
                         .pipe(
