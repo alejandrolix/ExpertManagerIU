@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
-import { CerrarSiniestroDto } from 'src/app/clases/DTOs/cerrar-siniestro-dto';
+import { CerrarSiniestroDto } from 'src/app/interfaces/DTOs/cerrar-siniestro-dto';
 import { AccionFormulario } from 'src/app/enumeraciones/accion-formulario.enum';
 import { Aseguradora } from 'src/app/interfaces/aseguradora';
 import { CrearMensajeRevisarCierreDto } from 'src/app/interfaces/DTOs/crear-mensaje-revisar-cierre-dto';
