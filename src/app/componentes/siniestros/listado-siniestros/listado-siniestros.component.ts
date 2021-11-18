@@ -5,7 +5,7 @@ import { CerrarSiniestroDto } from 'src/app/clases/DTOs/cerrar-siniestro-dto';
 import { AccionFormulario } from 'src/app/enumeraciones/accion-formulario.enum';
 import { Aseguradora } from 'src/app/interfaces/aseguradora';
 import { CrearMensajeRevisarCierreDto } from 'src/app/interfaces/DTOs/crear-mensaje-revisar-cierre-dto';
-import { ImpValoracionDaniosSiniestroDto } from 'src/app/interfaces/imp-valoracion-danios-siniestro-dto';
+import { ImpValoracionDaniosSiniestroDto } from 'src/app/interfaces/DTOs/imp-valoracion-danios-siniestro-dto';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AseguradorasService } from 'src/app/servicios/aseguradoras.service';

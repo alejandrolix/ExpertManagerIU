@@ -6,7 +6,7 @@ import { CerrarSiniestroDto } from '../clases/DTOs/cerrar-siniestro-dto';
 import { CrearSiniestroDto } from '../clases/DTOs/crear-siniestro-dto';
 import { EditarSiniestroDto } from '../clases/DTOs/editar-siniestro-dto';
 import { PeticionHttp } from '../clases/PeticionHttp';
-import { ImpValoracionDaniosSiniestroDto } from '../interfaces/imp-valoracion-danios-siniestro-dto';
+import { ImpValoracionDaniosSiniestroDto } from '../interfaces/DTOs/imp-valoracion-danios-siniestro-dto';
 import { Siniestro } from '../interfaces/siniestro';
 
 @Injectable({
