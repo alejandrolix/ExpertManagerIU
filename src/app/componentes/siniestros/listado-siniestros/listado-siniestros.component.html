@@ -39,6 +39,7 @@
                     <th scope="col">Daño</th>
                     <th scope="col">Imp. Valoración Daños</th>
                     <th scope="col" *ngIf="!tienePermisoAdministracion()"></th>
+                    <th scope="col" *ngIf="tienePermisoAdministracion()"></th>
                     <th scope="col"></th>
                     <th scope="col" *ngIf="tienePermisoAdministracion()"></th>
                     <th scope="col" *ngIf="tienePermisoAdministracion()"></th>
@@ -58,6 +59,9 @@
                     <td class="align-middle" *ngIf="!tienePermisoAdministracion()">
                         <i title="Cerrar siniestro" (click)="cerrarSiniestro(siniestro.id)" *ngIf="siniestro.idEstado == 3"
                             class="fas fa-power-off me-3"></i>
+                    </td>
+                    <td class="align-middle" *ngIf="tienePermisoAdministracion()" (click)="abrirSiniestro(siniestro.id)">
+                        <i title="Abrir siniestro" class="fas fa-lock-open me-3" *ngIf="siniestro.idEstado == 4"></i>
                     </td>
                     <td class="align-middle" (click)="verDetalles(siniestro.id)">
                         <i title="Ver detalles" class="fas fa-info me-3"></i>

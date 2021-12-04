@@ -8,6 +8,7 @@ import { EditarSiniestroDto } from '../interfaces/DTOs/editar-siniestro-dto';
 import { PeticionHttp } from '../clases/PeticionHttp';
 import { ImpValoracionDaniosSiniestroDto } from '../interfaces/DTOs/imp-valoracion-danios-siniestro-dto';
 import { Siniestro } from '../interfaces/siniestro';
+import { AbrirSiniestroDto } from '../interfaces/DTOs/abrir-siniestro-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,7 @@ export class SiniestrosService {
     return this.peticionHttp.hacerPeticionPost<boolean>(`${environment.urlApi}/Siniestros`, siniestro);
   }
 
-  public abrir(abrirSiniestroDto: EditarSiniestroDto): Observable<boolean> {
+  public abrir(abrirSiniestroDto: AbrirSiniestroDto): Observable<boolean> {
     return this.peticionHttp.hacerPeticionPut<boolean>(`${environment.urlApi}/Siniestros/Abrir`, abrirSiniestroDto);
   }
 

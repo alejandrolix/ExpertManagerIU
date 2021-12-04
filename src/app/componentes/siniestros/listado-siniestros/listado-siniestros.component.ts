@@ -16,6 +16,7 @@ import { PermisosService } from 'src/app/servicios/permisos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { SweetAlertResult } from 'sweetalert2';
+import { AbrirSiniestroDto } from 'src/app/interfaces/DTOs/abrir-siniestro-dto';
 
 @Component({
   selector: 'app-listado-siniestros',
@@ -155,6 +156,34 @@ export class ListadoSiniestrosComponent implements OnInit {
     }
 
     await Alerta.mostrarOkAsincrono('Siniestro cerrado correctamente');
+    this.filtrarSiniestros();
+  }
+
+  public async abrirSiniestro(idSiniestro: number): Promise<void> {
+    let accionPregunta: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono(`¿Está seguro que desea abrir el siniestro con id ${idSiniestro}?`);
+
+    if (!accionPregunta.isConfirmed)
+      return;
+
+    let idUsuario: number = this.autenticacionService.obtenerIdUsuario();
+    let abrirSiniestroDto: AbrirSiniestroDto = {
+      idSiniestro,
+      idUsuario
+    };
+
+    let respuesta: boolean;
+
+    try {
+      respuesta = await this.siniestrosService.abrir(abrirSiniestroDto)
+                                              .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
+      this.spinnerService.ocultarSpinner();
+
+      return;
+    }
+
+    await Alerta.mostrarOkAsincrono('Siniestro abierto correctamente');
     this.filtrarSiniestros();
   }
 
