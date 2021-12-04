@@ -36,6 +36,10 @@ export class SiniestrosService {
     return this.peticionHttp.hacerPeticionPost<boolean>(`${environment.urlApi}/Siniestros`, siniestro);
   }
 
+  public abrir(abrirSiniestroDto: EditarSiniestroDto): Observable<boolean> {
+    return this.peticionHttp.hacerPeticionPut<boolean>(`${environment.urlApi}/Siniestros/Abrir`, abrirSiniestroDto);
+  }
+
   public editar(siniestro: EditarSiniestroDto, id: number): Observable<boolean> {
     return this.peticionHttp.hacerPeticionPut<boolean>(`${environment.urlApi}/Siniestros/${id}`, siniestro);
   }
