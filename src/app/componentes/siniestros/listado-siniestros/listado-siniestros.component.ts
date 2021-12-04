@@ -141,7 +141,7 @@ export class ListadoSiniestrosComponent implements OnInit {
     let cerrarSiniestroDto: CerrarSiniestroDto = {
       idSiniestro,
       idPermiso,
-      idUsuario
+      idPerito: idUsuario
     };
 
     try {
