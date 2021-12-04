@@ -17,6 +17,7 @@ import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { SweetAlertResult } from 'sweetalert2';
 import { AbrirSiniestroDto } from 'src/app/interfaces/DTOs/abrir-siniestro-dto';
+import { TipoEstado } from 'src/app/enumeraciones/tipo-estado.enum';
 
 @Component({
   selector: 'app-listado-siniestros',
@@ -29,6 +30,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   public aseguradoras: Aseguradora[];
   public idPeritoSeleccionado: number;
   public idAseguradoraSeleccionada: number;
+  public tipoEstadoEnum: typeof TipoEstado = TipoEstado;
 
   constructor(private siniestrosService: SiniestrosService, private router: Router, private permisosService: PermisosService,
               private aseguradorasService: AseguradorasService, private autenticacionService: AutenticacionService, private peritosService: PeritosService,
