@@ -31,6 +31,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   public idPeritoSeleccionado: number;
   public idAseguradoraSeleccionada: number;
   public tipoEstadoEnum: typeof TipoEstado = TipoEstado;
+  public tienePermisoAdministracion: boolean;
 
   constructor(private siniestrosService: SiniestrosService, private router: Router, private permisosService: PermisosService,
               private aseguradorasService: AseguradorasService, private autenticacionService: AutenticacionService, private peritosService: PeritosService,
@@ -43,6 +44,8 @@ export class ListadoSiniestrosComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.spinnerService.mostrarSpinner();
+    this.tienePermisoAdministracion = this.permisosService.tienePermisoAdministracion();
+
     try {
       this.aseguradoras = await this.aseguradorasService.obtenerTodas()
                                                         .toPromise();
@@ -84,10 +87,6 @@ export class ListadoSiniestrosComponent implements OnInit {
 
     this.filtrarSiniestros();
     this.spinnerService.ocultarSpinner();
-  }
-
-  public tienePermisoAdministracion(): boolean {
-    return this.permisosService.tienePermisoAdministracion();
   }
 
   public async cerrarSiniestro(idSiniestro: number): Promise<void> {
