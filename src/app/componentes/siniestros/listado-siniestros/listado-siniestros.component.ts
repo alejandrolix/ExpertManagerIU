@@ -223,14 +223,10 @@ export class ListadoSiniestrosComponent implements OnInit {
         this.obtenerSiniestrosPorPeritoResponsable(idPerito);
         vaciarListaSiniestros = true;
       }
-      else
-        try {
-          this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.idAseguradoraSeleccionada)
-                                                        .toPromise();
-        } catch (error: any) {
-          Alerta.mostrarError(error);
-          this.spinnerService.ocultarSpinner();
-        }
+      else {
+        this.obtenerSiniestrosPorPeritoNoResponsable(idPerito);
+        vaciarListaSiniestros = true;
+      }
     }
   }
 
@@ -247,6 +243,16 @@ export class ListadoSiniestrosComponent implements OnInit {
   private async obtenerSiniestrosPorPeritoResponsable(idPerito: number): Promise<void> {
     try {
       this.siniestros = await this.siniestrosService.obtenerPorPeritoResponsable(idPerito, this.idAseguradoraSeleccionada)
+                                                    .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
+      this.spinnerService.ocultarSpinner();
+    }
+  }
+
+  private async obtenerSiniestrosPorPeritoNoResponsable(idPerito: number): Promise<void> {
+    try {
+      this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.idAseguradoraSeleccionada)
                                                     .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
