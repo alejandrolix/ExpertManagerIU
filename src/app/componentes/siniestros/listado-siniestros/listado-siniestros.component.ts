@@ -228,6 +228,9 @@ export class ListadoSiniestrosComponent implements OnInit {
         vaciarListaSiniestros = true;
       }
     }
+
+    if (vaciarListaSiniestros)
+      this.siniestros = [];
   }
 
   private async obtenerSiniestrosPermisoAdministracion(): Promise<void> {
