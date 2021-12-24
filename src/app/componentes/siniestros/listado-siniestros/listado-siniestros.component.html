@@ -57,8 +57,7 @@
                     <td class="align-middle">{{ siniestro.danio }}</td>
                     <td class="align-middle">{{ siniestro.impValoracionDanios }}</td>
                     <td class="align-middle" *ngIf="!tienePermisoAdministracion()">
-                        <i title="Cerrar siniestro" (click)="cerrarSiniestro(siniestro.id)" *ngIf="siniestro.idEstado == tipoEstadoEnum.Valorado"
-                            class="fas fa-power-off me-3"></i>
+                        <i title="Cerrar siniestro" (click)="cerrarSiniestro(siniestro.id)" *ngIf="siniestro.idEstado == tipoEstadoEnum.Valorado" class="fas fa-power-off me-3"></i>
                     </td>
                     <td class="align-middle" *ngIf="tienePermisoAdministracion()" (click)="abrirSiniestro(siniestro.id)">
                         <i title="Abrir siniestro" class="fas fa-lock-open me-3" *ngIf="siniestro.idEstado == tipoEstadoEnum.Cerrado"></i>
