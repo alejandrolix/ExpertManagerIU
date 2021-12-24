@@ -172,11 +172,9 @@ export class ListadoSiniestrosComponent implements OnInit {
       idUsuario
     };
 
-    let respuesta: boolean;
-
     try {
-      respuesta = await this.siniestrosService.abrir(abrirSiniestroDto)
-                                              .toPromise();
+      await this.siniestrosService.abrir(abrirSiniestroDto)
+                                  .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
