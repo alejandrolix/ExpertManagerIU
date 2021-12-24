@@ -190,9 +190,12 @@ export class ListadoSiniestrosComponent implements OnInit {
 
   public async filtrarSiniestros(): Promise<void> {
     let tienePermisoAdministracion: boolean = this.permisosService.tienePermisoAdministracion();
+    let vaciarListaSiniestros: boolean = false;
 
-    if (tienePermisoAdministracion)
+    if (tienePermisoAdministracion) {
       this.obtenerSiniestrosPermisoAdministracion();
+      vaciarListaSiniestros = true;
+    }
     else {
       let idPerito: number = 0;
 
@@ -216,14 +219,10 @@ export class ListadoSiniestrosComponent implements OnInit {
         return;
       }
 
-      if (tienePermisoPeritoResponsable)
-        try {
-          this.siniestros = await this.siniestrosService.obtenerPorPeritoResponsable(idPerito, this.idAseguradoraSeleccionada)
-                                                        .toPromise();
-        } catch (error: any) {
-          Alerta.mostrarError(error);
-          this.spinnerService.ocultarSpinner();
-        }
+      if (tienePermisoPeritoResponsable) {
+        this.obtenerSiniestrosPorPeritoResponsable(idPerito);
+        vaciarListaSiniestros = true;
+      }
       else
         try {
           this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.idAseguradoraSeleccionada)
@@ -242,8 +241,16 @@ export class ListadoSiniestrosComponent implements OnInit {
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
+    }
+  }
 
-      this.siniestros = [];
+  private async obtenerSiniestrosPorPeritoResponsable(idPerito: number): Promise<void> {
+    try {
+      this.siniestros = await this.siniestrosService.obtenerPorPeritoResponsable(idPerito, this.idAseguradoraSeleccionada)
+                                                    .toPromise();
+    } catch (error: any) {
+      Alerta.mostrarError(error);
+      this.spinnerService.ocultarSpinner();
     }
   }
 
