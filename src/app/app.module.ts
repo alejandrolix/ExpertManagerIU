@@ -20,6 +20,7 @@ import { SpinnerComponent } from './componentes/spinner/spinner.component';
 import { CrearEditarSiniestroComponent } from './componentes/siniestros/crear-editar-siniestro/crear-editar-siniestro.component';
 import { CrearEditarUsuarioComponent } from './componentes/usuarios/crear-editar-usuario/crear-editar-usuario.component';
 import { NumerosDecimalesDirective } from './directivas/numeros-decimales.directive';
+import { ListadoSiniestrosAdministracionComponent } from './componentes/siniestros/permiso-administracion/listado-siniestros-administracion.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { NumerosDecimalesDirective } from './directivas/numeros-decimales.direct
     SpinnerComponent,
     CrearEditarSiniestroComponent,
     CrearEditarUsuarioComponent,
-    NumerosDecimalesDirective
+    NumerosDecimalesDirective,
+    ListadoSiniestrosAdministracionComponent
   ],
   imports: [
     BrowserModule,
