@@ -28,8 +28,6 @@ export class ListadoSiniestrosComponent implements OnInit {
   public siniestros: Siniestro[];
   public peritos: Usuario[];
   public aseguradoras: Aseguradora[];
-  public idPeritoSeleccionado: number;
-  public idAseguradoraSeleccionada: number;
   public tipoEstadoEnum: typeof TipoEstado = TipoEstado;
   public tienePermisoAdministracion: boolean;
 
@@ -38,8 +36,6 @@ export class ListadoSiniestrosComponent implements OnInit {
               private mensajesService: MensajesService, private activatedRoute: ActivatedRoute, private spinnerService: SpinnerService) {
 
     this.siniestros = [];
-    this.idPeritoSeleccionado = 0;
-    this.idAseguradoraSeleccionada = 0;
   }
 
   async ngOnInit(): Promise<void> {
@@ -60,7 +56,7 @@ export class ListadoSiniestrosComponent implements OnInit {
       id: 0,
       nombre: 'Todas'
     });
-    this.idAseguradoraSeleccionada = 0;
+    this.siniestrosService.idAseguradoraSeleccionada = 0;
 
     try {
       this.peritos = await this.peritosService.obtenerTodos()
@@ -83,7 +79,7 @@ export class ListadoSiniestrosComponent implements OnInit {
       impReparacionDanios: 0,
       token: ''
     });
-    this.idPeritoSeleccionado = 0;
+    this.siniestrosService.idPeritoSeleccionado = 0;
 
     this.filtrarSiniestros();
     this.spinnerService.ocultarSpinner();
@@ -231,9 +227,19 @@ export class ListadoSiniestrosComponent implements OnInit {
       this.siniestros = [];
   }
 
+  public asignarPeritoSeleccionado(evento: any): void {
+    let idPeritoSeleccionado = parseInt(evento.target.value);
+    this.siniestrosService.idPeritoSeleccionado = idPeritoSeleccionado;
+  }
+
+  public asignarAseguradoraSeleccionada(evento: any): void {
+    let idAseguradoraSeleccionada = parseInt(evento.target.value);
+    this.siniestrosService.idPeritoSeleccionado = idAseguradoraSeleccionada;
+  }
+
   private async obtenerSiniestrosPermisoAdministracion(): Promise<void> {
     try {
-      this.siniestros = await this.siniestrosService.obtenerTodos(this.idPeritoSeleccionado, this.idAseguradoraSeleccionada)
+      this.siniestros = await this.siniestrosService.obtenerTodos(this.siniestrosService.idPeritoSeleccionado, this.siniestrosService.idAseguradoraSeleccionada)
                                                     .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
@@ -243,7 +249,7 @@ export class ListadoSiniestrosComponent implements OnInit {
 
   private async obtenerSiniestrosPorPeritoResponsable(idPerito: number): Promise<void> {
     try {
-      this.siniestros = await this.siniestrosService.obtenerPorPeritoResponsable(idPerito, this.idAseguradoraSeleccionada)
+      this.siniestros = await this.siniestrosService.obtenerPorPeritoResponsable(idPerito, this.siniestrosService.idAseguradoraSeleccionada)
                                                     .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
@@ -253,7 +259,7 @@ export class ListadoSiniestrosComponent implements OnInit {
 
   private async obtenerSiniestrosPorPeritoNoResponsable(idPerito: number): Promise<void> {
     try {
-      this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.idAseguradoraSeleccionada)
+      this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.siniestrosService.idAseguradoraSeleccionada)
                                                     .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
@@ -262,13 +268,14 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   public eliminarFiltros(): void {
-    this.idPeritoSeleccionado = 0;
-    this.idAseguradoraSeleccionada = 0;
+    this.siniestrosService.idPeritoSeleccionado = 0;
+    this.siniestrosService.idAseguradoraSeleccionada = 0;
 
     this.filtrarSiniestros();
   }
 
   public editar(id: number): void {
+    debugger
     this.router.navigate([id, 'editar'], { relativeTo: this.activatedRoute, queryParams: { tipoAccion: AccionFormulario.Editar } });
   }
 
