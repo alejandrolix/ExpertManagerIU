@@ -12,6 +12,8 @@
             <th scope="col">Imp. Valoración Daños</th>
             <th scope="col"></th>
             <th scope="col"></th>
+            <!-- <th scope="col"></th>
+            <th scope="col"></th> -->
         </tr>
     </thead>
     <tbody>
@@ -28,13 +30,13 @@
             <td class="align-middle" (click)="abrirSiniestro(siniestro.id)">
                 <i title="Abrir siniestro" class="fas fa-lock-open me-3"></i>
             </td>
-            <td class="align-middle" (click)="emitirEventoVerDetalles(siniestro.id)">
+            <td class="align-middle" (click)="eventoVerDetalles.emit(siniestro.id)">
                 <i title="Ver detalles" class="fas fa-info me-3"></i>
             </td>
-            <td class="align-middle" (click)="emitirEventoEditarSiniestro(siniestro.id)">
+            <!-- <td class="align-middle" (click)="editar(siniestro.id)">
                 <i title="Editar" class="fas fa-pencil-alt me-3"></i>
             </td>
-            <!-- <td class="align-middle" (click)="eliminar(siniestro.id)">
+            <td class="align-middle" (click)="eliminar(siniestro.id)">
                 <i title="Eliminar" class="fas fa-trash-alt"></i>
             </td> -->
         </tr>

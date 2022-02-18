@@ -14,14 +14,8 @@ import { AbrirSiniestroDto } from '../interfaces/DTOs/abrir-siniestro-dto';
   providedIn: 'root'
 })
 export class SiniestrosService {
-  public idPeritoSeleccionado: number;
-  public idAseguradoraSeleccionada: number;
-  public siniestros: Siniestro[];
 
-  constructor(private peticionHttp: PeticionHttp) {
-    this.idPeritoSeleccionado = 0;
-    this.idAseguradoraSeleccionada = 0;
-  }
+  constructor(private peticionHttp: PeticionHttp) { }
 
   public obtenerTodos(idPerito: number, idAseguradora: number): Observable<Siniestro[]> {
     return this.peticionHttp.hacerPeticionGet<Siniestro[]>(`${environment.urlApi}/Siniestros?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
