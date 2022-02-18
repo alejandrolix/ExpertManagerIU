@@ -275,6 +275,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   public editar(id: number): void {
+    debugger
     this.router.navigate([id, 'editar'], { relativeTo: this.activatedRoute, queryParams: { tipoAccion: AccionFormulario.Editar } });
   }
 
