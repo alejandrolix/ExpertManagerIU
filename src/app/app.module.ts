@@ -20,6 +20,8 @@ import { SpinnerComponent } from './componentes/spinner/spinner.component';
 import { CrearEditarSiniestroComponent } from './componentes/siniestros/crear-editar-siniestro/crear-editar-siniestro.component';
 import { CrearEditarUsuarioComponent } from './componentes/usuarios/crear-editar-usuario/crear-editar-usuario.component';
 import { NumerosDecimalesDirective } from './directivas/numeros-decimales.directive';
+import { AdministracionComponent } from './componentes/siniestros/listado-siniestros/administracion/administracion.component';
+import { FiltroPeritoAseguradoraComponent } from './componentes/siniestros/filtros/perito/filtro-perito-aseguradora.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { NumerosDecimalesDirective } from './directivas/numeros-decimales.direct
     SpinnerComponent,
     CrearEditarSiniestroComponent,
     CrearEditarUsuarioComponent,
-    NumerosDecimalesDirective
+    NumerosDecimalesDirective,
+    AdministracionComponent,
+    FiltroPeritoAseguradoraComponent
   ],
   imports: [
     BrowserModule,

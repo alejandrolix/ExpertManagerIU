@@ -33,7 +33,7 @@ const routes: Routes = [
         path: ':id/detalles',
         component: DetallesSiniestroComponent
       }
-    ]   
+    ]
   },
   {
     path: 'siniestros',
@@ -47,7 +47,7 @@ const routes: Routes = [
       {
         path: ':id/editar',
         component: CrearEditarSiniestroComponent
-      },      
+      },
       {
         path: ':id/documentaciones/subir',
         component: SubirArchivoComponent
@@ -61,7 +61,7 @@ const routes: Routes = [
         component: CrearMensajeComponent
       }
     ]
-  },  
+  },
   {
     path: 'usuarios',
     component: UsuariosComponent,
@@ -69,7 +69,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: ListadoUsuariosComponent        
+        component: ListadoUsuariosComponent
       }
     ]
   },
@@ -88,7 +88,7 @@ const routes: Routes = [
         component: CrearEditarUsuarioComponent
       }
     ]
-  },    
+  },
   {
     path: 'inicioSesion',
     component: InicioSesionComponent
