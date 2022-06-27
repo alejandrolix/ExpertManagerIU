@@ -33,12 +33,11 @@ export class CrearMensajeComponent implements OnInit {
 
     let descripcion: string = this.formCrearMensaje.get('descripcion')?.value;
     let idUsuarioCreado: number = this.autenticacionService.obtenerIdUsuario();
-    let idSiniestro: number = this.idSiniestro;
 
     let mensaje: { descripcion: string, idUsuarioCreado: number, idSiniestro: number } = {
       descripcion,
       idUsuarioCreado,
-      idSiniestro
+      idSiniestro: this.idSiniestro
     };
 
     this.spinnerService.mostrarSpinner();
@@ -46,17 +45,17 @@ export class CrearMensajeComponent implements OnInit {
 
     try {
       respuesta = await this.mensajesService.crear(mensaje)
-                                            .toPromise(); 
+                                            .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
 
       return;
-    }    
+    }
 
     if (respuesta) {
-      await Alerta.mostrarOkAsincrono('Mensaje creado correctamente');           
+      await Alerta.mostrarOkAsincrono('Mensaje creado correctamente');
       this.router.navigateByUrl(`/siniestros/detalles/${this.idSiniestro}`);
-    }         
+    }
   }
 }
