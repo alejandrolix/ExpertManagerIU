@@ -15,7 +15,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   public siniestros: Siniestro[];
   public idPeritoSeleccionado: number;
   public idAseguradoraSeleccionada: number;
-  public esUsuarioAdministrador: boolean;
+  public esAdministrador: boolean;
 
   constructor(private siniestrosService: SiniestrosService,
               private router: Router,
@@ -25,7 +25,7 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.esUsuarioAdministrador = this.permisosService.tienePermisoAdministracion();
+    this.esAdministrador = this.permisosService.tienePermisoAdministracion();
   }
 
   private async obtenerSiniestrosPorPeritoResponsable(idPerito: number): Promise<void> {
