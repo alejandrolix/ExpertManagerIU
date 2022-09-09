@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
-import { GenerarHashService } from 'src/app/servicios/generar-hash.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { UsuariosService } from '../../servicios/usuarios.service';
 
@@ -16,11 +15,11 @@ import { UsuariosService } from '../../servicios/usuarios.service';
 export class InicioSesionComponent implements OnInit {
   public formInicioSesion: FormGroup;
 
-  constructor(private usuariosService: UsuariosService, private router: Router, private generarHashService: GenerarHashService,
-              private spinnerService: SpinnerService, private autenticacionService: AutenticacionService) { }
+  constructor(private usuariosService: UsuariosService, private router: Router, private spinnerService: SpinnerService,
+              private autenticacionService: AutenticacionService) { }
 
-  ngOnInit(): void {           
-    this.spinnerService.ocultarSpinner();    
+  ngOnInit(): void {
+    this.spinnerService.ocultarSpinner();
 
     if (this.autenticacionService.estaLogueadoUsuario)
       this.router.navigateByUrl('/inicio');
@@ -29,29 +28,29 @@ export class InicioSesionComponent implements OnInit {
         usuario: new FormControl('', Validators.required),
         contrasenia: new FormControl('', Validators.required)
       });
-  }  
+  }
 
   public async iniciarSesion(): Promise<void> {
     this.spinnerService.mostrarSpinner();
     let nombre: string = this.formInicioSesion.get('usuario')?.value;
-    let hashContrasenia: string = await this.generarHashService.generar(this.formInicioSesion.get('contrasenia')?.value);
+    let contrasenia: string = this.formInicioSesion.get('contrasenia')?.value;
 
-    let credenciales: { nombre: string, hashContrasenia: string } = {
+    let credenciales: { nombre: string, contrasenia: string } = {
       nombre,
-      hashContrasenia
+      contrasenia
     };
 
     let usuario: Usuario;
 
     try {
       usuario = await this.usuariosService.iniciarSesion(credenciales)
-                                            .toPromise(); 
+                                            .toPromise();
     } catch (error: any) {
-      Alerta.mostrarError(error); 
+      Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
 
       return;
-    }    
+    }
 
     this.autenticacionService.guardarCredencialesUsuario(usuario);
     this.spinnerService.ocultarSpinner();
