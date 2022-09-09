@@ -1,6 +1,6 @@
 export interface CrearEditarUsuarioVm {
     nombre: string;
     idPermiso: number;
-    hashContrasenia: string;
+    contrasenia: string;
     impReparacionDanios: number;
 }
