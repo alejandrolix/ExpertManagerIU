@@ -85,8 +85,8 @@ export class CrearEditarUsuarioComponent implements OnInit {
 
       this.formCrearEditarUsuario = new FormGroup({
         nombre: new FormControl(usuario.nombre, Validators.required),
-        contrasenia: new FormControl(usuario.hashContrasenia, Validators.required),
-        repetirContrasenia: new FormControl(usuario.hashContrasenia, [Validators.required, Validadores.comprobarContraseniasSonIguales]),
+        contrasenia: new FormControl(usuario.contrasenia, Validators.required),
+        repetirContrasenia: new FormControl(usuario.contrasenia, [Validators.required, Validadores.comprobarContraseniasSonIguales]),
         permiso: new FormControl(usuario.idPermiso)
       });
 

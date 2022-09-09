@@ -42,7 +42,7 @@ export class FiltroPeritoAseguradoraComponent implements OnInit {
         esPerito: '',
         idPermiso: 0,
         permiso: '',
-        hashContrasenia: '',
+        contrasenia: '',
         impReparacionDanios: 0,
         token: ''
       });

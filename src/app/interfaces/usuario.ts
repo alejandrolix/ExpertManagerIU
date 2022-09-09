@@ -5,7 +5,7 @@ export interface Usuario {
     esPerito: string;
     idPermiso: number;
     permiso: string;
-    hashContrasenia: string;
+    contrasenia: string;
     impReparacionDanios: number;
     token: string;
 }
