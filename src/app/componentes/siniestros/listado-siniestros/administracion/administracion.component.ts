@@ -8,6 +8,7 @@ import { CerrarSiniestroDto } from 'src/app/interfaces/DTOs/cerrar-siniestro-dto
 import { CrearMensajeRevisarCierreDto } from 'src/app/interfaces/DTOs/crear-mensaje-revisar-cierre-dto';
 import { DatosFiltroPeritoYAseguradoraDTO } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
 import { ImpValoracionDaniosSiniestroDto } from 'src/app/interfaces/DTOs/imp-valoracion-danios-siniestro-dto';
+import { ListadoPeritos } from 'src/app/interfaces/listadoPeritos';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 import { MensajesService } from 'src/app/servicios/mensajes.service';
@@ -23,21 +24,23 @@ import { ListadoSiniestrosComponent } from '../listado-siniestros.component';
   templateUrl: './administracion.component.html',
   styleUrls: ['./administracion.component.scss']
 })
-export class AdministracionComponent implements OnInit {
+export class AdministracionComponent extends ListadoSiniestrosComponent implements OnInit, ListadoPeritos {
   public siniestros: Siniestro[];
   public tipoEstadoEnum: typeof TipoEstado = TipoEstado;
 
   @ViewChild(FiltroPeritoAseguradoraComponent)
   private filtroPeritoAseguradora: FiltroPeritoAseguradoraComponent;
 
-  constructor(private siniestrosService: SiniestrosService,
-              private router: Router,
+  constructor(siniestrosService: SiniestrosService,
+              router: Router,
               private autenticacionService: AutenticacionService,
-              private activatedRoute: ActivatedRoute,
-              private spinnerService: SpinnerService,
+              activatedRoute: ActivatedRoute,
+              spinnerService: SpinnerService,
               private mensajesService: MensajesService,
-              private permisosService: PermisosService,
+              permisosService: PermisosService,
               private injector: Injector) {
+
+    super(siniestrosService, router, permisosService, activatedRoute, spinnerService);
 
     this.siniestros = [];
   }
@@ -135,16 +138,8 @@ export class AdministracionComponent implements OnInit {
     });
   }
 
-  public verDetalles(id: number): void {
-    let componenteListadoSiniestros: ListadoSiniestrosComponent | undefined;
-    componenteListadoSiniestros = this.injector.get(ListadoSiniestrosComponent);
-
-    if (componenteListadoSiniestros == undefined) {
-      Alerta.mostrarError(`No se puede mostrar los detalles del siniestro id ${id}`);
-      return;
-    }
-
-    componenteListadoSiniestros.verDetalles(id);
+  public verDetalles(idSiniestro: number): void {
+    super.verDetalles(idSiniestro);
   }
 
   public async cerrarSiniestro(idSiniestro: number): Promise<void> {
@@ -171,7 +166,8 @@ export class AdministracionComponent implements OnInit {
     }
 
     if (esImpValoracionDaniosSiniestroMayorQuePerito) {
-      let accionPregunta: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono('Se va a crear un mensaje para revisar el cierre porque el importe de valoración de daños supera el establecido al perito. ¿Desea continuar?');
+      let accionPregunta: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono('Se va a crear un mensaje para revisar el cierre porque el importe de valoración de daños ' +
+                                                                                   'supera el establecido al perito. ¿Desea continuar?');
 
       if (!accionPregunta.isConfirmed)
         return;

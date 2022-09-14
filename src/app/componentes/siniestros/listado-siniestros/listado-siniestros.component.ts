@@ -20,9 +20,9 @@ export class ListadoSiniestrosComponent implements OnInit, ListadoPeritos {
   public esPeritoResponsable: boolean;
 
   constructor(public siniestrosService: SiniestrosService,
-              private router: Router,
-              private permisosService: PermisosService,
-              private activatedRoute: ActivatedRoute,
+              public router: Router,
+              public permisosService: PermisosService,
+              public activatedRoute: ActivatedRoute,
               public spinnerService: SpinnerService) {
   }
 
