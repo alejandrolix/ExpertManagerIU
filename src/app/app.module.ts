@@ -22,6 +22,7 @@ import { CrearEditarUsuarioComponent } from './componentes/usuarios/crear-editar
 import { NumerosDecimalesDirective } from './directivas/numeros-decimales.directive';
 import { AdministracionComponent } from './componentes/siniestros/listado-siniestros/administracion/administracion.component';
 import { FiltroPeritoAseguradoraComponent } from './componentes/siniestros/filtros/perito/filtro-perito-aseguradora.component';
+import { PeritoResponsableComponent } from './componentes/siniestros/listado-siniestros/perito-responsable/perito-responsable.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { FiltroPeritoAseguradoraComponent } from './componentes/siniestros/filtr
     CrearEditarUsuarioComponent,
     NumerosDecimalesDirective,
     AdministracionComponent,
-    FiltroPeritoAseguradoraComponent
+    FiltroPeritoAseguradoraComponent,
+    PeritoResponsableComponent
   ],
   imports: [
     BrowserModule,

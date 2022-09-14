@@ -30,16 +30,6 @@ export class ListadoSiniestrosComponent implements OnInit {
     this.esPeritoResponsable = this.permisosService.tienePermisoPeritoResponsable();
   }
 
-  private async obtenerSiniestrosPorPeritoResponsable(idPerito: number): Promise<void> {
-    try {
-      this.siniestros = await this.siniestrosService.obtenerPorPeritoResponsable(idPerito, this.idAseguradoraSeleccionada)
-                                                    .toPromise();
-    } catch (error: any) {
-      Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
-    }
-  }
-
   private async obtenerSiniestrosPorPeritoNoResponsable(idPerito: number): Promise<void> {
     try {
       this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(idPerito, this.idAseguradoraSeleccionada)
