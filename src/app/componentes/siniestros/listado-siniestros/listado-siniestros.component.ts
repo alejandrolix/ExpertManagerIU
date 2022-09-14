@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
+import { ListadoPeritos } from 'src/app/interfaces/listadoPeritos';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
@@ -11,21 +12,21 @@ import { SpinnerService } from 'src/app/servicios/spinner.service';
   templateUrl: './listado-siniestros.component.html',
   styleUrls: ['./listado-siniestros.component.scss']
 })
-export class ListadoSiniestrosComponent implements OnInit {
+export class ListadoSiniestrosComponent implements OnInit, ListadoPeritos {
   public siniestros: Siniestro[];
   public idPeritoSeleccionado: number;
   public idAseguradoraSeleccionada: number;
   public esAdministrador: boolean;
   public esPeritoResponsable: boolean;
 
-  constructor(private siniestrosService: SiniestrosService,
+  constructor(public siniestrosService: SiniestrosService,
               private router: Router,
               private permisosService: PermisosService,
               private activatedRoute: ActivatedRoute,
-              private spinnerService: SpinnerService) {
+              public spinnerService: SpinnerService) {
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.esAdministrador = this.permisosService.tienePermisoAdministracion();
     this.esPeritoResponsable = this.permisosService.tienePermisoPeritoResponsable();
   }
@@ -40,8 +41,8 @@ export class ListadoSiniestrosComponent implements OnInit {
     }
   }
 
-  public verDetalles(id: number): void {
-    this.router.navigate([id, 'detalles'], {
+  public verDetalles(idSiniestro: number): void {
+    this.router.navigate([idSiniestro, 'detalles'], {
       relativeTo: this.activatedRoute
     });
   }
