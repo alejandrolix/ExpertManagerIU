@@ -29,7 +29,9 @@ export class PeritoResponsableComponent extends ListadoSiniestrosComponent imple
   }
 
   ngOnInit(): void {
+    this.spinnerService.mostrarSpinner();
     this.obtenerSiniestros();
+    this.spinnerService.ocultarSpinner();
   }
 
   private async obtenerSiniestros(): Promise<void> {
