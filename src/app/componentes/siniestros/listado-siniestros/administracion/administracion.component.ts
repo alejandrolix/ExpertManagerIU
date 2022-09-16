@@ -49,6 +49,7 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
     this.spinnerService.mostrarSpinner();
 
     await this.obtenerSiniestros();
+    this.filtroPeritoAseguradora.asignarPeritos(this.siniestros);
     this.spinnerService.ocultarSpinner();
   }
 
