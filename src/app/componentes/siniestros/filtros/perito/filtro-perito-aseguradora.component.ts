@@ -14,7 +14,7 @@ export class FiltroPeritoAseguradoraComponent {
   public idPeritoSeleccionado: string;
   public idAseguradoraSeleccionada: string;
   public peritos: PeritoFiltroDto[];
-  public aseguradoras: {id: number, nombre: string}[];
+  public aseguradoras: AseguradoraFiltroDto[];
 
   @Output()
   public emisorPeritoYAseguradora: EventEmitter<DatosFiltroPeritoYAseguradoraDTO> = new EventEmitter<DatosFiltroPeritoYAseguradoraDTO>();
@@ -96,7 +96,7 @@ export class FiltroPeritoAseguradoraComponent {
     let aseguradorasUnicas: {id: number, nombre: string}[] = [];
 
     aseguradoras.forEach((aseguradora: AseguradoraSiniestroDto) => {
-      let encontrado = aseguradorasUnicas.find(aseguradoraUnica => {
+      let encontrado: AseguradoraFiltroDto | undefined = aseguradorasUnicas.find((aseguradoraUnica: AseguradoraFiltroDto) => {
         if (aseguradora.idAseguradora === aseguradoraUnica.id) {
           return true;
         }
@@ -127,12 +127,14 @@ interface PeritoSiniestroDto {
   perito: string;
 }
 
-interface PeritoFiltroDto {
-  id: number;
-  nombre: string;
+abstract class PeritoFiltroDto {
+  public id: number;
+  public nombre: string;
 }
 
 interface AseguradoraSiniestroDto {
   idAseguradora: number;
   aseguradora: string;
 }
+
+abstract class AseguradoraFiltroDto extends PeritoFiltroDto { }
