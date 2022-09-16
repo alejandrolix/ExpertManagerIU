@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
 import { DatosFiltroPeritoYAseguradoraDTO } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
@@ -7,6 +7,7 @@ import { Siniestro } from 'src/app/interfaces/siniestro';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
+import { FiltroPeritoAseguradoraComponent } from '../../filtros/perito/filtro-perito-aseguradora.component';
 import { ListadoSiniestrosComponent } from '../listado-siniestros.component';
 
 @Component({
@@ -17,6 +18,9 @@ import { ListadoSiniestrosComponent } from '../listado-siniestros.component';
 export class PeritoResponsableComponent extends ListadoSiniestrosComponent implements OnInit, ListadoPeritos {
   public siniestros: Siniestro[];
 
+  @ViewChild(FiltroPeritoAseguradoraComponent)
+  private filtroPeritoAseguradora: FiltroPeritoAseguradoraComponent;
+
   constructor(siniestrosService: SiniestrosService,
               spinnerService: SpinnerService,
               private injector: Injector) {
@@ -26,11 +30,15 @@ export class PeritoResponsableComponent extends ListadoSiniestrosComponent imple
           injector.get(PermisosService),
           injector.get(ActivatedRoute),
           spinnerService);
+
+    this.siniestros = [];
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.spinnerService.mostrarSpinner();
-    this.obtenerSiniestros();
+    await this.obtenerSiniestros();
+
+    this.filtroPeritoAseguradora.asignarAseguradoras(this.siniestros);
     this.spinnerService.ocultarSpinner();
   }
 
