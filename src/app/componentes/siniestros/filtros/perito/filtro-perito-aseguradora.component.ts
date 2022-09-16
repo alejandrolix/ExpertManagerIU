@@ -127,9 +127,9 @@ interface PeritoSiniestroDto {
   perito: string;
 }
 
-abstract class PeritoFiltroDto {
-  public id: number;
-  public nombre: string;
+interface PeritoFiltroDto {
+  id: number;
+  nombre: string;
 }
 
 interface AseguradoraSiniestroDto {
@@ -137,4 +137,4 @@ interface AseguradoraSiniestroDto {
   aseguradora: string;
 }
 
-abstract class AseguradoraFiltroDto extends PeritoFiltroDto { }
+interface AseguradoraFiltroDto extends PeritoFiltroDto {}
