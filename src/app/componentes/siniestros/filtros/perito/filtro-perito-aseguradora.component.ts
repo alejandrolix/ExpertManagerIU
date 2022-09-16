@@ -31,6 +31,14 @@ export class FiltroPeritoAseguradoraComponent {
     let idPerito = parseInt(this.idPeritoSeleccionado);
     let idAseguradora = parseInt(this.idAseguradoraSeleccionada);
 
+    if (isNaN(idPerito)) {
+      idPerito = 0;
+    }
+
+    if (isNaN(idAseguradora)) {
+      idAseguradora = 0;
+    }
+
     this.emisorPeritoYAseguradora.emit({
       idPerito,
       idAseguradora

@@ -56,7 +56,7 @@ export class PeritoResponsableComponent extends ListadoSiniestrosComponent imple
     let {idPerito, idAseguradora} = datosFiltroPeritoYAseguradoraDTO;
 
     try {
-      this.siniestros = await this.siniestrosService.obtenerTodos(idPerito, idAseguradora)
+      this.siniestros = await this.siniestrosService.obtenerPorPeritoResponsable(idPerito, idAseguradora)
                                                     .toPromise();
     } catch (error: any) {
       Alerta.mostrarError(error);
