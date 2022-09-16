@@ -58,7 +58,7 @@ export class FiltroPeritoAseguradoraComponent {
     let peritosUnicos: PeritoFiltroDto[] = [];
 
     peritos.forEach((perito: PeritoSiniestroDto) => {
-      let encontrado = peritosUnicos.find(peritoUnico => {
+      let encontrado: PeritoFiltroDto | undefined = peritosUnicos.find((peritoUnico: PeritoFiltroDto) => {
         if (perito.idPerito === peritoUnico.id) {
           return true;
         }
@@ -84,8 +84,8 @@ export class FiltroPeritoAseguradoraComponent {
   }
 
   public asignarAseguradoras(siniestros: Siniestro[]): void {
-    let aseguradoras: {idAseguradora: number, aseguradora: string}[] = siniestros.map((siniestro: Siniestro) => {
-      let {idAseguradora, aseguradora}: {idAseguradora: number, aseguradora: string} = siniestro;
+    let aseguradoras: AseguradoraSiniestroDto[] = siniestros.map((siniestro: Siniestro) => {
+      let {idAseguradora, aseguradora}: AseguradoraSiniestroDto = siniestro;
 
       return {
         idAseguradora,
@@ -95,7 +95,7 @@ export class FiltroPeritoAseguradoraComponent {
 
     let aseguradorasUnicas: {id: number, nombre: string}[] = [];
 
-    aseguradoras.forEach((aseguradora: {idAseguradora: number, aseguradora: string}) => {
+    aseguradoras.forEach((aseguradora: AseguradoraSiniestroDto) => {
       let encontrado = aseguradorasUnicas.find(aseguradoraUnica => {
         if (aseguradora.idAseguradora === aseguradoraUnica.id) {
           return true;
@@ -127,7 +127,12 @@ interface PeritoSiniestroDto {
   perito: string;
 }
 
-abstract class PeritoFiltroDto {
-  public id: number;
-  public nombre: string;
+interface PeritoFiltroDto {
+  id: number;
+  nombre: string;
+}
+
+interface AseguradoraSiniestroDto {
+  idAseguradora: number;
+  aseguradora: string;
 }
