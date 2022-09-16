@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Aseguradora } from 'src/app/interfaces/aseguradora';
 import { DatosFiltroPeritoYAseguradoraDTO } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 
@@ -15,7 +14,7 @@ export class FiltroPeritoAseguradoraComponent {
   public idPeritoSeleccionado: string;
   public idAseguradoraSeleccionada: string;
   public peritos: {id: number, nombre: string}[];
-  public aseguradoras: Aseguradora[];
+  public aseguradoras: {id: number, nombre: string}[];
 
   @Output()
   public emisorPeritoYAseguradora: EventEmitter<DatosFiltroPeritoYAseguradoraDTO> = new EventEmitter<DatosFiltroPeritoYAseguradoraDTO>();
@@ -74,5 +73,43 @@ export class FiltroPeritoAseguradoraComponent {
     });
 
     this.idPeritoSeleccionado = '0';
+  }
+
+  public asignarAseguradoras(siniestros: Siniestro[]): void {
+    let aseguradoras: {idAseguradora: number, aseguradora: string}[] = siniestros.map((siniestro: Siniestro) => {
+      let {idAseguradora, aseguradora}: {idAseguradora: number, aseguradora: string} = siniestro;
+
+      return {
+        idAseguradora,
+        aseguradora
+      };
+    });
+
+    let aseguradorasUnicas: {id: number, nombre: string}[] = [];
+
+    aseguradoras.forEach((aseguradora: {idAseguradora: number, aseguradora: string}) => {
+      let encontrado = aseguradorasUnicas.find(aseguradoraUnica => {
+        if (aseguradora.idAseguradora === aseguradoraUnica.id) {
+          return true;
+        }
+
+        return false;
+      });
+
+      if (encontrado === undefined) {
+        aseguradorasUnicas.push({
+          id: aseguradora.idAseguradora,
+          nombre: aseguradora.aseguradora
+        });
+      }
+    });
+
+    this.aseguradoras = aseguradorasUnicas;
+    this.aseguradoras.unshift({
+      id: 0,
+      nombre: 'Todas'
+    });
+
+    this.idAseguradoraSeleccionada = '0';
   }
 }
