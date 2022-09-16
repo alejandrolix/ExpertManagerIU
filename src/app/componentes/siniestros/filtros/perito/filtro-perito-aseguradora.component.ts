@@ -13,7 +13,7 @@ export class FiltroPeritoAseguradoraComponent {
 
   public idPeritoSeleccionado: string;
   public idAseguradoraSeleccionada: string;
-  public peritos: {id: number, nombre: string}[];
+  public peritos: PeritoFiltroDto[];
   public aseguradoras: {id: number, nombre: string}[];
 
   @Output()
@@ -55,10 +55,10 @@ export class FiltroPeritoAseguradoraComponent {
       };
     });
 
-    let peritosUnicos: {id: number, nombre: string}[] = [];
+    let peritosUnicos: PeritoFiltroDto[] = [];
 
     peritos.forEach((perito: PeritoSiniestroDto) => {
-      let peritoUnico = peritosUnicos.find(peritoUnico => {
+      let encontrado = peritosUnicos.find(peritoUnico => {
         if (perito.idPerito === peritoUnico.id) {
           return true;
         }
@@ -66,7 +66,7 @@ export class FiltroPeritoAseguradoraComponent {
         return false;
       });
 
-      if (peritoUnico === undefined) {
+      if (encontrado === undefined) {
         peritosUnicos.push({
           id: perito.idPerito,
           nombre: perito.perito
@@ -125,4 +125,9 @@ export class FiltroPeritoAseguradoraComponent {
 interface PeritoSiniestroDto {
   idPerito: number;
   perito: string;
+}
+
+abstract class PeritoFiltroDto {
+  public id: number;
+  public nombre: string;
 }
