@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
 import { AccionFormulario } from 'src/app/enumeraciones/accion-formulario.enum';
@@ -37,8 +37,7 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
               activatedRoute: ActivatedRoute,
               spinnerService: SpinnerService,
               private mensajesService: MensajesService,
-              permisosService: PermisosService,
-              private injector: Injector) {
+              permisosService: PermisosService) {
 
     super(siniestrosService, router, permisosService, activatedRoute, spinnerService);
 
