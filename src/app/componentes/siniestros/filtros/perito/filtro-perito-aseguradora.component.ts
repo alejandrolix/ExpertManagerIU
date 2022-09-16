@@ -46,8 +46,8 @@ export class FiltroPeritoAseguradoraComponent {
   }
 
   public asignarPeritos(siniestros: Siniestro[]): void {
-    let peritos: {idPerito: number, perito: string}[] = siniestros.map((siniestro: Siniestro) => {
-      let {idPerito, perito}: {idPerito: number, perito: string} = siniestro;
+    let peritos: PeritoSiniestroDto[] = siniestros.map((siniestro: Siniestro) => {
+      let {idPerito, perito}: PeritoSiniestroDto = siniestro;
 
       return {
         idPerito,
@@ -57,7 +57,7 @@ export class FiltroPeritoAseguradoraComponent {
 
     let peritosUnicos: {id: number, nombre: string}[] = [];
 
-    peritos.forEach((perito: {idPerito: number, perito: string}) => {
+    peritos.forEach((perito: PeritoSiniestroDto) => {
       let peritoUnico = peritosUnicos.find(peritoUnico => {
         if (perito.idPerito === peritoUnico.id) {
           return true;
@@ -120,4 +120,9 @@ export class FiltroPeritoAseguradoraComponent {
 
     this.idAseguradoraSeleccionada = '0';
   }
+}
+
+interface PeritoSiniestroDto {
+  idPerito: number;
+  perito: string;
 }
