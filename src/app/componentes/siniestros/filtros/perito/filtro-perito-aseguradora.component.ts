@@ -1,6 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DatosFiltroPeritoYAseguradoraDTO } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
+import { PeritoFiltroDto } from 'src/app/interfaces/DTOs/perito-filtro-dto';
+import { PeritoSiniestroDto } from 'src/app/interfaces/DTOs/perito-siniestro-dto';
 import { Siniestro } from 'src/app/interfaces/siniestro';
+import { AseguradoraSiniestroDto } from 'src/app/interfaces/DTOs/aseguradora-siniestro-dto';
+import { AseguradoraFiltroDto } from 'src/app/interfaces/DTOs/aseguradora-filtro-dto';
 
 @Component({
   selector: 'app-filtro-perito-aseguradora',
@@ -121,20 +125,3 @@ export class FiltroPeritoAseguradoraComponent {
     this.idAseguradoraSeleccionada = '0';
   }
 }
-
-interface PeritoSiniestroDto {
-  idPerito: number;
-  perito: string;
-}
-
-interface PeritoFiltroDto {
-  id: number;
-  nombre: string;
-}
-
-interface AseguradoraSiniestroDto {
-  idAseguradora: number;
-  aseguradora: string;
-}
-
-interface AseguradoraFiltroDto extends PeritoFiltroDto {}
