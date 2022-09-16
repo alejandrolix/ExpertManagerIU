@@ -189,7 +189,7 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
       }
 
       await Alerta.mostrarOkAsincrono('Mensaje revisar cierre creado correctamente');
-      // this.filtrarSiniestros();
+      this.filtroPeritoAseguradora.eliminarFiltros();
 
       return;
     }
@@ -212,6 +212,6 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
     }
 
     await Alerta.mostrarOkAsincrono('Siniestro cerrado correctamente');
-    // this.filtrarSiniestros();
+    this.filtroPeritoAseguradora.eliminarFiltros();
   }
 }
