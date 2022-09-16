@@ -2,7 +2,8 @@
     <div class="row mt-5">
         <div class="col-12">
             <div class="d-flex justify-content-start">
-                <app-filtro-perito-aseguradora [tienePermisoAdministracion]="false" (emisorPeritoYAseguradora)="filtrarSiniestros($event)"></app-filtro-perito-aseguradora>
+                <app-filtro-perito-aseguradora [hidden]="siniestros.length === 0" [tienePermisoAdministracion]="false" (emisorPeritoYAseguradora)="filtrarSiniestros($event)">
+                </app-filtro-perito-aseguradora>
             </div>
         </div>
     </div>
