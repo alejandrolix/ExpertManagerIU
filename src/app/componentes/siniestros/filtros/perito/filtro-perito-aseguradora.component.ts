@@ -93,7 +93,7 @@ export class FiltroPeritoAseguradoraComponent {
       };
     });
 
-    let aseguradorasUnicas: {id: number, nombre: string}[] = [];
+    let aseguradorasUnicas: AseguradoraFiltroDto[] = [];
 
     aseguradoras.forEach((aseguradora: AseguradoraSiniestroDto) => {
       let encontrado: AseguradoraFiltroDto | undefined = aseguradorasUnicas.find((aseguradoraUnica: AseguradoraFiltroDto) => {
