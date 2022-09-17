@@ -23,6 +23,7 @@ import { NumerosDecimalesDirective } from './directivas/numeros-decimales.direct
 import { AdministracionComponent } from './componentes/siniestros/listado-siniestros/administracion/administracion.component';
 import { FiltroPeritoAseguradoraComponent } from './componentes/siniestros/filtros/perito/filtro-perito-aseguradora.component';
 import { PeritoResponsableComponent } from './componentes/siniestros/listado-siniestros/perito-responsable/perito-responsable.component';
+import { PeritoNoResponsableComponent } from './componentes/siniestros/listado-siniestros/perito-no-responsable/perito-no-responsable.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { PeritoResponsableComponent } from './componentes/siniestros/listado-sin
     NumerosDecimalesDirective,
     AdministracionComponent,
     FiltroPeritoAseguradoraComponent,
-    PeritoResponsableComponent
+    PeritoResponsableComponent,
+    PeritoNoResponsableComponent
   ],
   imports: [
     BrowserModule,
