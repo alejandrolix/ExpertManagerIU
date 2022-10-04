@@ -2,9 +2,18 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+let urlApi: string = '';
+
+if (process.env.ES_CONTENEDOR === undefined) {
+  urlApi = 'https://localhost:44345/api';
+}
+else {
+  urlApi = 'http://em-api-rest-service:8080/api';
+}
+
 export const environment = {
   production: false,
-  urlApi: 'https://localhost:44345/api',
+  urlApi,
   urlHub: 'https://localhost:44345/mensajes'
 };
 
