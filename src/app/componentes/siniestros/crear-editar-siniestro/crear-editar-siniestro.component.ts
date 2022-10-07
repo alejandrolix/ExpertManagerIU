@@ -38,8 +38,15 @@ export class CrearEditarSiniestroComponent implements OnInit {
   private impValoracionDanios: string;
   private idSiniestro: number;
 
-  constructor(private route: ActivatedRoute, private siniestrosService: SiniestrosService, private location: Location, private spinnerService: SpinnerService, private estadosService: EstadosService,
-              private aseguradorasService: AseguradorasService, private daniosService: DaniosService, private peritosService: PeritosService, private autenticacionService: AutenticacionService,
+  constructor(private route: ActivatedRoute,
+              private siniestrosService: SiniestrosService,
+              private location: Location,
+              private spinnerService: SpinnerService,
+              private estadosService: EstadosService,
+              private aseguradorasService: AseguradorasService,
+              private daniosService: DaniosService,
+              private peritosService: PeritosService,
+              private autenticacionService: AutenticacionService,
               private router: Router) { }
 
   async ngOnInit(): Promise<void> {
@@ -207,10 +214,10 @@ export class CrearEditarSiniestroComponent implements OnInit {
 
       if (this.accionFormulario == AccionFormulario.Editar) {
         let idEstado: number = parseInt(this.formCrearEditarSiniestro.get('estado')?.value);
-        let impValoracionDanios: string = "";
+        let impValoracionDanios: number = 0;
 
         if (idEstado == TipoEstado.Valorado)
-          impValoracionDanios = this.formCrearEditarSiniestro.get('impValoracionDanios')?.value;
+          impValoracionDanios = Number(this.formCrearEditarSiniestro.get('impValoracionDanios')?.value);
 
         let siniestro: EditarSiniestroDto = {
           idUsuarioAlta,
