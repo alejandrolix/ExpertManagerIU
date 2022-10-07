@@ -2,25 +2,28 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
+import { AutenticacionService } from "../servicios/autenticacion.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class PeticionHttp {
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private autenticacionService: AutenticacionService) {}
 
     public hacerPeticionGet<T>(url: string): Observable<T> {
         return this.http.get<T>(url)
                         .pipe(
-                            catchError((error: any) => this.obtenerMensajeError(error))
+                            catchError((error: any) => this.comprobarTipoError(error))
                         );
     }
 
-    private obtenerMensajeError(error: any): Observable<never> {
-        if (error.status === 0)
-            return throwError('No funciona la API REST');
-        else if (error.error)
+    private comprobarTipoError(error: any): Observable<never> {
+        if (error.codigoRespuesta === 0) {
+            this.autenticacionService.cerrarSesion();
             return throwError(error.error);
+        }
+        else if (error.status === 0)
+            return throwError('No funciona la API REST');
 
         return throwError(error);
     }
@@ -39,7 +42,7 @@ export class PeticionHttp {
     }): Observable<Blob> {
         return this.http.get(url, opciones)
                         .pipe(
-                            catchError((error: any) => this.obtenerMensajeError(error))
+                            catchError((error: any) => this.comprobarTipoError(error))
                         );
     }
 
@@ -57,28 +60,28 @@ export class PeticionHttp {
     }): Observable<T> {
         return this.http.get<T>(url, opciones)
                         .pipe(
-                            catchError((error: any) => this.obtenerMensajeError(error))
+                            catchError((error: any) => this.comprobarTipoError(error))
                         );
     }
 
     public hacerPeticionPost<T>(url: string, datos: any): Observable<T> {
         return this.http.post<T>(url, datos)
                         .pipe(
-                            catchError((error: any) => this.obtenerMensajeError(error))
+                            catchError((error: any) => this.comprobarTipoError(error))
                         );
     }
 
     public hacerPeticionPut<T>(url: string, datos: any): Observable<T> {
         return this.http.put<T>(url, datos)
                         .pipe(
-                            catchError((error: any) => this.obtenerMensajeError(error))
+                            catchError((error: any) => this.comprobarTipoError(error))
                         );
     }
 
     public hacerPeticionDelete<T>(url: string): Observable<T> {
         return this.http.delete<T>(url)
                         .pipe(
-                            catchError((error: any) => this.obtenerMensajeError(error))
+                            catchError((error: any) => this.comprobarTipoError(error))
                         );
     }
 }
