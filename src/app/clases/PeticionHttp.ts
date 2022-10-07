@@ -18,7 +18,7 @@ export class PeticionHttp {
     }
 
     private comprobarTipoError(error: any): Observable<never> {
-        if (error.codigoRespuesta === 0) {
+        if (error.codigoRespuesta === CodigoRespuesta.SesionExpirada) {
             this.autenticacionService.cerrarSesion();
             return throwError(error.error);
         }
@@ -84,4 +84,9 @@ export class PeticionHttp {
                             catchError((error: any) => this.comprobarTipoError(error))
                         );
     }
+}
+
+enum CodigoRespuesta {
+    SesionExpirada = 0,
+    NoInicioSesion = 1
 }
