@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +24,10 @@ import { AdministracionComponent } from './componentes/siniestros/listado-sinies
 import { FiltroPeritoAseguradoraComponent } from './componentes/siniestros/filtros/perito/filtro-perito-aseguradora.component';
 import { PeritoResponsableComponent } from './componentes/siniestros/listado-siniestros/perito-responsable/perito-responsable.component';
 import { PeritoNoResponsableComponent } from './componentes/siniestros/listado-siniestros/perito-no-responsable/perito-no-responsable.component';
+import { registerLocaleData } from '@angular/common';
+import localees from '@angular/common/locales/es';
+
+registerLocaleData(localees);
 
 @NgModule({
   declarations: [
@@ -59,6 +63,10 @@ import { PeritoNoResponsableComponent } from './componentes/siniestros/listado-s
       provide: HTTP_INTERCEPTORS,
       useClass: ApiRestTokenInterceptor,
       multi: true
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'es-ES'
     }
   ],
   bootstrap: [AppComponent]

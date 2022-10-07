@@ -33,7 +33,7 @@
                     <td class="align-middle">{{ siniestro.fechaHoraAlta }}</td>
                     <td class="align-middle">{{ siniestro.sujetoAfectado }}</td>
                     <td class="align-middle">{{ siniestro.danio }}</td>
-                    <td class="align-middle">{{ siniestro.impValoracionDanios }}</td>
+                    <td class="align-middle">{{ siniestro.impValoracionDanios | currency:'EUR':true }}</td>
                     <td class="align-middle" (click)="verDetalles(siniestro.id)">
                         <i title="Ver detalles" class="fas fa-info me-3"></i>
                     </td>
