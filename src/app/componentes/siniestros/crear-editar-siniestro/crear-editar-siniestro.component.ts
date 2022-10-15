@@ -1,4 +1,4 @@
-import { Location } from '@angular/common';
+import { formatCurrency, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -190,8 +190,12 @@ export class CrearEditarSiniestroComponent implements OnInit {
   }
 
   private crearControlImpValoracionDanios(): void {
-    let control: FormControl = new FormControl(this.impValoracionDanios, Validators.required);
+    let impValoracionDaniosFormateado: string = formatCurrency(this.impValoracionDanios, 'es-ES', '€');
 
+    // Quitamos el símbolo del euro.
+    impValoracionDaniosFormateado = impValoracionDaniosFormateado.substring(0, impValoracionDaniosFormateado.length - 2);
+
+    let control: FormControl = new FormControl(impValoracionDaniosFormateado, Validators.required);
     this.formCrearEditarSiniestro.addControl('impValoracionDanios', control);
   }
 
