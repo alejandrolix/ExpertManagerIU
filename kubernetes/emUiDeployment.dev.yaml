@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: em-ui
-        image: alejandrolix/em-ui:15
+        image: alejandrolix/em-ui:22
         imagePullPolicy: Always
         ports:
         - containerPort: 80
