@@ -35,7 +35,7 @@ export class CrearEditarSiniestroComponent implements OnInit {
   public peritos: Usuario[];
   public formCrearEditarSiniestro: FormGroup;
   public mostrarCampoImpValDanios: boolean;
-  private impValoracionDanios: string;
+  private impValoracionDanios: number;
   private idSiniestro: number;
 
   constructor(private route: ActivatedRoute,
@@ -167,10 +167,7 @@ export class CrearEditarSiniestroComponent implements OnInit {
 
       if (idEstadoSeleccionado == TipoEstado.Valorado) {
         this.mostrarCampoImpValDanios = true;
-        this.impValoracionDanios = siniestro.impValoracionDanios
-                                            .replace('€', '')
-                                            .trim();
-
+        this.impValoracionDanios = siniestro.impValoracionDanios;
         this.crearControlImpValoracionDanios();
       }
     }
