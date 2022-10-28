@@ -16,6 +16,11 @@ import { InicioSesionGuard } from './guards/inicio-sesion.guard';
 
 const routes: Routes = [
   {
+    path: '',
+    component: InicioSesionComponent,
+    pathMatch: 'full'
+  },
+  {
     path: 'inicio',
     component: InicioComponent,
     canActivate: [InicioSesionGuard]
@@ -90,12 +95,8 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'inicioSesion',
-    component: InicioSesionComponent
-  },
-  {
     path: '**',
-    component: InicioSesionComponent
+    redirectTo: ''
   }
 ];
 
