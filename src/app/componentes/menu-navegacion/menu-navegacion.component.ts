@@ -11,6 +11,7 @@ import { PermisosService } from '../../servicios/permisos.service';
 export class MenuNavegacionComponent implements OnInit {
   public usuario: string;
   public mostrarUsuario: boolean;
+  public tienePermisoAdministracion: boolean;
 
   constructor(private permisosService: PermisosService, private autenticacionService: AutenticacionService) {
     this.mostrarUsuario = false;
@@ -18,7 +19,7 @@ export class MenuNavegacionComponent implements OnInit {
 
   ngOnInit(): void {
     let nombreUsuario: string = this.autenticacionService.obtenerNombreUsuario();
-    
+
     if (nombreUsuario.length === 0) {
       this.mostrarUsuario = false;
       Alerta.mostrarError('El nombre de usuario no existe');
@@ -26,14 +27,12 @@ export class MenuNavegacionComponent implements OnInit {
     else {
       this.mostrarUsuario = true;
       this.usuario = nombreUsuario;
-    }    
+    }
+
+    this.tienePermisoAdministracion = this.permisosService.tienePermisoAdministracion();
   }
 
-  public tienePermisoAdministracion(): boolean {
-    return this.permisosService.tienePermisoAdministracion();
-  }
-
-  public cerrarSesion(): void {        
+  public cerrarSesion(): void {
     this.autenticacionService.cerrarSesion();
   }
 }
