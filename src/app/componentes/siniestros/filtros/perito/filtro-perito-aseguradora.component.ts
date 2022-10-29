@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DatosFiltroPeritoYAseguradoraDTO } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
+import { DatosFiltroPeritoYAseguradoraDTO, NombreDesplegableFiltro } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
 import { PeritoFiltroDto } from 'src/app/interfaces/DTOs/perito-filtro-dto';
 import { PeritoSiniestroDto } from 'src/app/interfaces/DTOs/perito-siniestro-dto';
 import { Siniestro } from 'src/app/interfaces/siniestro';
@@ -19,6 +19,7 @@ export class FiltroPeritoAseguradoraComponent {
   public idAseguradoraSeleccionada: string;
   public peritos: PeritoFiltroDto[];
   public aseguradoras: AseguradoraFiltroDto[];
+  public desplegableSeleccionadoEnum: typeof NombreDesplegableFiltro = NombreDesplegableFiltro;
 
   @Output()
   public emisorPeritoYAseguradora: EventEmitter<DatosFiltroPeritoYAseguradoraDTO> = new EventEmitter<DatosFiltroPeritoYAseguradoraDTO>();
@@ -28,10 +29,10 @@ export class FiltroPeritoAseguradoraComponent {
   public eliminarFiltros(): void {
     this.idPeritoSeleccionado = '0';
     this.idAseguradoraSeleccionada = '0';
-    this.enviarPeritoYAseguradoraSeleccionada();
+    this.enviarPeritoYAseguradoraSeleccionada(NombreDesplegableFiltro.Ninguno);
   }
 
-  public enviarPeritoYAseguradoraSeleccionada(): void {
+  public enviarPeritoYAseguradoraSeleccionada(nombreDesplegable: NombreDesplegableFiltro): void {
     let idPerito = parseInt(this.idPeritoSeleccionado);
     let idAseguradora = parseInt(this.idAseguradoraSeleccionada);
 
@@ -45,7 +46,8 @@ export class FiltroPeritoAseguradoraComponent {
 
     this.emisorPeritoYAseguradora.emit({
       idPerito,
-      idAseguradora
+      idAseguradora,
+      nombreDesplegable: nombreDesplegable
     });
   }
 

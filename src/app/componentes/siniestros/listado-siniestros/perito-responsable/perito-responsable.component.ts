@@ -1,7 +1,7 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alerta } from 'src/app/clases/Alerta';
-import { DatosFiltroPeritoYAseguradoraDTO } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
+import { DatosFiltroPeritoYAseguradoraDTO, NombreDesplegableFiltro } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
 import { ListadoPeritos } from 'src/app/interfaces/listadoPeritos';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { PermisosService } from 'src/app/servicios/permisos.service';
@@ -53,7 +53,7 @@ export class PeritoResponsableComponent extends ListadoSiniestrosComponent imple
   }
 
   public async filtrarSiniestros(datosFiltroPeritoYAseguradoraDTO: DatosFiltroPeritoYAseguradoraDTO): Promise<void> {
-    let {idPerito, idAseguradora} = datosFiltroPeritoYAseguradoraDTO;
+    let {idPerito, idAseguradora, nombreDesplegable} = datosFiltroPeritoYAseguradoraDTO;
 
     try {
       this.siniestros = await this.siniestrosService.obtenerPorPeritoResponsable(idPerito, idAseguradora)
@@ -61,6 +61,11 @@ export class PeritoResponsableComponent extends ListadoSiniestrosComponent imple
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
+    }
+
+    // Asignamos las aseguradoras obtenidas según el perito seleccionado.
+    if (nombreDesplegable !== NombreDesplegableFiltro.Aseguradora) {
+      this.filtroPeritoAseguradora.asignarAseguradoras(this.siniestros);
     }
   }
 

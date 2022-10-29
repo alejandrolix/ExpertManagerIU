@@ -6,7 +6,7 @@ import { TipoEstado } from 'src/app/enumeraciones/tipo-estado.enum';
 import { AbrirSiniestroDto } from 'src/app/interfaces/DTOs/abrir-siniestro-dto';
 import { CerrarSiniestroDto } from 'src/app/interfaces/DTOs/cerrar-siniestro-dto';
 import { CrearMensajeRevisarCierreDto } from 'src/app/interfaces/DTOs/crear-mensaje-revisar-cierre-dto';
-import { DatosFiltroPeritoYAseguradoraDTO } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
+import { DatosFiltroPeritoYAseguradoraDTO, NombreDesplegableFiltro } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
 import { ImpValoracionDaniosSiniestroDto } from 'src/app/interfaces/DTOs/imp-valoracion-danios-siniestro-dto';
 import { ListadoPeritos } from 'src/app/interfaces/listadoPeritos';
 import { Siniestro } from 'src/app/interfaces/siniestro';
@@ -80,7 +80,7 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
   }
 
   public async filtrarSiniestros(datosFiltroPeritoYAseguradoraDTO: DatosFiltroPeritoYAseguradoraDTO): Promise<void> {
-    let {idPerito, idAseguradora} = datosFiltroPeritoYAseguradoraDTO;
+    let {idPerito, idAseguradora, nombreDesplegable} = datosFiltroPeritoYAseguradoraDTO;
 
     try {
       this.siniestros = await this.siniestrosService.obtenerTodos(idPerito, idAseguradora)
@@ -88,6 +88,13 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
+
+      return;
+    }
+
+    // Asignamos las aseguradoras obtenidas según el perito seleccionado.
+    if (nombreDesplegable !== NombreDesplegableFiltro.Aseguradora) {
+      this.filtroPeritoAseguradora.asignarAseguradoras(this.siniestros);
     }
   }
 
