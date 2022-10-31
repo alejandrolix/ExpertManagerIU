@@ -2,14 +2,24 @@
     width: auto;
 }
 
-.anchuraMitad {
-    width: 50%;
-}
-
-.anchura60porCiento {
-    width: 60%;
-}
-
 .invalid-feedback {
     display: block;
+}
+
+@media screen and (max-width: 992px) {
+    form {
+        #segundoApartado {
+            margin-top: 20px;
+        }
+    }
+}
+
+@media screen and (min-width: 765px) {
+    #txtDireccion {
+        width: 70%;
+    }
+
+    #txtDescripcion {
+        width: 70%;
+    }
 }
