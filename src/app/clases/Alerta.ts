@@ -11,7 +11,9 @@ export class Alerta {
         popup: 'animate__animated animate__fadeOutUp'
       },
       icon: 'error',
-      confirmButtonText: 'Aceptar'
+      confirmButtonText: 'Aceptar',
+      allowOutsideClick: false,
+      allowEscapeKey: false
     });
   }
 
