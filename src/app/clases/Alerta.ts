@@ -59,7 +59,9 @@ export class Alerta {
         popup: 'animate__animated animate__fadeOutUp'
       },
       icon: 'success',
-      confirmButtonText: 'Aceptar'
+      confirmButtonText: 'Aceptar',
+      allowOutsideClick: false,
+      allowEscapeKey: false
     });
 
     return await alerta;
