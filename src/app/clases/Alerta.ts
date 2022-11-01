@@ -37,7 +37,9 @@ export class Alerta {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
+      cancelButtonText: 'Cancelar',
+      allowOutsideClick: false,
+      allowEscapeKey: false
     });
 
     return await alerta;
