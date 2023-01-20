@@ -14,11 +14,13 @@ import { UsuariosService } from '../../servicios/usuarios.service';
 })
 export class InicioSesionComponent implements OnInit {
   public formInicioSesion: FormGroup;
+  public deshabilitarBtnEntrar: boolean;
 
   constructor(private usuariosService: UsuariosService, private router: Router, private spinnerService: SpinnerService,
               private autenticacionService: AutenticacionService) { }
 
   ngOnInit(): void {
+    this.deshabilitarBtnEntrar = false;
     this.spinnerService.ocultarSpinner();
 
     if (this.autenticacionService.estaLogueadoUsuario)
@@ -32,6 +34,8 @@ export class InicioSesionComponent implements OnInit {
 
   public async iniciarSesion(): Promise<void> {
     this.spinnerService.mostrarSpinner();
+    this.deshabilitarBtnEntrar = true;
+
     let nombre: string = this.formInicioSesion.get('usuario')?.value;
     let contrasenia: string = this.formInicioSesion.get('contrasenia')?.value;
 
@@ -48,9 +52,12 @@ export class InicioSesionComponent implements OnInit {
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
+      this.deshabilitarBtnEntrar = false;
 
       return;
     }
+
+    this.deshabilitarBtnEntrar = false;
 
     this.autenticacionService.guardarCredencialesUsuario(usuario);
     this.spinnerService.ocultarSpinner();
