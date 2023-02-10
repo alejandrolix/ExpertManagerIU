@@ -1,0 +1,13 @@
+.form-select {
+    width: auto;
+}
+
+.invalid-feedback {
+    display: block;
+}
+
+@media screen and (min-width: 1000px) {
+    #txtNombre, #txtPassword, #txtRepetirPassword, #txtImpReparacionDanios {
+        width: 70%;
+    }
+}

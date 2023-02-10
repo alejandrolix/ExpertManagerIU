@@ -1,0 +1,25 @@
+.form-select {
+    width: auto;
+}
+
+.invalid-feedback {
+    display: block;
+}
+
+@media screen and (max-width: 992px) {
+    form {
+        #segundoApartado {
+            margin-top: 20px;
+        }
+    }
+}
+
+@media screen and (min-width: 765px) {
+    #txtDireccion {
+        width: 70%;
+    }
+
+    #txtDescripcion {
+        width: 70%;
+    }
+}

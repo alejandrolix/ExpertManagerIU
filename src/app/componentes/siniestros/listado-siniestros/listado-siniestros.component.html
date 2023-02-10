@@ -1,0 +1,6 @@
+<app-spinner></app-spinner>
+<h2>Listado siniestros</h2>
+
+<app-listado-siniestros-administracion *ngIf="esAdministrador"></app-listado-siniestros-administracion>
+<app-listado-siniestros-perito-responsable *ngIf="esPeritoResponsable"></app-listado-siniestros-perito-responsable>
+<app-listado-siniestros-perito-no-responsable *ngIf="esPeritoNoResponsable"></app-listado-siniestros-perito-no-responsable>

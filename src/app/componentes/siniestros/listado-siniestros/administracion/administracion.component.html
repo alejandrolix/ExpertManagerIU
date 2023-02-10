@@ -1,0 +1,63 @@
+<div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="d-flex justify-content-start">
+                <app-filtro-perito-aseguradora [hidden]="siniestros.length === 0" [tienePermisoAdministracion]="true" (emisorPeritoYAseguradora)="filtrarSiniestros($event)">
+                </app-filtro-perito-aseguradora>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end mb-3">
+        <i title="Crear" (click)="crear()" class="fas fa-plus"></i>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Aseguradora</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Perito</th>
+                    <th scope="col">Fecha/Hora Alta</th>
+                    <th scope="col">Sujeto Afectado</th>
+                    <th scope="col">Daño</th>
+                    <th scope="col">Imp. Valoración Daños</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let siniestro of siniestros">
+                    <td class="align-middle">{{ siniestro.id }}</td>
+                    <td class="align-middle">{{ siniestro.estado }}</td>
+                    <td class="align-middle">{{ siniestro.aseguradora }}</td>
+                    <td class="align-middle">{{ siniestro.descripcion }}</td>
+                    <td class="align-middle">{{ siniestro.perito }}</td>
+                    <td class="align-middle">{{ siniestro.fechaHoraAlta }}</td>
+                    <td class="align-middle">{{ siniestro.sujetoAfectado }}</td>
+                    <td class="align-middle">{{ siniestro.danio }}</td>
+                    <td class="align-middle">{{ siniestro.impValoracionDanios | currency:'EUR':'symbol' }}</td>
+                    <td class="align-middle">
+                        <i title="Cerrar siniestro" class="fas fa-power-off me-3" (click)="cerrarSiniestro(siniestro.id)" *ngIf="siniestro.idEstado == tipoEstadoEnum.Valorado"></i>
+                    </td>
+                    <td class="align-middle">
+                        <i title="Abrir siniestro" class="fas fa-lock-open me-3" (click)="abrirSiniestro(siniestro.id)" *ngIf="siniestro.idEstado == tipoEstadoEnum.Cerrado"></i>
+                    </td>
+                    <td class="align-middle" (click)="verDetalles(siniestro.id)">
+                        <i title="Ver detalles" class="fas fa-info me-3"></i>
+                    </td>
+                    <td class="align-middle" (click)="editar(siniestro.id)">
+                        <i title="Editar" class="fas fa-pencil-alt me-3"></i>
+                    </td>
+                    <td class="align-middle" (click)="eliminar(siniestro.id)">
+                        <i title="Eliminar" class="fas fa-trash-alt"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

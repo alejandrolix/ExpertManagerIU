@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: em-ui-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: em-ui
+  template:
+    metadata:
+      labels:
+        app: em-ui
+    spec:
+      containers:
+      - name: em-ui
+        image: alejandrolix/em-ui:22
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80

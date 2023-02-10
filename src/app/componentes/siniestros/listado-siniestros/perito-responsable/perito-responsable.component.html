@@ -1,0 +1,44 @@
+<div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="d-flex justify-content-start">
+                <app-filtro-perito-aseguradora [hidden]="siniestros.length === 0" [tienePermisoAdministracion]="false" (emisorPeritoYAseguradora)="filtrarSiniestros($event)">
+                </app-filtro-perito-aseguradora>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive mt-4">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Aseguradora</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Perito</th>
+                    <th scope="col">Fecha/Hora Alta</th>
+                    <th scope="col">Sujeto Afectado</th>
+                    <th scope="col">Daño</th>
+                    <th scope="col">Imp. Valoración Daños</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let siniestro of siniestros">
+                    <td class="align-middle">{{ siniestro.id }}</td>
+                    <td class="align-middle">{{ siniestro.estado }}</td>
+                    <td class="align-middle">{{ siniestro.aseguradora }}</td>
+                    <td class="align-middle">{{ siniestro.descripcion }}</td>
+                    <td class="align-middle">{{ siniestro.perito }}</td>
+                    <td class="align-middle">{{ siniestro.fechaHoraAlta }}</td>
+                    <td class="align-middle">{{ siniestro.sujetoAfectado }}</td>
+                    <td class="align-middle">{{ siniestro.danio }}</td>
+                    <td class="align-middle">{{ siniestro.impValoracionDanios | currency:'EUR':'symbol' }}</td>
+                    <td class="align-middle" (click)="verDetalles(siniestro.id)">
+                        <i title="Ver detalles" class="fas fa-info me-3"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

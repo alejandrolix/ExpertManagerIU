@@ -1,0 +1,33 @@
+nav {
+    position: sticky;
+    top: 0;
+
+    .navbar-brand {
+        font-size: 1.5rem;
+        color: #FAA41B;
+    }
+
+    #sesion {
+        width: 100%;
+    }
+
+    #usuario {
+        color: #ffffff;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    #sesion {
+        flex-wrap: wrap;
+
+        #usuario {
+            width: 100%;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        button {
+            width: 100%;
+        }
+    }
+}
