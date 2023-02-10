@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { Alerta } from 'src/app/clases/Alerta';
 import { TipoArchivo } from 'src/app/enumeraciones/tipo-archivo.enum';
 import { Archivo } from 'src/app/interfaces/archivo';
@@ -34,43 +35,39 @@ export class DetallesSiniestroComponent implements OnInit {
                                                .paramMap
                                                .get('id'));
     try {
-      this.siniestro = await this.siniestrosService.obtenerPorId(idSiniestro)
-                                                   .toPromise();
+      this.siniestro = await firstValueFrom(this.siniestrosService.obtenerPorId(idSiniestro));
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
-      
+
       return;
     }
 
     try {
-      this.documentaciones = await this.documentacionesService.obtenerPorIdSiniestro(idSiniestro)
-                                                              .toPromise();
+      this.documentaciones = await firstValueFrom(this.documentacionesService.obtenerPorIdSiniestro(idSiniestro));
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
-      
+
       return;
     }
 
     try {
-      this.imagenes = await this.imagenesService.obtenerPorIdSiniestro(idSiniestro)
-                                                .toPromise();
+      this.imagenes = await firstValueFrom(this.imagenesService.obtenerPorIdSiniestro(idSiniestro));
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
-      
+
       return;
     }
-    
+
     await this.obtenerMensajes();
     this.spinnerService.ocultarSpinner();
   }
 
   private async obtenerMensajes(): Promise<void> {
     try {
-      this.mensajes = await this.mensajesService.obtenerTodosPorIdSiniestro(this.siniestro.id)
-                                                .toPromise();
+      this.mensajes = await firstValueFrom(this.mensajesService.obtenerTodosPorIdSiniestro(this.siniestro.id));
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
@@ -87,13 +84,12 @@ export class DetallesSiniestroComponent implements OnInit {
     let pdf: Blob;
 
     try {
-      pdf = await this.documentacionesService.obtener(id)
-                                             .toPromise(); 
+      pdf = await firstValueFrom(this.documentacionesService.obtener(id));
     } catch (error: any) {
       Alerta.mostrarError(error);
       return;
-    }    
-    
+    }
+
     let urlPdf = URL.createObjectURL(pdf);
     window.open(urlPdf, '_blank');
   }
@@ -102,13 +98,12 @@ export class DetallesSiniestroComponent implements OnInit {
     let imagen: Blob;
 
     try {
-      imagen = await this.imagenesService.obtener(id)
-                                         .toPromise();
+      imagen = await firstValueFrom(this.imagenesService.obtener(id));
     } catch (error: any) {
       Alerta.mostrarError(error);
       return;
-    }    
-    
+    }
+
     let urlImagen = URL.createObjectURL(imagen);
     window.open(urlImagen, '_blank');
   }
@@ -124,49 +119,46 @@ export class DetallesSiniestroComponent implements OnInit {
   public async eliminarDocumentacion(idDocumentacion: number): Promise<void> {
     let accion: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono(`¿Está seguro que desea eliminar la documentación con id ${idDocumentacion}?`);
 
-    if (accion.isConfirmed) {   
+    if (accion.isConfirmed) {
       let respuesta: boolean;
 
       try {
-        respuesta = await this.documentacionesService.eliminar(idDocumentacion)
-                                                     .toPromise(); 
+        respuesta = await firstValueFrom(this.documentacionesService.eliminar(idDocumentacion));
       } catch (error: any) {
         Alerta.mostrarError(error);
         return;
-      }      
+      }
 
       if (respuesta) {
         await Alerta.mostrarOkAsincrono('Documentación eliminada');
 
         try {
-          this.documentaciones = await this.documentacionesService.obtenerPorIdSiniestro(this.siniestro.id)
-                                                                  .toPromise(); 
+          this.documentaciones = await firstValueFrom(this.documentacionesService.obtenerPorIdSiniestro(this.siniestro.id));
         } catch (error: any) {
           Alerta.mostrarError(error);
-        }        
-      }        
+        }
+      }
     }
   }
 
   public async eliminarMensaje(idMensaje: number): Promise<void> {
     let accion: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono(`¿Está seguro que desea eliminar el mensaje con id ${idMensaje}?`);
 
-    if (accion.isConfirmed) {      
+    if (accion.isConfirmed) {
       let respuesta: boolean;
 
       try {
-        respuesta = await this.mensajesService.eliminar(idMensaje)
-                                              .toPromise();
+        respuesta = await firstValueFrom(this.mensajesService.eliminar(idMensaje));
       } catch (error: any) {
         Alerta.mostrarError(error);
-  
+
         return;
-      }      
+      }
 
       if (respuesta) {
-        await Alerta.mostrarOkAsincrono('Mensaje eliminado');      
-        await this.obtenerMensajes();        
-      }        
+        await Alerta.mostrarOkAsincrono('Mensaje eliminado');
+        await this.obtenerMensajes();
+      }
     }
   }
 
@@ -185,27 +177,25 @@ export class DetallesSiniestroComponent implements OnInit {
   public async eliminarImagen(idImagen: number): Promise<void> {
     let accion: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono(`¿Está seguro que desea eliminar la imagen con id ${idImagen}?`);
 
-    if (accion.isConfirmed) {     
+    if (accion.isConfirmed) {
       let respuesta: boolean;
 
       try {
-        respuesta = await this.imagenesService.eliminar(idImagen)
-                                              .toPromise();
+        respuesta = await firstValueFrom(this.imagenesService.eliminar(idImagen));
       } catch (error: any) {
         Alerta.mostrarError(error);
         return;
-      }      
+      }
 
       if (respuesta) {
         await Alerta.mostrarOkAsincrono('Imagen eliminada');
 
         try {
-          this.imagenes = await this.imagenesService.obtenerPorIdSiniestro(this.siniestro.id)
-                                                    .toPromise(); 
+          this.imagenes = await firstValueFrom(this.imagenesService.obtenerPorIdSiniestro(this.siniestro.id));
         } catch (error: any) {
           Alerta.mostrarError(error);
-        }        
-      }        
+        }
+      }
     }
   }
 }

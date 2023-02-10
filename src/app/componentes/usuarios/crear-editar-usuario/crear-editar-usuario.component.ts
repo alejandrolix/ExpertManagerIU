@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { first, pluck } from 'rxjs/operators';
 import { Alerta } from 'src/app/clases/Alerta';
 import { Validadores } from 'src/app/clases/validadores';
@@ -46,8 +47,7 @@ export class CrearEditarUsuarioComponent implements OnInit {
     }
 
     try {
-      this.permisos = await this.permisosService.obtenerTodos()
-                                                .toPromise();
+      this.permisos = await firstValueFrom(this.permisosService.obtenerTodos());
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
@@ -74,8 +74,7 @@ export class CrearEditarUsuarioComponent implements OnInit {
       this.idUsuario = idUsuario;
 
       try {
-        usuario = await this.usuariosService.obtenerPorId(this.idUsuario)
-                                            .toPromise();
+        usuario = await firstValueFrom(this.usuariosService.obtenerPorId(this.idUsuario));
       } catch (error: any) {
         Alerta.mostrarError(error);
         this.spinnerService.ocultarSpinner();

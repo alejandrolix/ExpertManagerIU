@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { Alerta } from 'src/app/clases/Alerta';
 import { AccionFormulario } from 'src/app/enumeraciones/accion-formulario.enum';
 import { TipoEstado } from 'src/app/enumeraciones/tipo-estado.enum';
@@ -25,7 +26,7 @@ import { ListadoSiniestrosComponent } from '../listado-siniestros.component';
   styleUrls: ['./administracion.component.scss']
 })
 export class AdministracionComponent extends ListadoSiniestrosComponent implements OnInit, ListadoPeritos {
-  public siniestros: Siniestro[];
+  public override siniestros: Siniestro[];
   public tipoEstadoEnum: typeof TipoEstado = TipoEstado;
 
   @ViewChild(FiltroPeritoAseguradoraComponent)
@@ -44,7 +45,7 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
     this.siniestros = [];
   }
 
-  async ngOnInit(): Promise<void> {
+  override async ngOnInit(): Promise<void> {
     this.spinnerService.mostrarSpinner();
 
     await this.obtenerSiniestros();
@@ -83,8 +84,7 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
     let {idPerito, idAseguradora, nombreDesplegable} = datosFiltroPeritoYAseguradoraDTO;
 
     try {
-      this.siniestros = await this.siniestrosService.obtenerTodos(idPerito, idAseguradora)
-                                                    .toPromise();
+      this.siniestros = await firstValueFrom(this.siniestrosService.obtenerTodos(idPerito, idAseguradora));
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
@@ -100,8 +100,7 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
 
   public async obtenerSiniestros(): Promise<void> {
     try {
-      this.siniestros = await this.siniestrosService.obtenerTodos(0, 0)
-                                                    .toPromise();
+      this.siniestros = await firstValueFrom(this.siniestrosService.obtenerTodos(0, 0));
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
@@ -146,7 +145,7 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
     });
   }
 
-  public verDetalles(idSiniestro: number): void {
+  public override verDetalles(idSiniestro: number): void {
     super.verDetalles(idSiniestro);
   }
 
@@ -164,8 +163,7 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
     let esImpValoracionDaniosSiniestroMayorQuePerito: boolean;
 
     try {
-      esImpValoracionDaniosSiniestroMayorQuePerito = await this.siniestrosService.esImpValoracionDaniosSiniestroMayorQuePerito(impValoracionDaniosSiniestroDto)
-                                                                                 .toPromise();
+      esImpValoracionDaniosSiniestroMayorQuePerito = await firstValueFrom(this.siniestrosService.esImpValoracionDaniosSiniestroMayorQuePerito(impValoracionDaniosSiniestroDto));
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();

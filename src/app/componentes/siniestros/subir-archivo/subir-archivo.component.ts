@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { first, pluck } from 'rxjs/operators';
 import { Alerta } from 'src/app/clases/Alerta';
 import { TipoArchivo } from 'src/app/enumeraciones/tipo-archivo.enum';
@@ -17,10 +18,10 @@ export class SubirArchivoComponent implements OnInit {
   public formSubirArchivo: FormGroup;
   public hayArchivoSeleccionado: boolean;
   @ViewChild("archivo") archivo: ElementRef<HTMLInputElement>;
-  private idSiniestro: number;  
+  private idSiniestro: number;
   public formatosArchivoASubir: string;
   public tipoArchivoEnum: typeof TipoArchivo = TipoArchivo;
-  public tipoArchivo: TipoArchivo;  
+  public tipoArchivo: TipoArchivo;
 
   constructor(private route: ActivatedRoute, private spinnerService: SpinnerService, private documentacionesService: DocumentacionesService, private imagenesService: ImagenesService,
               private router: Router) { }
@@ -46,18 +47,18 @@ export class SubirArchivoComponent implements OnInit {
     if (isNaN(this.tipoArchivo)) {
       Alerta.mostrarError('El tipo de archivo es incorrecto');
       this.irAtras();
-    }    
+    }
 
-    if (this.tipoArchivo === TipoArchivo.Documento)        
-      this.formatosArchivoASubir = "application/pdf";    
-    else      
-      this.formatosArchivoASubir = "image/png, image/jpeg, image/jpg";    
+    if (this.tipoArchivo === TipoArchivo.Documento)
+      this.formatosArchivoASubir = "application/pdf";
+    else
+      this.formatosArchivoASubir = "image/png, image/jpeg, image/jpg";
 
     this.formSubirArchivo = new FormGroup({
       descripcion: new FormControl('', Validators.required)
     });
 
-    this.hayArchivoSeleccionado = true;  
+    this.hayArchivoSeleccionado = true;
     this.spinnerService.ocultarSpinner();
   }
 
@@ -65,7 +66,7 @@ export class SubirArchivoComponent implements OnInit {
     history.back();
   }
 
-  public async enviar(): Promise<void> {    
+  public async enviar(): Promise<void> {
     if (!this.formSubirArchivo.valid)
       return;
 
@@ -81,7 +82,7 @@ export class SubirArchivoComponent implements OnInit {
     if (nombreArchivoSeleccionado.length === 0) {
       this.hayArchivoSeleccionado = false;
       return;
-    }    
+    }
 
     let archivo: any = this.archivo.nativeElement.files?.[0];
     let archivoASubir = {
@@ -89,12 +90,11 @@ export class SubirArchivoComponent implements OnInit {
       idSiniestro: this.idSiniestro,
       archivo
     };
-    let respuesta: boolean = true;      
+    let respuesta: boolean = true;
 
     if (this.tipoArchivo === TipoArchivo.Documento)
       try {
-        respuesta = await this.documentacionesService.subirDocumentacion(archivoASubir)
-                                                      .toPromise();
+        respuesta = await firstValueFrom(this.documentacionesService.subirDocumentacion(archivoASubir));
       } catch (error: any) {
         Alerta.mostrarError(error);
 
@@ -102,8 +102,7 @@ export class SubirArchivoComponent implements OnInit {
       }
     else
       try {
-        respuesta = await this.imagenesService.subirImagen(archivoASubir)
-                                              .toPromise();
+        respuesta = await firstValueFrom(this.imagenesService.subirImagen(archivoASubir));
       } catch (error: any) {
         Alerta.mostrarError(error);
 
@@ -111,12 +110,12 @@ export class SubirArchivoComponent implements OnInit {
       }
 
     if (respuesta) {
-      await Alerta.mostrarOkAsincrono('Archivo subido correctamente');        
+      await Alerta.mostrarOkAsincrono('Archivo subido correctamente');
       this.router.navigate(['/siniestros/detalles', this.idSiniestro]);
-    }    
+    }
   }
 
-  public async comprobarArchivo(): Promise<void> {    
+  public async comprobarArchivo(): Promise<void> {
     if (!this.archivo.nativeElement.files) {
       await Alerta.mostrarErrorAsincrono('Seleccione un archivo');
       return;
@@ -133,7 +132,7 @@ export class SubirArchivoComponent implements OnInit {
     }
 
     if (!formatosArchivos.includes(extensionArchivo)) {
-      await Alerta.mostrarErrorAsincrono(`El archivo seleccionado tiene que ser ${formatosArchivos.join(', ')}`);      
+      await Alerta.mostrarErrorAsincrono(`El archivo seleccionado tiene que ser ${formatosArchivos.join(', ')}`);
     }
     else
       this.hayArchivoSeleccionado = true;

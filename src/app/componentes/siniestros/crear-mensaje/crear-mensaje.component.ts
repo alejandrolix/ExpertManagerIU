@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { Alerta } from 'src/app/clases/Alerta';
 import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 import { MensajesService } from 'src/app/servicios/mensajes.service';
@@ -44,8 +45,7 @@ export class CrearMensajeComponent implements OnInit {
     let respuesta: boolean;
 
     try {
-      respuesta = await this.mensajesService.crear(mensaje)
-                                            .toPromise();
+      respuesta = await firstValueFrom(this.mensajesService.crear(mensaje));
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();

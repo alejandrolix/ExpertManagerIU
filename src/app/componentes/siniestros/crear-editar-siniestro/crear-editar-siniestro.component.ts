@@ -20,6 +20,7 @@ import { EstadosService } from 'src/app/servicios/estados.service';
 import { PeritosService } from 'src/app/servicios/peritos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-crear-editar-siniestro',
@@ -64,8 +65,7 @@ export class CrearEditarSiniestroComponent implements OnInit {
     }
 
     try {
-      this.estados = await this.estadosService.obtenerTodos()
-                                              .toPromise();
+      this.estados = await firstValueFrom(this.estadosService.obtenerTodos());
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
@@ -73,8 +73,7 @@ export class CrearEditarSiniestroComponent implements OnInit {
     }
 
     try {
-      this.aseguradoras = await this.aseguradorasService.obtenerTodas()
-                                                        .toPromise();
+      this.aseguradoras = await firstValueFrom(this.aseguradorasService.obtenerTodas());
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
@@ -82,8 +81,7 @@ export class CrearEditarSiniestroComponent implements OnInit {
     }
 
     try {
-      this.danios = await this.daniosService.obtenerTodos()
-                                            .toPromise();
+      this.danios = await firstValueFrom(this.daniosService.obtenerTodos());
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
@@ -91,8 +89,7 @@ export class CrearEditarSiniestroComponent implements OnInit {
     }
 
     try {
-      this.peritos = await this.peritosService.obtenerTodos()
-                                              .toPromise();
+      this.peritos = await firstValueFrom(this.peritosService.obtenerTodos());
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
@@ -114,8 +111,7 @@ export class CrearEditarSiniestroComponent implements OnInit {
       let siniestro: Siniestro;
 
       try {
-        siniestro = await this.siniestrosService.obtenerPorId(idSiniestro)
-                                                .toPromise();
+        siniestro = await firstValueFrom(this.siniestrosService.obtenerPorId(idSiniestro));
       } catch (error: any) {
         Alerta.mostrarError(error);
         this.spinnerService.ocultarSpinner();
@@ -217,8 +213,9 @@ export class CrearEditarSiniestroComponent implements OnInit {
         let idEstado: number = parseInt(this.formCrearEditarSiniestro.get('estado')?.value);
         let impValoracionDanios: number = 0;
 
-        if (idEstado == TipoEstado.Valorado)
-          impValoracionDanios = Number(this.formCrearEditarSiniestro.get('impValoracionDanios')?.value);
+        if (idEstado == TipoEstado.Valorado) {
+          impValoracionDanios = parseFloat(this.formCrearEditarSiniestro.get('impValoracionDanios')?.value);
+        }
 
         let siniestro: EditarSiniestroDto = {
           idUsuarioAlta,
@@ -233,8 +230,7 @@ export class CrearEditarSiniestroComponent implements OnInit {
         };
 
         try {
-          await this.siniestrosService.editar(siniestro, this.idSiniestro)
-                                      .toPromise();
+          await firstValueFrom(this.siniestrosService.editar(siniestro, this.idSiniestro));
         } catch (error: any) {
           Alerta.mostrarError(error);
           this.spinnerService.ocultarSpinner();
@@ -256,8 +252,7 @@ export class CrearEditarSiniestroComponent implements OnInit {
         };
 
         try {
-          await this.siniestrosService.crear(siniestro)
-                                      .toPromise();
+          await firstValueFrom(this.siniestrosService.crear(siniestro));
         } catch (error: any) {
           Alerta.mostrarError(error);
           this.spinnerService.ocultarSpinner();

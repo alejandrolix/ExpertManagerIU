@@ -1,5 +1,6 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { Alerta } from 'src/app/clases/Alerta';
 import { DatosFiltroPeritoYAseguradoraDTO, NombreDesplegableFiltro } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
 import { ListadoPeritos } from 'src/app/interfaces/listadoPeritos';
@@ -16,7 +17,7 @@ import { ListadoSiniestrosComponent } from '../listado-siniestros.component';
   styleUrls: ['./perito-responsable.component.scss']
 })
 export class PeritoResponsableComponent extends ListadoSiniestrosComponent implements OnInit, ListadoPeritos {
-  public siniestros: Siniestro[];
+  public override siniestros: Siniestro[];
 
   @ViewChild(FiltroPeritoAseguradoraComponent)
   private filtroPeritoAseguradora: FiltroPeritoAseguradoraComponent;
@@ -34,7 +35,7 @@ export class PeritoResponsableComponent extends ListadoSiniestrosComponent imple
     this.siniestros = [];
   }
 
-  async ngOnInit(): Promise<void> {
+  override async ngOnInit(): Promise<void> {
     this.spinnerService.mostrarSpinner();
     await this.obtenerSiniestros();
 
@@ -44,8 +45,7 @@ export class PeritoResponsableComponent extends ListadoSiniestrosComponent imple
 
   private async obtenerSiniestros(): Promise<void> {
     try {
-      this.siniestros = await this.siniestrosService.obtenerPorPeritoResponsable(0, 0)
-                                                    .toPromise();
+      this.siniestros = await firstValueFrom(this.siniestrosService.obtenerPorPeritoResponsable(0, 0));
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
@@ -56,8 +56,7 @@ export class PeritoResponsableComponent extends ListadoSiniestrosComponent imple
     let {idPerito, idAseguradora, nombreDesplegable} = datosFiltroPeritoYAseguradoraDTO;
 
     try {
-      this.siniestros = await this.siniestrosService.obtenerPorPeritoResponsable(idPerito, idAseguradora)
-                                                    .toPromise();
+      this.siniestros = await firstValueFrom(this.siniestrosService.obtenerPorPeritoResponsable(idPerito, idAseguradora));
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
@@ -69,7 +68,7 @@ export class PeritoResponsableComponent extends ListadoSiniestrosComponent imple
     }
   }
 
-  verDetalles(idSiniestro: number): void {
+  override verDetalles(idSiniestro: number): void {
     super.verDetalles(idSiniestro);
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { Alerta } from 'src/app/clases/Alerta';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
@@ -47,8 +48,7 @@ export class InicioSesionComponent implements OnInit {
     let usuario: Usuario;
 
     try {
-      usuario = await this.usuariosService.iniciarSesion(credenciales)
-                                            .toPromise();
+      usuario = await firstValueFrom(this.usuariosService.iniciarSesion(credenciales));
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();

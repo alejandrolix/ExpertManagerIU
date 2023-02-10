@@ -1,5 +1,6 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { Alerta } from 'src/app/clases/Alerta';
 import { DatosFiltroPeritoYAseguradoraDTO } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
 import { ListadoPeritos } from 'src/app/interfaces/listadoPeritos';
@@ -17,7 +18,7 @@ import { ListadoSiniestrosComponent } from '../listado-siniestros.component';
   styleUrls: ['./perito-no-responsable.component.scss']
 })
 export class PeritoNoResponsableComponent extends ListadoSiniestrosComponent implements OnInit, ListadoPeritos {
-  public siniestros: Siniestro[];
+  public override siniestros: Siniestro[];
   private idPerito: number;
 
   @ViewChild(FiltroPeritoAseguradoraComponent)
@@ -38,7 +39,7 @@ export class PeritoNoResponsableComponent extends ListadoSiniestrosComponent imp
     this.idPerito = this.autenticacionService.obtenerIdUsuario();
   }
 
-  async ngOnInit(): Promise<void> {
+  override async ngOnInit(): Promise<void> {
     this.spinnerService.mostrarSpinner();
     await this.obtenerSiniestros();
 
@@ -48,8 +49,7 @@ export class PeritoNoResponsableComponent extends ListadoSiniestrosComponent imp
 
   private async obtenerSiniestros(): Promise<void> {
     try {
-      this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(this.idPerito, 0)
-                                                    .toPromise();
+      this.siniestros = await firstValueFrom(this.siniestrosService.obtenerPorPeritoNoResponsable(this.idPerito, 0));
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
@@ -60,15 +60,14 @@ export class PeritoNoResponsableComponent extends ListadoSiniestrosComponent imp
     let {idAseguradora} = datosFiltroPeritoYAseguradoraDTO;
 
     try {
-      this.siniestros = await this.siniestrosService.obtenerPorPeritoNoResponsable(this.idPerito, idAseguradora)
-                                                    .toPromise();
+      this.siniestros = await firstValueFrom(this.siniestrosService.obtenerPorPeritoNoResponsable(this.idPerito, idAseguradora));
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
     }
   }
 
-  verDetalles(idSiniestro: number): void {
+  override verDetalles(idSiniestro: number): void {
     super.verDetalles(idSiniestro);
   }
 }

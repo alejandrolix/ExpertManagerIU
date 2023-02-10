@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { Alerta } from 'src/app/clases/Alerta';
 import { Estadistica } from 'src/app/interfaces/estadistica';
 import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
@@ -26,8 +27,7 @@ export class InicioComponent implements OnInit {
     this.tieneUsuarioPermisoAdministracion = this.permisosService.tienePermisoAdministracion();
 
     try {
-      this.estadistica = await this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuario)
-                                                 .toPromise();
+      this.estadistica = await firstValueFrom(this.inicioService.obtenerEstadisticasPorIdUsuario(idUsuario));
     } catch (error: any) {
       Alerta.mostrarError(error);
       this.spinnerService.ocultarSpinner();
