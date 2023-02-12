@@ -1,0 +1,28 @@
+.spinner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.75s, visibility 0.75s;
+    z-index: 9999;
+}
+
+.spinner::after {
+    content: "";
+    width: 80px;
+    height: 80px;
+    border: 12px solid #dddddd;
+    border-top-color: #212529;
+    border-radius: 50%;
+    animation: loading 1s linear infinite;
+}
+
+@keyframes loading {
+    to {
+        transform: rotate(1turn);
+    }
+}

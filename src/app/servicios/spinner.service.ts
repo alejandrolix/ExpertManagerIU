@@ -9,7 +9,7 @@ export class SpinnerService {
   public mostrar: boolean;
   public mostrarSpinnerObs: Observable<boolean>;
 
-  constructor() {    
+  constructor() {
     this.mostrarSpinnerSubject = new BehaviorSubject<boolean>(false);
     this.mostrarSpinnerObs = this.mostrarSpinnerSubject.asObservable();
   }

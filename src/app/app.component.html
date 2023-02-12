@@ -1,8 +1,9 @@
+<app-spinner></app-spinner>
 <app-menu-navegacion *ngIf="estaLogueadoUsuario"></app-menu-navegacion>
 <div class="container-fluid mt-4">
-    <div class="container margenAbajo">        
+    <div class="container margenAbajo">
         <router-outlet></router-outlet>
-    </div>    
+    </div>
 
     <footer class="footer fixed-bottom bg-dark" *ngIf="estaLogueadoUsuario">
         <p class="mt-2 text-center">Expert Manager ha sido desarrollado por ViewAx. Copyright &copy; 2020-2021</p>
