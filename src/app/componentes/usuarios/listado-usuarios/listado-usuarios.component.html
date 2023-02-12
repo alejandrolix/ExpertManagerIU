@@ -1,4 +1,3 @@
-<app-spinner></app-spinner>
 <div>
     <h2 class="mb-4">Listado usuarios</h2>
     <div class="d-flex justify-content-end mb-3">
@@ -13,7 +12,7 @@
                     <th scope="col">Es Perito</th>
                     <th scope="col">Permiso</th>
                     <th scope="col"></th>
-                    <th scope="col"></th>                
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -21,9 +20,9 @@
                     <td class="align-middle">{{ usuario.id }}</td>
                     <td class="align-middle">{{ usuario.nombre }}</td>
                     <td class="align-middle">{{ usuario.esPerito }}</td>
-                    <td class="align-middle">{{ usuario.permiso }}</td>                
+                    <td class="align-middle">{{ usuario.permiso }}</td>
                     <td class="align-middle" (click)="editar(usuario.id)">
-                        <i title="Editar" class="fas fa-pencil-alt me-3"></i>                    
+                        <i title="Editar" class="fas fa-pencil-alt me-3"></i>
                     </td>
                     <td class="align-middle" (click)="eliminar(usuario.id)">
                         <i title="Eliminar" class="fas fa-trash-alt"></i>

@@ -1,11 +1,10 @@
-<app-spinner></app-spinner>
 <div class="row" *ngIf="estadistica">
   <div class="col-12 col-md-6">
     <div class="card">
       <div class="card-header">Total Siniestros</div>
       <div class="card-body">
         <h5 *ngIf="estadistica.numSiniestros >= 2 || estadistica.numSiniestros == 0">{{ estadistica.numSiniestros }} siniestros totales</h5>
-        <h5 *ngIf="estadistica.numSiniestros == 1">{{ estadistica.numSiniestros }} siniestro total</h5>        
+        <h5 *ngIf="estadistica.numSiniestros == 1">{{ estadistica.numSiniestros }} siniestro total</h5>
       </div>
     </div>
   </div>

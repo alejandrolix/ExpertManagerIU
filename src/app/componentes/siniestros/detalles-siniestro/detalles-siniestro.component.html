@@ -1,4 +1,3 @@
-<app-spinner></app-spinner>
 <div *ngIf="siniestro != undefined">
     <h2 class="mb-4">Detalles siniestro</h2>
     <div class="row">
@@ -69,7 +68,7 @@
                 <tr *ngFor="let documentacion of documentaciones">
                     <td>{{ documentacion.descripcion }}</td>
                     <td class="align-middle" (click)="verArchivo(documentacion.id)">
-                        <i title="Ver documentación" class="fas fa-search"></i>              
+                        <i title="Ver documentación" class="fas fa-search"></i>
                     </td>
                     <td class="align-middle" (click)="eliminarDocumentacion(documentacion.id)" *ngIf="tienePermisoAdministracion()">
                         <i title="Eliminar" class="fas fa-trash-alt"></i>
@@ -96,7 +95,7 @@
                 <tr *ngFor="let imagen of imagenes">
                     <td>{{ imagen.descripcion }}</td>
                     <td class="align-middle" (click)="verImagen(imagen.id)">
-                        <i title="Ver imagen" class="fas fa-search"></i>              
+                        <i title="Ver imagen" class="fas fa-search"></i>
                     </td>
                     <td class="align-middle" (click)="eliminarImagen(imagen.id)" *ngIf="tienePermisoAdministracion()">
                         <i title="Eliminar" class="fas fa-trash-alt"></i>
