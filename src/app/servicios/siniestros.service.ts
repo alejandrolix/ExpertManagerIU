@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CerrarSiniestroDto } from '../interfaces/DTOs/siniestro/cerrar-siniestro-dto';
 import { CrearSiniestroDto } from '../interfaces/DTOs/siniestro/crear-siniestro-dto';
-import { EditarSiniestroDto } from '../interfaces/DTOs/editar-siniestro-dto';
+import { EditarSiniestroDto } from '../interfaces/DTOs/siniestro/editar-siniestro-dto';
 import { PeticionHttp } from '../clases/PeticionHttp';
 import { ImpValoracionDaniosSiniestroDto } from '../interfaces/DTOs/imp-valoracion-danios-siniestro-dto';
 import { Siniestro } from '../interfaces/siniestro';
