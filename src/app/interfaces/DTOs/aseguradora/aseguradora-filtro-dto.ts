@@ -1,3 +1,3 @@
-import { PeritoFiltroDto } from "../perito-filtro-dto";
+import { PeritoFiltroDto } from "../perito/perito-filtro-dto";
 
 export interface AseguradoraFiltroDto extends PeritoFiltroDto { }

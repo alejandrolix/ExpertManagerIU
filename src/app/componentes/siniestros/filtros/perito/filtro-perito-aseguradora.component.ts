@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DatosFiltroPeritoYAseguradoraDTO, NombreDesplegableFiltro } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
-import { PeritoFiltroDto } from 'src/app/interfaces/DTOs/perito-filtro-dto';
+import { PeritoFiltroDto } from 'src/app/interfaces/DTOs/perito/perito-filtro-dto';
 import { PeritoSiniestroDto } from 'src/app/interfaces/DTOs/perito-siniestro-dto';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { AseguradoraSiniestroDto } from 'src/app/interfaces/DTOs/aseguradora/aseguradora-siniestro-dto';
