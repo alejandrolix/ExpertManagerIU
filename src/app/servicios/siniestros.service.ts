@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { CerrarSiniestroDto } from '../interfaces/DTOs/cerrar-siniestro-dto';
+import { CerrarSiniestroDto } from '../interfaces/DTOs/siniestro/cerrar-siniestro-dto';
 import { CrearSiniestroDto } from '../interfaces/DTOs/crear-siniestro-dto';
 import { EditarSiniestroDto } from '../interfaces/DTOs/editar-siniestro-dto';
 import { PeticionHttp } from '../clases/PeticionHttp';
