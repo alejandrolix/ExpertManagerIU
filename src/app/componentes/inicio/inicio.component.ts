@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Alerta } from 'src/app/clases/Alerta';
-import { Estadistica } from 'src/app/interfaces/estadistica';
+import { Estadistica } from 'src/app/interfaces/estadistica/estadistica';
 import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 import { InicioService } from 'src/app/servicios/inicio.service';
 import { PermisosService } from 'src/app/servicios/permisos.service';
