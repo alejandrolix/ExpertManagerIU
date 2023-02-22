@@ -3,8 +3,8 @@ import { DatosFiltroPeritoYAseguradoraDTO, NombreDesplegableFiltro } from 'src/a
 import { PeritoFiltroDto } from 'src/app/interfaces/DTOs/perito-filtro-dto';
 import { PeritoSiniestroDto } from 'src/app/interfaces/DTOs/perito-siniestro-dto';
 import { Siniestro } from 'src/app/interfaces/siniestro';
-import { AseguradoraSiniestroDto } from 'src/app/interfaces/DTOs/aseguradora-siniestro-dto';
-import { AseguradoraFiltroDto } from 'src/app/interfaces/DTOs/aseguradora-filtro-dto';
+import { AseguradoraSiniestroDto } from 'src/app/interfaces/DTOs/aseguradora/aseguradora-siniestro-dto';
+import { AseguradoraFiltroDto } from 'src/app/interfaces/DTOs/aseguradora/aseguradora-filtro-dto';
 
 @Component({
   selector: 'app-filtro-perito-aseguradora',
