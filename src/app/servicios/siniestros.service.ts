@@ -8,7 +8,7 @@ import { EditarSiniestroDto } from '../interfaces/DTOs/editar-siniestro-dto';
 import { PeticionHttp } from '../clases/PeticionHttp';
 import { ImpValoracionDaniosSiniestroDto } from '../interfaces/DTOs/imp-valoracion-danios-siniestro-dto';
 import { Siniestro } from '../interfaces/siniestro';
-import { AbrirSiniestroDto } from '../interfaces/DTOs/abrir-siniestro-dto';
+import { AbrirSiniestroDto } from '../interfaces/DTOs/siniestro/abrir-siniestro-dto';
 
 @Injectable({
   providedIn: 'root'

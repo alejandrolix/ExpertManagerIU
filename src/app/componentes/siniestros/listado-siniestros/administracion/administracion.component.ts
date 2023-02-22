@@ -4,7 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { Alerta } from 'src/app/clases/Alerta';
 import { AccionFormulario } from 'src/app/enumeraciones/accion-formulario.enum';
 import { TipoEstado } from 'src/app/enumeraciones/tipo-estado.enum';
-import { AbrirSiniestroDto } from 'src/app/interfaces/DTOs/abrir-siniestro-dto';
+import { AbrirSiniestroDto } from 'src/app/interfaces/DTOs/siniestro/abrir-siniestro-dto';
 import { CerrarSiniestroDto } from 'src/app/interfaces/DTOs/cerrar-siniestro-dto';
 import { CrearMensajeRevisarCierreDto } from 'src/app/interfaces/DTOs/crear-mensaje-revisar-cierre-dto';
 import { DatosFiltroPeritoYAseguradoraDTO, NombreDesplegableFiltro } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
