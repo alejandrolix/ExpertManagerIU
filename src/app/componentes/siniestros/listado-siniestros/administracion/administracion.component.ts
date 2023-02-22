@@ -8,7 +8,7 @@ import { AbrirSiniestroDto } from 'src/app/interfaces/DTOs/siniestro/abrir-sinie
 import { CerrarSiniestroDto } from 'src/app/interfaces/DTOs/siniestro/cerrar-siniestro-dto';
 import { CrearMensajeRevisarCierreDto } from 'src/app/interfaces/DTOs/crear-mensaje-revisar-cierre-dto';
 import { DatosFiltroPeritoYAseguradoraDTO, NombreDesplegableFiltro } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
-import { ImpValoracionDaniosSiniestroDto } from 'src/app/interfaces/DTOs/imp-valoracion-danios-siniestro-dto';
+import { ImpValoracionDaniosSiniestroDto } from 'src/app/interfaces/DTOs/siniestro/imp-valoracion-danios-siniestro-dto';
 import { ListadoPeritos } from 'src/app/interfaces/listadoPeritos';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { AutenticacionService } from 'src/app/servicios/autenticacion.service';

@@ -6,7 +6,7 @@ import { CerrarSiniestroDto } from '../interfaces/DTOs/siniestro/cerrar-siniestr
 import { CrearSiniestroDto } from '../interfaces/DTOs/siniestro/crear-siniestro-dto';
 import { EditarSiniestroDto } from '../interfaces/DTOs/siniestro/editar-siniestro-dto';
 import { PeticionHttp } from '../clases/PeticionHttp';
-import { ImpValoracionDaniosSiniestroDto } from '../interfaces/DTOs/imp-valoracion-danios-siniestro-dto';
+import { ImpValoracionDaniosSiniestroDto } from '../interfaces/DTOs/siniestro/imp-valoracion-danios-siniestro-dto';
 import { Siniestro } from '../interfaces/siniestro';
 import { AbrirSiniestroDto } from '../interfaces/DTOs/siniestro/abrir-siniestro-dto';
 
