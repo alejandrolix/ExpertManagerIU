@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Alerta } from '../clases/Alerta';
 import { AutenticacionService } from '../servicios/autenticacion.service';
+import { SpinnerService } from '../servicios/spinner.service';
 
 @Injectable()
 export class ApiRestTokenInterceptor implements HttpInterceptor {
 
-  constructor(private autenticacionService: AutenticacionService) {}
+  constructor(private autenticacionService: AutenticacionService, private spinnerService: SpinnerService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let enviarTokenEnPeticion: boolean;
@@ -44,6 +45,8 @@ export class ApiRestTokenInterceptor implements HttpInterceptor {
       mensaje = error.error;
 
     Alerta.mostrarError(mensaje);
-    return throwError(mensaje);
+    this.spinnerService.ocultarSpinner();
+
+    throw new Error(error);
   }
 }
