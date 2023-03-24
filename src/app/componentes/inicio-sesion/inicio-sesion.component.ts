@@ -50,10 +50,7 @@ export class InicioSesionComponent implements OnInit {
     try {
       usuario = await firstValueFrom(this.usuariosService.iniciarSesion(credenciales));
     } catch (error: any) {
-      Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
       this.deshabilitarBtnEntrar = false;
-
       return;
     }
 
