@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { Alerta } from 'src/app/clases/Alerta';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
