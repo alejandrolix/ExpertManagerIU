@@ -11,21 +11,7 @@ export class PeticionHttp {
     constructor(private http: HttpClient, private autenticacionService: AutenticacionService) {}
 
     public hacerPeticionGet<T>(url: string): Observable<T> {
-        return this.http.get<T>(url)
-                        .pipe(
-                            catchError((error: any) => this.comprobarTipoError(error))
-                        );
-    }
-
-    private comprobarTipoError(error: any): Observable<never> {
-        if (error.codigoRespuesta === CodigoRespuesta.SesionExpirada) {
-            this.autenticacionService.cerrarSesion();
-            return throwError(error.error);
-        }
-        else if (error.status === 0)
-            return throwError('No funciona la API REST');
-
-        return throwError(error);
+        return this.http.get<T>(url);
     }
 
     public hacerPeticionGetConOpciones(url: string, opciones: {
@@ -40,10 +26,7 @@ export class PeticionHttp {
         responseType: 'blob';
         withCredentials?: boolean;
     }): Observable<Blob> {
-        return this.http.get(url, opciones)
-                        .pipe(
-                            catchError((error: any) => this.comprobarTipoError(error))
-                        );
+        return this.http.get(url, opciones);
     }
 
     public hacerPeticionGetConOpcionesJson<T>(url: string, opciones?: {
@@ -58,35 +41,19 @@ export class PeticionHttp {
         responseType?: 'json';
         withCredentials?: boolean;
     }): Observable<T> {
-        return this.http.get<T>(url, opciones)
-                        .pipe(
-                            catchError((error: any) => this.comprobarTipoError(error))
-                        );
+        return this.http.get<T>(url, opciones);
     }
 
     public hacerPeticionPost<T>(url: string, datos: any): Observable<T> {
-        return this.http.post<T>(url, datos)
-                        .pipe(
-                            catchError((error: any) => this.comprobarTipoError(error))
-                        );
+        return this.http.post<T>(url, datos);
     }
 
     public hacerPeticionPut<T>(url: string, datos: any): Observable<T> {
-        return this.http.put<T>(url, datos)
-                        .pipe(
-                            catchError((error: any) => this.comprobarTipoError(error))
-                        );
+        return this.http.put<T>(url, datos);
     }
 
     public hacerPeticionDelete<T>(url: string): Observable<T> {
-        return this.http.delete<T>(url)
-                        .pipe(
-                            catchError((error: any) => this.comprobarTipoError(error))
-                        );
+        return this.http.delete<T>(url);
     }
 }
 
-enum CodigoRespuesta {
-    SesionExpirada = 0,
-    NoInicioSesion = 1
-}

@@ -14,22 +14,26 @@ export class ApiRestTokenInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let enviarTokenEnPeticion: boolean;
 
-    if (request.url.includes('api/Usuarios/IniciarSesion'))   // Ignoramos la ruta de iniciar sesión.
+    if (request.url.includes('api/Usuarios/IniciarSesion')) {   // Ignoramos la ruta de iniciar sesión.
       enviarTokenEnPeticion = false;
+    }
 
     let token: string = this.autenticacionService.obtenerToken();
 
-    if (token.length === 0)
+    if (token.length === 0) {
       enviarTokenEnPeticion = false;
-    else
+    }
+    else {
       enviarTokenEnPeticion = true;
+    }
 
-    if (enviarTokenEnPeticion)
+    if (enviarTokenEnPeticion) {
       request = request.clone({
         setHeaders: {
           authorization: `Bearer ${token}`
         }
       });
+    }
 
     return next.handle(request).pipe(
       catchError((error: any) => this.mostrarError(error))
@@ -38,15 +42,31 @@ export class ApiRestTokenInterceptor implements HttpInterceptor {
 
   private mostrarError(error: any): Observable<never> {
     let mensaje: string;
+    let cerrarSesion: boolean = false;
 
-    if (error.status === 0)
+    if (error.status === 0) {
       mensaje = 'No funciona la API REST';
-    else
+      cerrarSesion = true;
+    }
+    else {
       mensaje = error.error;
+
+      if (error.codigoRespuesta === CodigoRespuesta.SesionExpirada) {
+        cerrarSesion = true;
+      }
+    }
 
     Alerta.mostrarError(mensaje);
     this.spinnerService.ocultarSpinner();
 
+    if (cerrarSesion) {
+      this.autenticacionService.cerrarSesion();
+    }
+
     throw new Error(error);
   }
+}
+
+enum CodigoRespuesta {
+  SesionExpirada = 0
 }
