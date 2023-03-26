@@ -66,8 +66,7 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
       idUsuario
     };
 
-    await this.siniestrosService.abrir(abrirSiniestroDto)
-                                .toPromise();
+    await firstValueFrom(this.siniestrosService.abrir(abrirSiniestroDto));
 
     await Alerta.mostrarOkAsincrono('Siniestro abierto correctamente');
     this.filtroPeritoAseguradora.eliminarFiltros();
@@ -99,8 +98,7 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
     if (!accionPregunta.isConfirmed)
       return;
 
-    await this.siniestrosService.eliminar(id)
-                                .toPromise();
+    await firstValueFrom(this.siniestrosService.eliminar(id));
 
     await Alerta.mostrarOkAsincrono('Siniestro eliminado correctamente');
     this.filtroPeritoAseguradora.eliminarFiltros();
@@ -146,8 +144,7 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
         idSiniestro
       };
 
-      await this.mensajesService.crearMensajeRevisarCierre(crearMensajeRevisarCierreDto)
-                                .toPromise();
+      await firstValueFrom(this.mensajesService.crearMensajeRevisarCierre(crearMensajeRevisarCierreDto));
 
       await Alerta.mostrarOkAsincrono('Mensaje revisar cierre creado correctamente');
       this.filtroPeritoAseguradora.eliminarFiltros();
@@ -162,8 +159,7 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
       idPerito: idUsuario
     };
 
-    await this.siniestrosService.cerrar(cerrarSiniestroDto)
-                                .toPromise();
+    await firstValueFrom(this.siniestrosService.cerrar(cerrarSiniestroDto));
 
     await Alerta.mostrarOkAsincrono('Siniestro cerrado correctamente');
     this.filtroPeritoAseguradora.eliminarFiltros();
