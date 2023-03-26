@@ -1,7 +1,6 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { Alerta } from 'src/app/clases/Alerta';
 import { DatosFiltroPeritoYAseguradoraDTO, NombreDesplegableFiltro } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
 import { ListadoPeritos } from 'src/app/interfaces/listadoPeritos';
 import { Siniestro } from 'src/app/interfaces/siniestro';
@@ -44,23 +43,13 @@ export class PeritoResponsableComponent extends ListadoSiniestrosComponent imple
   }
 
   private async obtenerSiniestros(): Promise<void> {
-    try {
-      this.siniestros = await firstValueFrom(this.siniestrosService.obtenerPorPeritoResponsable(0, 0));
-    } catch (error: any) {
-      Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
-    }
+    this.siniestros = await firstValueFrom(this.siniestrosService.obtenerPorPeritoResponsable(0, 0));
   }
 
   public async filtrarSiniestros(datosFiltroPeritoYAseguradoraDTO: DatosFiltroPeritoYAseguradoraDTO): Promise<void> {
     let {idPerito, idAseguradora, nombreDesplegable} = datosFiltroPeritoYAseguradoraDTO;
 
-    try {
-      this.siniestros = await firstValueFrom(this.siniestrosService.obtenerPorPeritoResponsable(idPerito, idAseguradora));
-    } catch (error: any) {
-      Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
-    }
+    this.siniestros = await firstValueFrom(this.siniestrosService.obtenerPorPeritoResponsable(idPerito, idAseguradora));
 
     // Asignamos las aseguradoras obtenidas según el perito seleccionado.
     if (nombreDesplegable !== NombreDesplegableFiltro.Aseguradora) {
