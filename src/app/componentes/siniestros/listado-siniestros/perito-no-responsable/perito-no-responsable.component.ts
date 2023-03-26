@@ -1,7 +1,6 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { Alerta } from 'src/app/clases/Alerta';
 import { DatosFiltroPeritoYAseguradoraDTO } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
 import { ListadoPeritos } from 'src/app/interfaces/listadoPeritos';
 import { Siniestro } from 'src/app/interfaces/siniestro';
