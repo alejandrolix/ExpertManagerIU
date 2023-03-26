@@ -14,7 +14,6 @@ import { Usuario } from 'src/app/interfaces/usuario';
 import { PermisosService } from 'src/app/servicios/permisos.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
-import { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-crear-editar-usuario',
@@ -116,19 +115,19 @@ export class CrearEditarUsuarioComponent implements OnInit {
       usuario.impReparacionDanios = impReparacionDanios;
     }
 
-    let accion: SweetAlertResult;
+    let mensajeAviso = '';
 
     if (this.accionFormulario == AccionFormulario.Editar) {
       await firstValueFrom(this.usuariosService.editar(usuario, this.idUsuario));
-      accion = await Alerta.mostrarOkAsincrono('Usuario editado correctamente');
+      mensajeAviso = 'Usuario editado correctamente';
     }
     else {
       await firstValueFrom(this.usuariosService.crear(usuario));
-      accion = await Alerta.mostrarOkAsincrono('Usuario creado correctamente');
+      mensajeAviso = 'Usuario creado correctamente';
     }
 
-    if (accion.isConfirmed)
-      this.router.navigateByUrl('/usuarios');
+    await Alerta.mostrarOkAsincrono(mensajeAviso);
+    this.router.navigateByUrl('/usuarios');
   }
 
   public comprobarPermisoSeleccionado(e: any): void {
