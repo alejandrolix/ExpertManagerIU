@@ -46,14 +46,7 @@ export class CrearEditarUsuarioComponent implements OnInit {
       this.irAtras();
     }
 
-    try {
-      this.permisos = await firstValueFrom(this.permisosService.obtenerTodos());
-    } catch (error: any) {
-      Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
-
-      return;
-    }
+    this.permisos = await firstValueFrom(this.permisosService.obtenerTodos());
 
     if (this.accionFormulario == AccionFormulario.Crear)
       this.formCrearEditarUsuario = new FormGroup({
@@ -127,24 +120,14 @@ export class CrearEditarUsuarioComponent implements OnInit {
     let accion: SweetAlertResult;
 
     if (this.accionFormulario == AccionFormulario.Editar) {
-      try {
-        await this.usuariosService.editar(usuario, this.idUsuario)
-                                  .toPromise();
-      } catch (error: any) {
-        Alerta.mostrarError(error);
-        return;
-      }
+      await this.usuariosService.editar(usuario, this.idUsuario)
+                                .toPromise();
 
       accion = await Alerta.mostrarOkAsincrono('Usuario editado correctamente');
     }
     else {
-      try {
-        await this.usuariosService.crear(usuario)
-                                  .toPromise();
-      } catch (error: any) {
-        Alerta.mostrarError(error);
-        return;
-      }
+      await this.usuariosService.crear(usuario)
+                                .toPromise();
 
       accion = await Alerta.mostrarOkAsincrono('Usuario creado correctamente');
     }
