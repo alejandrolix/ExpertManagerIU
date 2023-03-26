@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { first, pluck } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Alerta } from 'src/app/clases/Alerta';
 import { TipoArchivo } from 'src/app/enumeraciones/tipo-archivo.enum';
 import { DocumentacionesService } from 'src/app/servicios/documentaciones.service';
@@ -37,14 +37,20 @@ export class SubirArchivoComponent implements OnInit {
       this.irAtras();
     }
 
-    this.tipoArchivo = Number(await this.route.queryParamMap
+    const claveTipoAccion: string = 'tipoArchivo';
+
+    this.tipoArchivo = Number(await firstValueFrom(this.route.queryParamMap
                                               .pipe(
-                                                first(),
-                                                pluck('params'),
-                                                pluck('tipoArchivo')
-                                              )
-                                              .toPromise());
-    if (isNaN(this.tipoArchivo)) {
+                                                map((paramMap: ParamMap) => {
+                                                  if (paramMap.get(claveTipoAccion) !== null) {
+                                                    return paramMap.get(claveTipoAccion);
+                                                  }
+
+                                                  return 0;
+                                                })
+                                              )));
+
+    if (isNaN(this.tipoArchivo) || !(this.tipoArchivo in TipoArchivo)) {
       Alerta.mostrarError('El tipo de archivo es incorrecto');
       this.irAtras();
     }
