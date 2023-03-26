@@ -34,13 +34,12 @@ export class CrearEditarUsuarioComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.spinnerService.mostrarSpinner();
-    this.accionFormulario = Number(await this.route.queryParamMap
-                                                   .pipe(
-                                                     first(),
-                                                     pluck('params'),
-                                                     pluck('tipoAccion')
-                                                   )
-                                                   .toPromise());
+    this.accionFormulario = Number(await firstValueFrom(this.route.queryParamMap
+                                          .pipe(
+                                            first(),
+                                            pluck('params'),
+                                            pluck('tipoAccion')
+                                          )));
     if (isNaN(this.accionFormulario)) {
       Alerta.mostrarError('El tipo de acción es incorrecto');
       this.irAtras();
@@ -65,15 +64,7 @@ export class CrearEditarUsuarioComponent implements OnInit {
       }
 
       this.idUsuario = idUsuario;
-
-      try {
-        usuario = await firstValueFrom(this.usuariosService.obtenerPorId(this.idUsuario));
-      } catch (error: any) {
-        Alerta.mostrarError(error);
-        this.spinnerService.ocultarSpinner();
-
-        return;
-      }
+      usuario = await firstValueFrom(this.usuariosService.obtenerPorId(this.idUsuario));
 
       this.formCrearEditarUsuario = new FormGroup({
         nombre: new FormControl(usuario.nombre, Validators.required),
@@ -120,15 +111,11 @@ export class CrearEditarUsuarioComponent implements OnInit {
     let accion: SweetAlertResult;
 
     if (this.accionFormulario == AccionFormulario.Editar) {
-      await this.usuariosService.editar(usuario, this.idUsuario)
-                                .toPromise();
-
+      await firstValueFrom(this.usuariosService.editar(usuario, this.idUsuario));
       accion = await Alerta.mostrarOkAsincrono('Usuario editado correctamente');
     }
     else {
-      await this.usuariosService.crear(usuario)
-                                .toPromise();
-
+      await firstValueFrom(this.usuariosService.crear(usuario));
       accion = await Alerta.mostrarOkAsincrono('Usuario creado correctamente');
     }
 
