@@ -49,9 +49,9 @@ export class ApiRestTokenInterceptor implements HttpInterceptor {
       cerrarSesion = true;
     }
     else {
-      mensaje = error.error;
+      mensaje = error.error.error;
 
-      if (error.codigoRespuesta === CodigoRespuesta.SesionExpirada) {
+      if (error.error.codigoRespuesta === CodigoRespuesta.SesionExpirada) {
         cerrarSesion = true;
       }
     }
