@@ -93,21 +93,9 @@ export class SubirArchivoComponent implements OnInit {
     let respuesta: boolean = true;
 
     if (this.tipoArchivo === TipoArchivo.Documento)
-      try {
-        respuesta = await firstValueFrom(this.documentacionesService.subirDocumentacion(archivoASubir));
-      } catch (error: any) {
-        Alerta.mostrarError(error);
-
-        return;
-      }
+      respuesta = await firstValueFrom(this.documentacionesService.subirDocumentacion(archivoASubir));
     else
-      try {
-        respuesta = await firstValueFrom(this.imagenesService.subirImagen(archivoASubir));
-      } catch (error: any) {
-        Alerta.mostrarError(error);
-
-        return;
-      }
+      respuesta = await firstValueFrom(this.imagenesService.subirImagen(archivoASubir));
 
     if (respuesta) {
       await Alerta.mostrarOkAsincrono('Archivo subido correctamente');
