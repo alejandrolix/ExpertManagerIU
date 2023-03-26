@@ -26,11 +26,7 @@ export class ListadoUsuariosComponent implements OnInit {
   }
 
   private async obtenerUsuarios(): Promise<void> {
-    try {
-      this.usuarios = await firstValueFrom(this.usuariosService.obtenerTodos());
-    } catch (error: any) {
-      Alerta.mostrarError(error);
-    }
+    this.usuarios = await firstValueFrom(this.usuariosService.obtenerTodos());
   }
 
   public editar(id: number): void {
