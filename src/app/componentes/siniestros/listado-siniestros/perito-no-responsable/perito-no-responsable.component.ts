@@ -48,23 +48,13 @@ export class PeritoNoResponsableComponent extends ListadoSiniestrosComponent imp
   }
 
   private async obtenerSiniestros(): Promise<void> {
-    try {
-      this.siniestros = await firstValueFrom(this.siniestrosService.obtenerPorPeritoNoResponsable(this.idPerito, 0));
-    } catch (error: any) {
-      Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
-    }
+    this.siniestros = await firstValueFrom(this.siniestrosService.obtenerPorPeritoNoResponsable(this.idPerito, 0));
   }
 
   public async filtrarSiniestros(datosFiltroPeritoYAseguradoraDTO: DatosFiltroPeritoYAseguradoraDTO): Promise<void> {
     let {idAseguradora} = datosFiltroPeritoYAseguradoraDTO;
 
-    try {
-      this.siniestros = await firstValueFrom(this.siniestrosService.obtenerPorPeritoNoResponsable(this.idPerito, idAseguradora));
-    } catch (error: any) {
-      Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
-    }
+    this.siniestros = await firstValueFrom(this.siniestrosService.obtenerPorPeritoNoResponsable(this.idPerito, idAseguradora));
   }
 
   override verDetalles(idSiniestro: number): void {
