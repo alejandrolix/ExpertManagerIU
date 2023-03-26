@@ -33,12 +33,14 @@ export class CrearEditarUsuarioComponent implements OnInit {
               private router: Router) { }
 
   async ngOnInit(): Promise<void> {
+    const claveTipoAccion: string = 'tipoAccion';
+
     this.spinnerService.mostrarSpinner();
     this.accionFormulario = Number(await firstValueFrom(this.route.queryParamMap
                                           .pipe(
                                             map((paramMap: ParamMap) => {
-                                              if (paramMap.get('tipoAcciona') !== null) {
-                                                return paramMap.get('tipoAccion');
+                                              if (paramMap.get(claveTipoAccion) !== null) {
+                                                return paramMap.get(claveTipoAccion);
                                               }
 
                                               return 0;
