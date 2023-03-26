@@ -48,7 +48,7 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
   override async ngOnInit(): Promise<void> {
     this.spinnerService.mostrarSpinner();
 
-    await this.obtenerSiniestros();
+    this.siniestros = await firstValueFrom(this.siniestrosService.obtenerTodos(0, 0));
     this.filtroPeritoAseguradora.asignarPeritos(this.siniestros);
     this.filtroPeritoAseguradora.asignarAseguradoras(this.siniestros);
     this.spinnerService.ocultarSpinner();
@@ -82,10 +82,6 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
     if (nombreDesplegable !== NombreDesplegableFiltro.Aseguradora) {
       this.filtroPeritoAseguradora.asignarAseguradoras(this.siniestros);
     }
-  }
-
-  public async obtenerSiniestros(): Promise<void> {
-    this.siniestros = await firstValueFrom(this.siniestrosService.obtenerTodos(0, 0));
   }
 
   public editar(id: number): void {
