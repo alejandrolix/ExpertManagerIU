@@ -43,6 +43,7 @@ export class ApiRestTokenInterceptor implements HttpInterceptor {
   private mostrarError(error: any): Observable<never> {
     let mensaje: string;
     let cerrarSesion: boolean = false;
+    const codigoSesionExpirada: number = 0;
 
     if (error.status === 0) {
       mensaje = 'No funciona la API REST';
@@ -51,7 +52,7 @@ export class ApiRestTokenInterceptor implements HttpInterceptor {
     else {
       mensaje = error.error.error;
 
-      if (error.error.codigoRespuesta === CodigoRespuesta.SesionExpirada) {
+      if (error.error.codigoRespuesta === codigoSesionExpirada) {
         cerrarSesion = true;
       }
     }
@@ -65,8 +66,4 @@ export class ApiRestTokenInterceptor implements HttpInterceptor {
 
     throw new Error(error);
   }
-}
-
-enum CodigoRespuesta {
-  SesionExpirada = 0
 }
