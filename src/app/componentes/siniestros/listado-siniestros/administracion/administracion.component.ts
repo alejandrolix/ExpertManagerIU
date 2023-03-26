@@ -66,15 +66,8 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
       idUsuario
     };
 
-    try {
-      await this.siniestrosService.abrir(abrirSiniestroDto)
-                                  .toPromise();
-    } catch (error: any) {
-      Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
-
-      return;
-    }
+    await this.siniestrosService.abrir(abrirSiniestroDto)
+                                .toPromise();
 
     await Alerta.mostrarOkAsincrono('Siniestro abierto correctamente');
     this.filtroPeritoAseguradora.eliminarFiltros();
@@ -83,14 +76,7 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
   public async filtrarSiniestros(datosFiltroPeritoYAseguradoraDTO: DatosFiltroPeritoYAseguradoraDTO): Promise<void> {
     let {idPerito, idAseguradora, nombreDesplegable} = datosFiltroPeritoYAseguradoraDTO;
 
-    try {
-      this.siniestros = await firstValueFrom(this.siniestrosService.obtenerTodos(idPerito, idAseguradora));
-    } catch (error: any) {
-      Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
-
-      return;
-    }
+    this.siniestros = await firstValueFrom(this.siniestrosService.obtenerTodos(idPerito, idAseguradora));
 
     // Asignamos las aseguradoras obtenidas según el perito seleccionado.
     if (nombreDesplegable !== NombreDesplegableFiltro.Aseguradora) {
@@ -99,12 +85,7 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
   }
 
   public async obtenerSiniestros(): Promise<void> {
-    try {
-      this.siniestros = await firstValueFrom(this.siniestrosService.obtenerTodos(0, 0));
-    } catch (error: any) {
-      Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
-    }
+    this.siniestros = await firstValueFrom(this.siniestrosService.obtenerTodos(0, 0));
   }
 
   public editar(id: number): void {
@@ -122,15 +103,8 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
     if (!accionPregunta.isConfirmed)
       return;
 
-    try {
-      await this.siniestrosService.eliminar(id)
-                                  .toPromise();
-    } catch (error: any) {
-      Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
-
-      return;
-    }
+    await this.siniestrosService.eliminar(id)
+                                .toPromise();
 
     await Alerta.mostrarOkAsincrono('Siniestro eliminado correctamente');
     this.filtroPeritoAseguradora.eliminarFiltros();
@@ -162,14 +136,7 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
     };
     let esImpValoracionDaniosSiniestroMayorQuePerito: boolean;
 
-    try {
-      esImpValoracionDaniosSiniestroMayorQuePerito = await firstValueFrom(this.siniestrosService.esImpValoracionDaniosSiniestroMayorQuePerito(impValoracionDaniosSiniestroDto));
-    } catch (error: any) {
-      Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
-
-      return;
-    }
+    esImpValoracionDaniosSiniestroMayorQuePerito = await firstValueFrom(this.siniestrosService.esImpValoracionDaniosSiniestroMayorQuePerito(impValoracionDaniosSiniestroDto));
 
     if (esImpValoracionDaniosSiniestroMayorQuePerito) {
       let accionPregunta: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono('Se va a crear un mensaje para revisar el cierre porque el importe de valoración de daños ' +
@@ -183,15 +150,8 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
         idSiniestro
       };
 
-      try {
-        await this.mensajesService.crearMensajeRevisarCierre(crearMensajeRevisarCierreDto)
-                                  .toPromise();
-      } catch (error: any) {
-        Alerta.mostrarError(error);
-        this.spinnerService.ocultarSpinner();
-
-        return;
-      }
+      await this.mensajesService.crearMensajeRevisarCierre(crearMensajeRevisarCierreDto)
+                                .toPromise();
 
       await Alerta.mostrarOkAsincrono('Mensaje revisar cierre creado correctamente');
       this.filtroPeritoAseguradora.eliminarFiltros();
@@ -206,15 +166,8 @@ export class AdministracionComponent extends ListadoSiniestrosComponent implemen
       idPerito: idUsuario
     };
 
-    try {
-      await this.siniestrosService.cerrar(cerrarSiniestroDto)
-                                  .toPromise();
-    } catch (error: any) {
-      Alerta.mostrarError(error);
-      this.spinnerService.ocultarSpinner();
-
-      return;
-    }
+    await this.siniestrosService.cerrar(cerrarSiniestroDto)
+                                .toPromise();
 
     await Alerta.mostrarOkAsincrono('Siniestro cerrado correctamente');
     this.filtroPeritoAseguradora.eliminarFiltros();
