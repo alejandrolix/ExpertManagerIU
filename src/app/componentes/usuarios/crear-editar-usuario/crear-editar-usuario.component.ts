@@ -1,9 +1,9 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { first, pluck } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Alerta } from 'src/app/clases/Alerta';
 import { Validadores } from 'src/app/clases/validadores';
 import { AccionFormulario } from 'src/app/enumeraciones/accion-formulario.enum';
@@ -36,12 +36,18 @@ export class CrearEditarUsuarioComponent implements OnInit {
     this.spinnerService.mostrarSpinner();
     this.accionFormulario = Number(await firstValueFrom(this.route.queryParamMap
                                           .pipe(
-                                            first(),
-                                            pluck('params'),
-                                            pluck('tipoAccion')
+                                            map((paramMap: ParamMap) => {
+                                              if (paramMap.get('tipoAcciona') !== null) {
+                                                return paramMap.get('tipoAccion');
+                                              }
+
+                                              return 0;
+                                            })
                                           )));
-    if (isNaN(this.accionFormulario)) {
-      Alerta.mostrarError('El tipo de acción es incorrecto');
+
+    if (isNaN(this.accionFormulario) || !(this.accionFormulario in AccionFormulario)) {
+      this.spinnerService.ocultarSpinner();
+      await Alerta.mostrarErrorAsincrono('El tipo de acción es incorrecto');
       this.irAtras();
     }
 
