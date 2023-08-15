@@ -29,6 +29,7 @@ const routes: Routes = [
     path: 'siniestros',
     component: SiniestrosComponent,
     canActivate: [InicioSesionGuard],
+    canActivateChild: [ComprobarPermisoGuard],
     children: [
       {
         path: '',
@@ -37,14 +38,7 @@ const routes: Routes = [
       {
         path: ':id/detalles',
         component: DetallesSiniestroComponent
-      }
-    ]
-  },
-  {
-    path: 'siniestros',
-    canActivate: [InicioSesionGuard],
-    canActivateChild: [ComprobarPermisoGuard],
-    children: [
+      },
       {
         path: 'crear',
         component: CrearEditarSiniestroComponent
