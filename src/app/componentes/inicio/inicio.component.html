@@ -12,9 +12,12 @@
     <div class="card">
       <div class="card-header">Total Siniestros por Aseguradora</div>
       <div class="card-body">
-        <div class="d-flex justify-content-between" *ngFor="let nsPorAseguradora of estadistica.numSiniestrosPorAseguradora">
-          <div>{{ nsPorAseguradora.nombreAseguradora }}</div>
-          <div>{{ nsPorAseguradora.numSiniestros }}</div>
+        <h5 *ngIf="!estadistica.numSiniestrosCerrarPorAseguradora">No existen siniestros</h5>
+        <div *ngIf="estadistica.numSiniestrosCerrarPorAseguradora">
+          <div class="d-flex justify-content-between" *ngFor="let nsPorAseguradora of estadistica.numSiniestrosPorAseguradora">
+            <div>{{ nsPorAseguradora.nombreAseguradora }}</div>
+            <div>{{ nsPorAseguradora.numSiniestros }}</div>
+          </div>
         </div>
       </div>
     </div>
