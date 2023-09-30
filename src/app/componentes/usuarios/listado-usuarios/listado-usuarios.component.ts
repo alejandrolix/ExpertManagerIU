@@ -4,6 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { Alerta } from 'src/app/clases/Alerta';
 import { AccionFormulario } from 'src/app/enumeraciones/accion-formulario.enum';
 import { Usuario } from 'src/app/interfaces/usuario';
+import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import { SweetAlertResult } from 'sweetalert2';
@@ -16,8 +17,11 @@ import { SweetAlertResult } from 'sweetalert2';
 export class ListadoUsuariosComponent implements OnInit {
   public usuarios: Usuario[];
 
-  constructor(private router: Router, private usuariosService: UsuariosService, private activatedRoute: ActivatedRoute,
-              private spinnerService: SpinnerService) { }
+  constructor(private router: Router,
+              private usuariosService: UsuariosService,
+              private activatedRoute: ActivatedRoute,
+              private spinnerService: SpinnerService,
+              private autenticacionService: AutenticacionService) { }
 
   async ngOnInit(): Promise<void> {
     this.spinnerService.mostrarSpinner();
@@ -34,6 +38,13 @@ export class ListadoUsuariosComponent implements OnInit {
   }
 
   public async eliminar(id: number): Promise<void> {
+    let idUsuarioLogueado: number = this.autenticacionService.obtenerIdUsuario();
+
+    if (id === idUsuarioLogueado) {
+      Alerta.mostrarError('No se puede eliminar el usuario porque tiene iniciada la sesión');
+      return;
+    }
+
     let accion: SweetAlertResult = await Alerta.mostrarPreguntaAsincrono(`¿Está seguro que desea eliminar el usuario con id ${id}?`);
 
     if (!accion.isConfirmed)
