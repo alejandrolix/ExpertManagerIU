@@ -12,28 +12,13 @@ export class ApiRestTokenInterceptor implements HttpInterceptor {
   constructor(private autenticacionService: AutenticacionService, private spinnerService: SpinnerService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    let enviarTokenEnPeticion: boolean;
-
-    if (request.url.includes('api/Usuarios/IniciarSesion')) {   // Ignoramos la ruta de iniciar sesión.
-      enviarTokenEnPeticion = false;
-    }
-
     let token: string = this.autenticacionService.obtenerToken();
 
-    if (token.length === 0) {
-      enviarTokenEnPeticion = false;
-    }
-    else {
-      enviarTokenEnPeticion = true;
-    }
-
-    if (enviarTokenEnPeticion) {
-      request = request.clone({
-        setHeaders: {
-          authorization: `Bearer ${token}`
-        }
-      });
-    }
+    request = request.clone({
+      setHeaders: {
+        authorization: `Bearer ${token}`
+      }
+    });
 
     return next.handle(request).pipe(
       catchError((error: any) => this.mostrarError(error))
