@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivateChild } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Alerta } from '../clases/Alerta';
 import { PermisosService } from '../servicios/permisos.service';
@@ -8,7 +8,7 @@ import { PermisosService } from '../servicios/permisos.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ComprobarPermisoGuard implements CanActivate, CanActivateChild {
+export class ComprobarPermisoGuard  {
 
   constructor(private permisosService: PermisosService, private location: Location) { }
 

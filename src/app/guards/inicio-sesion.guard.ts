@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Alerta } from '../clases/Alerta';
 import { AutenticacionService } from '../servicios/autenticacion.service';
@@ -7,7 +7,7 @@ import { AutenticacionService } from '../servicios/autenticacion.service';
 @Injectable({
   providedIn: 'root'
 })
-export class InicioSesionGuard implements CanActivate {
+export class InicioSesionGuard  {
   constructor(private autenticacionService: AutenticacionService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
