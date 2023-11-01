@@ -20,10 +20,7 @@ import { SpinnerComponent } from './componentes/spinner/spinner.component';
 import { CrearEditarSiniestroComponent } from './componentes/siniestros/crear-editar-siniestro/crear-editar-siniestro.component';
 import { CrearEditarUsuarioComponent } from './componentes/usuarios/crear-editar-usuario/crear-editar-usuario.component';
 import { NumerosDecimalesDirective } from './directivas/numeros-decimales.directive';
-import { AdministracionComponent } from './componentes/siniestros/listado-siniestros/administracion/administracion.component';
 import { FiltroPeritoAseguradoraComponent } from './componentes/siniestros/filtros/perito/filtro-perito-aseguradora.component';
-import { PeritoResponsableComponent } from './componentes/siniestros/listado-siniestros/perito-responsable/perito-responsable.component';
-import { PeritoNoResponsableComponent } from './componentes/siniestros/listado-siniestros/perito-no-responsable/perito-no-responsable.component';
 import { registerLocaleData } from '@angular/common';
 import localees from '@angular/common/locales/es';
 
@@ -46,10 +43,7 @@ registerLocaleData(localees);
     CrearEditarSiniestroComponent,
     CrearEditarUsuarioComponent,
     NumerosDecimalesDirective,
-    AdministracionComponent,
-    FiltroPeritoAseguradoraComponent,
-    PeritoResponsableComponent,
-    PeritoNoResponsableComponent
+    FiltroPeritoAseguradoraComponent
   ],
   imports: [
     BrowserModule,

@@ -6,7 +6,6 @@ import { CrearEditarSiniestroComponent } from './componentes/siniestros/crear-ed
 import { CrearMensajeComponent } from './componentes/siniestros/crear-mensaje/crear-mensaje.component';
 import { DetallesSiniestroComponent } from './componentes/siniestros/detalles-siniestro/detalles-siniestro.component';
 import { ListadoSiniestrosComponent } from './componentes/siniestros/listado-siniestros/listado-siniestros.component';
-import { SiniestrosComponent } from './componentes/siniestros/siniestros.component';
 import { SubirArchivoComponent } from './componentes/siniestros/subir-archivo/subir-archivo.component';
 import { CrearEditarUsuarioComponent } from './componentes/usuarios/crear-editar-usuario/crear-editar-usuario.component';
 import { ListadoUsuariosComponent } from './componentes/usuarios/listado-usuarios/listado-usuarios.component';
@@ -27,14 +26,10 @@ const routes: Routes = [
   },
   {
     path: 'siniestros',
-    component: SiniestrosComponent,
+    component: ListadoSiniestrosComponent,
     canActivate: [InicioSesionGuard],
     canActivateChild: [ComprobarPermisoGuard],
     children: [
-      {
-        path: '',
-        component: ListadoSiniestrosComponent
-      },
       {
         path: ':id/detalles',
         component: DetallesSiniestroComponent
