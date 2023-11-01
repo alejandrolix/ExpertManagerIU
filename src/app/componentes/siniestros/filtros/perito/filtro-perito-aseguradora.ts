@@ -72,7 +72,7 @@ export class FiltroPeritoAseguradora {
         return false;
       });
 
-      if (encontrado === undefined) {
+      if (!encontrado) {
         peritosUnicos.push({
           id: perito.idPerito,
           nombre: perito.perito
