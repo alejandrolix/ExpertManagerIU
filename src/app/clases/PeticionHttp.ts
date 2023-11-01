@@ -1,14 +1,12 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, throwError } from "rxjs";
-import { catchError } from "rxjs/operators";
-import { AutenticacionService } from "../servicios/autenticacion.service";
+import { Observable } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
 })
 export class PeticionHttp {
-    constructor(private http: HttpClient, private autenticacionService: AutenticacionService) {}
+    constructor(private http: HttpClient) {}
 
     public hacerPeticionGet<T>(url: string): Observable<T> {
         return this.http.get<T>(url);
