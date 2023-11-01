@@ -8,10 +8,10 @@ import { AseguradoraFiltroDto } from 'src/app/interfaces/DTOs/aseguradora/asegur
 
 @Component({
   selector: 'app-filtro-perito-aseguradora',
-  templateUrl: './filtro-perito-aseguradora.component.html',
-  styleUrls: ['./filtro-perito-aseguradora.component.scss']
+  templateUrl: './filtro-perito-aseguradora.html',
+  styleUrls: ['./filtro-perito-aseguradora.scss']
 })
-export class FiltroPeritoAseguradoraComponent {
+export class FiltroPeritoAseguradora {
   @Input()
   public tienePermisoAdministracion: boolean = true;
 

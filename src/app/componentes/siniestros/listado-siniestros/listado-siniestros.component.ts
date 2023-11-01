@@ -16,7 +16,7 @@ import { PermisosService } from 'src/app/servicios/permisos.service';
 import { SiniestrosService } from 'src/app/servicios/siniestros.service';
 import { SpinnerService } from 'src/app/servicios/spinner.service';
 import { SweetAlertResult } from 'sweetalert2';
-import { FiltroPeritoAseguradoraComponent } from '../filtros/perito/filtro-perito-aseguradora.component';
+import { FiltroPeritoAseguradora } from '../filtros/perito/filtro-perito-aseguradora';
 
 @Component({
   selector: 'app-listado-siniestros',
@@ -28,8 +28,8 @@ export class ListadoSiniestrosComponent implements OnInit {
   public tipoEstadoEnum: typeof TipoEstado = TipoEstado;
   private _tienePermisoAdministracion: boolean;
 
-  @ViewChild(FiltroPeritoAseguradoraComponent)
-  private filtroPeritoAseguradora: FiltroPeritoAseguradoraComponent;
+  @ViewChild(FiltroPeritoAseguradora)
+  private filtroPeritoAseguradora: FiltroPeritoAseguradora;
 
   constructor(private siniestrosService:    SiniestrosService,
               private router:               Router,
