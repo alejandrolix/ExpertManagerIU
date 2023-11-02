@@ -38,11 +38,11 @@ export class SiniestrosService {
   }
 
   public abrir(abrirSiniestroDto: AbrirSiniestroDto): Observable<boolean> {
-    return this.peticionHttp.hacerPeticionPut<boolean>(`${environment.urlApi}/Siniestros/Abrir`, abrirSiniestroDto);
+    return this.peticionHttp.put<boolean>(`${environment.urlApi}/Siniestros/Abrir`, abrirSiniestroDto);
   }
 
   public editar(siniestro: EditarSiniestroDto, id: number): Observable<boolean> {
-    return this.peticionHttp.hacerPeticionPut<boolean>(`${environment.urlApi}/Siniestros/${id}`, siniestro);
+    return this.peticionHttp.put<boolean>(`${environment.urlApi}/Siniestros/${id}`, siniestro);
   }
 
   public eliminar(id: number): Observable<boolean> {
@@ -50,7 +50,7 @@ export class SiniestrosService {
   }
 
   public cerrar(cerrarSiniestroDto: CerrarSiniestroDto): Observable<boolean> {
-    return this.peticionHttp.hacerPeticionPut<boolean>(`${environment.urlApi}/Siniestros/Cerrar`, cerrarSiniestroDto);
+    return this.peticionHttp.put<boolean>(`${environment.urlApi}/Siniestros/Cerrar`, cerrarSiniestroDto);
   }
 
   public esImpValoracionDaniosSiniestroMayorQuePerito(impValoracionDaniosSiniestroDto: ImpValoracionDaniosSiniestroDto): Observable<boolean> {

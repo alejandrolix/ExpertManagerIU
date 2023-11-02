@@ -23,7 +23,7 @@ export class UsuariosService {
   }
 
   public editar(usuario: any, id: number): Observable<boolean> {    
-    return this.peticionHttp.hacerPeticionPut<boolean>(`${environment.urlApi}/Usuarios/${id}`, usuario);
+    return this.peticionHttp.put<boolean>(`${environment.urlApi}/Usuarios/${id}`, usuario);
   }
 
   public eliminar(id: number): Observable<boolean> {    
