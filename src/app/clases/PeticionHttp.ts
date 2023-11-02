@@ -12,7 +12,7 @@ export class PeticionHttp {
         return this.http.get<T>(url);
     }
 
-    public hacerPeticionGetConOpciones(url: string, opciones: {
+    public getConOpciones(url: string, opciones: {
         headers?: HttpHeaders | {
             [header: string]: string | string[];
         };

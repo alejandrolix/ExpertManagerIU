@@ -21,7 +21,7 @@ export class DocumentacionesService {
     let headers = new HttpHeaders();
     headers = headers.set('Accept', 'application/pdf');
 
-    return this.peticionHttp.hacerPeticionGetConOpciones(`${environment.urlApi}/Documentaciones/${id}`, { headers: headers, responseType: 'blob' })
+    return this.peticionHttp.getConOpciones(`${environment.urlApi}/Documentaciones/${id}`, { headers: headers, responseType: 'blob' })
                             .pipe(
                                   map((res: any) => {
                                     return new Blob([res], { type: 'application/pdf' })
