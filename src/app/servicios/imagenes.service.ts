@@ -35,6 +35,6 @@ export class ImagenesService {
   }
 
   public eliminar(idImagen: number): Observable<boolean> {
-    return this.peticionHttp.hacerPeticionDelete<boolean>(`${environment.urlApi}/Imagenes/${idImagen}`);
+    return this.peticionHttp.delete<boolean>(`${environment.urlApi}/Imagenes/${idImagen}`);
   }
 }

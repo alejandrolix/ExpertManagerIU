@@ -50,7 +50,7 @@ export class PeticionHttp {
         return this.http.put<T>(url, datos);
     }
 
-    public hacerPeticionDelete<T>(url: string): Observable<T> {
+    public delete<T>(url: string): Observable<T> {
         return this.http.delete<T>(url);
     }
 }

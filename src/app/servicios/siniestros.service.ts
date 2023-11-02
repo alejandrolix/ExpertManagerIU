@@ -46,7 +46,7 @@ export class SiniestrosService {
   }
 
   public eliminar(id: number): Observable<boolean> {
-    return this.peticionHttp.hacerPeticionDelete<boolean>(`${environment.urlApi}/Siniestros/${id}`);
+    return this.peticionHttp.delete<boolean>(`${environment.urlApi}/Siniestros/${id}`);
   }
 
   public cerrar(cerrarSiniestroDto: CerrarSiniestroDto): Observable<boolean> {

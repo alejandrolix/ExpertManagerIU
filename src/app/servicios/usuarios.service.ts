@@ -27,7 +27,7 @@ export class UsuariosService {
   }
 
   public eliminar(id: number): Observable<boolean> {    
-    return this.peticionHttp.hacerPeticionDelete<boolean>(`${environment.urlApi}/Usuarios/${id}`);
+    return this.peticionHttp.delete<boolean>(`${environment.urlApi}/Usuarios/${id}`);
   }
 
   public iniciarSesion(credenciales: any): Observable<Usuario> {

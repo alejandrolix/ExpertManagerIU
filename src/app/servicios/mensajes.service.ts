@@ -21,7 +21,7 @@ export class MensajesService {
   }
 
   public eliminar(idMensaje: number): Observable<boolean> {
-    return this.peticionHttp.hacerPeticionDelete<boolean>(`${environment.urlApi}/Mensajes/${idMensaje}`);
+    return this.peticionHttp.delete<boolean>(`${environment.urlApi}/Mensajes/${idMensaje}`);
   }
 
   public obtenerTodosPorIdSiniestro(idSiniestro: number): Observable<Mensaje[]> {

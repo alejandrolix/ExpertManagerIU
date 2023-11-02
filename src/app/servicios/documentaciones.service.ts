@@ -39,6 +39,6 @@ export class DocumentacionesService {
   }
 
   public eliminar(idDocumentacion: number): Observable<boolean> {
-    return this.peticionHttp.hacerPeticionDelete<boolean>(`${environment.urlApi}/Documentaciones/${idDocumentacion}`);
+    return this.peticionHttp.delete<boolean>(`${environment.urlApi}/Documentaciones/${idDocumentacion}`);
   }
 }
