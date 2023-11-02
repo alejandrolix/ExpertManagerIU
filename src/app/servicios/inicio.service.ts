@@ -12,6 +12,6 @@ export class InicioService {
   constructor(private peticionHttp: PeticionHttp) { }
 
   public obtenerEstadisticasPorIdUsuario(idUsuario: number): Observable<Estadistica> {
-    return this.peticionHttp.hacerPeticionGet<Estadistica>(`${environment.urlApi}/Inicio/${idUsuario}`);
+    return this.peticionHttp.get<Estadistica>(`${environment.urlApi}/Inicio/${idUsuario}`);
   }
 }

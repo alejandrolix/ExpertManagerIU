@@ -11,11 +11,11 @@ export class UsuariosService {
   constructor(private peticionHttp: PeticionHttp) {}
 
   public obtenerTodos(): Observable<Usuario[]> {    
-    return this.peticionHttp.hacerPeticionGet<Usuario[]>(`${environment.urlApi}/Usuarios`);
+    return this.peticionHttp.get<Usuario[]>(`${environment.urlApi}/Usuarios`);
   }
 
   public obtenerPorId(id: number): Observable<Usuario> {    
-    return this.peticionHttp.hacerPeticionGet<Usuario>(`${environment.urlApi}/Usuarios/${id}`);
+    return this.peticionHttp.get<Usuario>(`${environment.urlApi}/Usuarios/${id}`);
   }
 
   public crear(usuario: any): Observable<boolean> {    

@@ -13,7 +13,7 @@ export class PermisosService {
   constructor(private peticionHttp: PeticionHttp) { }
 
   public obtenerTodos(): Observable<Permiso[]> {
-    return this.peticionHttp.hacerPeticionGet<Permiso[]>(`${environment.urlApi}/Permisos`);
+    return this.peticionHttp.get<Permiso[]>(`${environment.urlApi}/Permisos`);
   }
 
   public obtenerIdPermisoLogueado(): number {

@@ -14,7 +14,7 @@ export class ImagenesService {
   constructor(private http: HttpClient, private peticionHttp: PeticionHttp) { }
 
   public obtenerPorIdSiniestro(id: number): Observable<Archivo[]> {
-    return this.peticionHttp.hacerPeticionGet<Archivo[]>(`${environment.urlApi}/Imagenes/ObtenerPorIdSiniestro/${id}`);
+    return this.peticionHttp.get<Archivo[]>(`${environment.urlApi}/Imagenes/ObtenerPorIdSiniestro/${id}`);
   }
 
   public subirImagen(envioImagen: any): Observable<boolean> {

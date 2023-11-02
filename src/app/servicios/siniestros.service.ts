@@ -18,19 +18,19 @@ export class SiniestrosService {
   constructor(private peticionHttp: PeticionHttp) { }
 
   public obtenerTodos(idPerito: number, idAseguradora: number): Observable<Siniestro[]> {
-    return this.peticionHttp.hacerPeticionGet<Siniestro[]>(`${environment.urlApi}/Siniestros?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
+    return this.peticionHttp.get<Siniestro[]>(`${environment.urlApi}/Siniestros?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
   }
 
   public obtenerPorPeritoNoResponsable(idPerito: number, idAseguradora: number): Observable<Siniestro[]> {
-    return this.peticionHttp.hacerPeticionGet<Siniestro[]>(`${environment.urlApi}/Siniestros/PeritoNoResponsable?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
+    return this.peticionHttp.get<Siniestro[]>(`${environment.urlApi}/Siniestros/PeritoNoResponsable?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
   }
 
   public obtenerPorPeritoResponsable(idPerito: number, idAseguradora: number): Observable<Siniestro[]> {
-    return this.peticionHttp.hacerPeticionGet<Siniestro[]>(`${environment.urlApi}/Siniestros/PeritoResponsable?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
+    return this.peticionHttp.get<Siniestro[]>(`${environment.urlApi}/Siniestros/PeritoResponsable?idPerito=${idPerito}&idAseguradora=${idAseguradora}`);
   }
 
   public obtenerPorId(id: number): Observable<Siniestro> {
-    return this.peticionHttp.hacerPeticionGet<Siniestro>(`${environment.urlApi}/Siniestros/${id}`);
+    return this.peticionHttp.get<Siniestro>(`${environment.urlApi}/Siniestros/${id}`);
   }
 
   public crear(siniestro: CrearSiniestroDto): Observable<boolean> {

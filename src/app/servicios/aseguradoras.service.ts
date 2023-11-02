@@ -12,6 +12,6 @@ export class AseguradorasService {
   constructor(private peticionHttp: PeticionHttp) { }
 
   public obtenerTodas(): Observable<Aseguradora[]> {
-    return this.peticionHttp.hacerPeticionGet<Aseguradora[]>(`${environment.urlApi}/Aseguradoras`);
+    return this.peticionHttp.get<Aseguradora[]>(`${environment.urlApi}/Aseguradoras`);
   }
 }

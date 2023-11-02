@@ -12,10 +12,10 @@ export class PeritosService {
   constructor(private peticionHttp: PeticionHttp) { }
 
   public obtenerTodos(): Observable<Usuario[]> {    
-    return this.peticionHttp.hacerPeticionGet<Usuario[]>(`${environment.urlApi}/Peritos`);
+    return this.peticionHttp.get<Usuario[]>(`${environment.urlApi}/Peritos`);
   }
 
   public obtenerImpReparacionDaniosPorIdPerito(idPerito: number): Observable<number> {
-    return this.peticionHttp.hacerPeticionGet<number>(`${environment.urlApi}/Peritos/ImporteReparacionDanios/${idPerito}`);
+    return this.peticionHttp.get<number>(`${environment.urlApi}/Peritos/ImporteReparacionDanios/${idPerito}`);
   } 
 }

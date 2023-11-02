@@ -8,7 +8,7 @@ import { Observable } from "rxjs";
 export class PeticionHttp {
     constructor(private http: HttpClient) {}
 
-    public hacerPeticionGet<T>(url: string): Observable<T> {
+    public get<T>(url: string): Observable<T> {
         return this.http.get<T>(url);
     }
 

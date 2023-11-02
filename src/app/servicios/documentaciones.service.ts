@@ -14,7 +14,7 @@ export class DocumentacionesService {
   constructor(private peticionHttp: PeticionHttp) { }
 
   public obtenerPorIdSiniestro(id: number): Observable<Archivo[]> {
-    return this.peticionHttp.hacerPeticionGet<Archivo[]>(`${environment.urlApi}/Documentaciones/ObtenerPorIdSiniestro/${id}`);
+    return this.peticionHttp.get<Archivo[]>(`${environment.urlApi}/Documentaciones/ObtenerPorIdSiniestro/${id}`);
   }
 
   public obtener(id: number): Observable<Blob> {
