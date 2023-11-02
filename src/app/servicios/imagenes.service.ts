@@ -23,7 +23,7 @@ export class ImagenesService {
     formData.append("IdSiniestro", envioImagen.idSiniestro); 
     formData.append("Archivo", envioImagen.archivo);
       
-    return this.peticionHttp.hacerPeticionPost<boolean>(`${environment.urlApi}/Imagenes`, formData);
+    return this.peticionHttp.post<boolean>(`${environment.urlApi}/Imagenes`, formData);
   }
 
   public obtener(id: number): Observable<Blob> {          

@@ -42,7 +42,7 @@ export class PeticionHttp {
         return this.http.get<T>(url, opciones);
     }
 
-    public hacerPeticionPost<T>(url: string, datos: any): Observable<T> {
+    public post<T>(url: string, datos: any): Observable<T> {
         return this.http.post<T>(url, datos);
     }
 

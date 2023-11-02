@@ -35,7 +35,7 @@ export class DocumentacionesService {
     formData.append("IdSiniestro", documentacion.idSiniestro); 
     formData.append("Archivo", documentacion.archivo, documentacion.archivo.name);
       
-    return this.peticionHttp.hacerPeticionPost<boolean>(`${environment.urlApi}/Documentaciones`, formData);
+    return this.peticionHttp.post<boolean>(`${environment.urlApi}/Documentaciones`, formData);
   }
 
   public eliminar(idDocumentacion: number): Observable<boolean> {

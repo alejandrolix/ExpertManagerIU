@@ -13,11 +13,11 @@ export class MensajesService {
   constructor(private peticionHttp: PeticionHttp) { }
 
   public crear(mensaje: any): Observable<boolean> {
-    return this.peticionHttp.hacerPeticionPost<boolean>(`${environment.urlApi}/Mensajes`, mensaje);
+    return this.peticionHttp.post<boolean>(`${environment.urlApi}/Mensajes`, mensaje);
   }
 
   public crearMensajeRevisarCierre(crearMensajeRevisarCierreDto: CrearMensajeRevisarCierreDto): Observable<boolean> {
-    return this.peticionHttp.hacerPeticionPost<boolean>(`${environment.urlApi}/Mensajes/RevisarCierre`, crearMensajeRevisarCierreDto);
+    return this.peticionHttp.post<boolean>(`${environment.urlApi}/Mensajes/RevisarCierre`, crearMensajeRevisarCierreDto);
   }
 
   public eliminar(idMensaje: number): Observable<boolean> {

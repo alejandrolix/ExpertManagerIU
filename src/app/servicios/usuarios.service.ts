@@ -19,7 +19,7 @@ export class UsuariosService {
   }
 
   public crear(usuario: any): Observable<boolean> {    
-    return this.peticionHttp.hacerPeticionPost<boolean>(`${environment.urlApi}/Usuarios`, usuario);
+    return this.peticionHttp.post<boolean>(`${environment.urlApi}/Usuarios`, usuario);
   }
 
   public editar(usuario: any, id: number): Observable<boolean> {    
@@ -31,6 +31,6 @@ export class UsuariosService {
   }
 
   public iniciarSesion(credenciales: any): Observable<Usuario> {
-    return this.peticionHttp.hacerPeticionPost<Usuario>(`${environment.urlApi}/Usuarios/IniciarSesion`, credenciales);
+    return this.peticionHttp.post<Usuario>(`${environment.urlApi}/Usuarios/IniciarSesion`, credenciales);
   }
 }

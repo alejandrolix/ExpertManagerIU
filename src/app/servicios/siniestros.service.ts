@@ -34,7 +34,7 @@ export class SiniestrosService {
   }
 
   public crear(siniestro: CrearSiniestroDto): Observable<boolean> {
-    return this.peticionHttp.hacerPeticionPost<boolean>(`${environment.urlApi}/Siniestros`, siniestro);
+    return this.peticionHttp.post<boolean>(`${environment.urlApi}/Siniestros`, siniestro);
   }
 
   public abrir(abrirSiniestroDto: AbrirSiniestroDto): Observable<boolean> {
