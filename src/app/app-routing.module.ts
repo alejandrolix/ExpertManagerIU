@@ -26,10 +26,13 @@ const routes: Routes = [
   },
   {
     path: 'siniestros',
-    component: ListadoSiniestrosComponent,
     canActivate: [InicioSesionGuard],
     canActivateChild: [ComprobarPermisoGuard],
     children: [
+      {
+        path: '',
+        component: ListadoSiniestrosComponent
+      },
       {
         path: ':id/detalles',
         component: DetallesSiniestroComponent
