@@ -1,7 +1,7 @@
 <div id="logreg-forms" *ngIf="formInicioSesion !== undefined">
     <form class="form-signin" [formGroup]="formInicioSesion">
         <h1 class="h3 mb-4 font-weight-normal" style="text-align: center">Iniciar Sesión</h1>
-        <input type="text" class="form-control mb-3" placeholder="Usuario" formControlName="usuario">
+        <input #txtUsuario type="text" class="form-control mb-3" placeholder="Usuario" formControlName="usuario">
         <div class="invalid-feedback mb-3" *ngIf="formInicioSesion.get('usuario')?.touched && !formInicioSesion.get('usuario')?.valid">
             El usuario es obligatorio
         </div>

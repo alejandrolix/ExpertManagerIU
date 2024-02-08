@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
@@ -12,24 +12,35 @@ import { UsuariosService } from '../../servicios/usuarios.service';
   templateUrl: './inicio-sesion.component.html',
   styleUrls: ['./inicio-sesion.component.scss']
 })
-export class InicioSesionComponent implements OnInit {
+export class InicioSesionComponent implements OnInit, AfterViewInit {
   public formInicioSesion: FormGroup;
   public deshabilitarBtnEntrar: boolean;
 
-  constructor(private usuariosService: UsuariosService, private router: Router, private spinnerService: SpinnerService,
+  @ViewChild('txtUsuario')
+  public txtUsuario: ElementRef<HTMLInputElement>;
+
+  constructor(private usuariosService: UsuariosService,
+              private router: Router,
+              private spinnerService: SpinnerService,
               private autenticacionService: AutenticacionService) { }
+
+  ngAfterViewInit(): void {
+    this.txtUsuario.nativeElement.focus();
+  }
 
   ngOnInit(): void {
     this.deshabilitarBtnEntrar = false;
     this.spinnerService.ocultarSpinner();
 
-    if (this.autenticacionService.estaLogueadoUsuario)
+    if (this.autenticacionService.estaLogueadoUsuario) {
       this.router.navigateByUrl('/inicio');
-    else
+    }
+    else {
       this.formInicioSesion = new FormGroup({
         usuario: new FormControl('', Validators.required),
         contrasenia: new FormControl('', Validators.required)
       });
+    }
   }
 
   public async iniciarSesion(): Promise<void> {
