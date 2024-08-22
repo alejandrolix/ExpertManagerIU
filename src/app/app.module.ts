@@ -23,6 +23,7 @@ import { NumerosDecimalesDirective } from './directivas/numeros-decimales.direct
 import { FiltroPeritoAseguradora } from './componentes/siniestros/filtros/perito/filtro-perito-aseguradora';
 import { registerLocaleData } from '@angular/common';
 import localees from '@angular/common/locales/es';
+import { AseguradorasComponent } from './componentes/aseguradoras/aseguradoras.component';
 
 registerLocaleData(localees);
 
@@ -43,7 +44,8 @@ registerLocaleData(localees);
     CrearEditarSiniestroComponent,
     CrearEditarUsuarioComponent,
     NumerosDecimalesDirective,
-    FiltroPeritoAseguradora
+    FiltroPeritoAseguradora,
+    AseguradorasComponent
   ],
   imports: [
     BrowserModule,

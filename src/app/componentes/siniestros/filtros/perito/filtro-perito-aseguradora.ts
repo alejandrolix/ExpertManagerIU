@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DatosFiltroPeritoYAseguradoraDTO, NombreDesplegableFiltro } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
 import { PeritoFiltroDto } from 'src/app/interfaces/DTOs/perito/perito-filtro-dto';
-import { PeritoSiniestroDto } from 'src/app/interfaces/DTOs/perito/perito-siniestro-dto';
-import { Siniestro } from 'src/app/interfaces/siniestro';
-import { AseguradoraSiniestroDto } from 'src/app/interfaces/DTOs/aseguradora/aseguradora-siniestro-dto';
 import { AseguradoraFiltroDto } from 'src/app/interfaces/DTOs/aseguradora/aseguradora-filtro-dto';
+import { PeritosService } from 'src/app/servicios/peritos.service';
+import { firstValueFrom } from 'rxjs';
+import { AseguradorasService } from 'src/app/servicios/aseguradoras.service';
 
 @Component({
   selector: 'app-filtro-perito-aseguradora',
@@ -24,7 +24,27 @@ export class FiltroPeritoAseguradora {
   @Output()
   public emisorPeritoYAseguradora: EventEmitter<DatosFiltroPeritoYAseguradoraDTO> = new EventEmitter<DatosFiltroPeritoYAseguradoraDTO>();
 
-  constructor() { }
+  constructor(private peritosService: PeritosService, private aseguradorasService: AseguradorasService) {
+    this.cargarDatos();
+  }
+
+  private async cargarDatos(): Promise<void> {
+    this.peritos = await firstValueFrom(this.peritosService.obtenerTodos());
+    this.peritos.unshift({
+      id: 0,
+      nombre: 'Todos'
+    });
+
+    this.idPeritoSeleccionado = '0';
+
+    this.aseguradoras = await firstValueFrom(this.aseguradorasService.obtenerTodas());
+    this.aseguradoras.unshift({
+      id: 0,
+      nombre: 'Todas'
+    });
+
+    this.idAseguradoraSeleccionada = '0';
+  }
 
   public eliminarFiltros(): void {
     this.idPeritoSeleccionado = '0';
@@ -46,84 +66,7 @@ export class FiltroPeritoAseguradora {
 
     this.emisorPeritoYAseguradora.emit({
       idPerito,
-      idAseguradora,
-      nombreDesplegable: nombreDesplegable
+      idAseguradora
     });
-  }
-
-  public asignarPeritos(siniestros: Siniestro[]): void {
-    let peritos: PeritoSiniestroDto[] = siniestros.map((siniestro: Siniestro) => {
-      let {idPerito, perito}: PeritoSiniestroDto = siniestro;
-
-      return {
-        idPerito,
-        perito
-      };
-    });
-
-    let peritosUnicos: PeritoFiltroDto[] = [];
-
-    peritos.forEach((perito: PeritoSiniestroDto) => {
-      let encontrado: PeritoFiltroDto | undefined = peritosUnicos.find((peritoUnico: PeritoFiltroDto) => {
-        if (perito.idPerito === peritoUnico.id) {
-          return true;
-        }
-
-        return false;
-      });
-
-      if (!encontrado) {
-        peritosUnicos.push({
-          id: perito.idPerito,
-          nombre: perito.perito
-        });
-      }
-    });
-
-    this.peritos = peritosUnicos;
-    this.peritos.unshift({
-      id: 0,
-      nombre: 'Todos'
-    });
-
-    this.idPeritoSeleccionado = '0';
-  }
-
-  public asignarAseguradoras(siniestros: Siniestro[]): void {
-    let aseguradoras: AseguradoraSiniestroDto[] = siniestros.map((siniestro: Siniestro) => {
-      let {idAseguradora, aseguradora}: AseguradoraSiniestroDto = siniestro;
-
-      return {
-        idAseguradora,
-        aseguradora
-      };
-    });
-
-    let aseguradorasUnicas: AseguradoraFiltroDto[] = [];
-
-    aseguradoras.forEach((aseguradora: AseguradoraSiniestroDto) => {
-      let encontrado: AseguradoraFiltroDto | undefined = aseguradorasUnicas.find((aseguradoraUnica: AseguradoraFiltroDto) => {
-        if (aseguradora.idAseguradora === aseguradoraUnica.id) {
-          return true;
-        }
-
-        return false;
-      });
-
-      if (encontrado === undefined) {
-        aseguradorasUnicas.push({
-          id: aseguradora.idAseguradora,
-          nombre: aseguradora.aseguradora
-        });
-      }
-    });
-
-    this.aseguradoras = aseguradorasUnicas;
-    this.aseguradoras.unshift({
-      id: 0,
-      nombre: 'Todas'
-    });
-
-    this.idAseguradoraSeleccionada = '0';
   }
 }

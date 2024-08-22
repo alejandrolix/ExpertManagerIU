@@ -1,7 +1,6 @@
 export interface DatosFiltroPeritoYAseguradoraDTO {
     idPerito: number,
-    idAseguradora: number,
-    nombreDesplegable: NombreDesplegableFiltro
+    idAseguradora: number
 }
 
 export enum NombreDesplegableFiltro {

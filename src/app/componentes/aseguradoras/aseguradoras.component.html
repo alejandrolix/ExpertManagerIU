@@ -1,0 +1,30 @@
+<div>
+    <h2>Listado aseguradoras</h2>
+    <div class="d-flex justify-content-end mb-3">
+        <i title="Crear" (click)="crear()" class="fas fa-plus"></i>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Aseguradora</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let aseguradora of aseguradoras()">
+                    <td class="align-middle">{{ aseguradora.id }}</td>
+                    <td class="align-middle">{{ aseguradora.nombre }}</td>
+                    <td class="align-middle">
+                        <i title="Editar" class="fas fa-pencil-alt me-3" (click)="editar(aseguradora.id)"></i>
+                    </td>
+                    <td class="align-middle">
+                        <i title="Eliminar" class="fas fa-trash-alt" (click)="eliminar(aseguradora.id)"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

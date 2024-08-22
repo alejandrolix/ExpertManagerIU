@@ -12,6 +12,7 @@ import { ListadoUsuariosComponent } from './componentes/usuarios/listado-usuario
 import { UsuariosComponent } from './componentes/usuarios/usuarios.component';
 import { ComprobarPermisoGuard } from './guards/comprobar-permiso.guard';
 import { InicioSesionGuard } from './guards/inicio-sesion.guard';
+import { AseguradorasComponent } from './componentes/aseguradoras/aseguradoras.component';
 
 const routes: Routes = [
   {
@@ -85,6 +86,11 @@ const routes: Routes = [
         component: CrearEditarUsuarioComponent
       }
     ]
+  },
+  {
+    path: 'aseguradoras',
+    component: AseguradorasComponent,
+    canActivate: [InicioSesionGuard]
   },
   {
     path: '**',

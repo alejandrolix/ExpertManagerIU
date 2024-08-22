@@ -3,15 +3,15 @@
     <div class="row mt-5">
         <div class="col-12">
             <div class="d-flex justify-content-start">
-                <app-filtro-perito-aseguradora [hidden]="siniestros().length === 0" [tienePermisoAdministracion]="tienePermisoAdministracion" (emisorPeritoYAseguradora)="filtrarSiniestros($event)">
-                </app-filtro-perito-aseguradora>
+                <app-filtro-perito-aseguradora [tienePermisoAdministracion]="tienePermisoAdministracion" (emisorPeritoYAseguradora)="filtrarSiniestros($event)"></app-filtro-perito-aseguradora>
             </div>
         </div>
     </div>
     <div class="d-flex justify-content-end mb-3">
         <i title="Crear" (click)="crear()" class="fas fa-plus" *ngIf="tienePermisoAdministracion"></i>
     </div>
-    <div class="table-responsive">
+    <h2 *ngIf="siniestros().length === 0">Sin datos</h2>
+    <div class="table-responsive" *ngIf="siniestros().length > 0">
         <table class="table table-striped table-hover">
             <thead>
                 <tr>

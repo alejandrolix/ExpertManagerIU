@@ -7,7 +7,7 @@ import { TipoEstado } from 'src/app/enumeraciones/tipo-estado.enum';
 import { AbrirSiniestroDto } from 'src/app/interfaces/DTOs/siniestro/abrir-siniestro-dto';
 import { CerrarSiniestroDto } from 'src/app/interfaces/DTOs/siniestro/cerrar-siniestro-dto';
 import { CrearMensajeRevisarCierreDto } from 'src/app/interfaces/DTOs/crear-mensaje-revisar-cierre-dto';
-import { DatosFiltroPeritoYAseguradoraDTO, NombreDesplegableFiltro } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
+import { DatosFiltroPeritoYAseguradoraDTO } from 'src/app/interfaces/DTOs/filtro-perito-y-aseguradora';
 import { ImpValoracionDaniosSiniestroDto } from 'src/app/interfaces/DTOs/siniestro/imp-valoracion-danios-siniestro-dto';
 import { Siniestro } from 'src/app/interfaces/siniestro';
 import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
@@ -47,8 +47,6 @@ export class ListadoSiniestrosComponent implements OnInit {
     let siniestros: Siniestro[] = await this.obtenerSiniestros(0, 0);
     this.siniestros.set(siniestros);
 
-    this.filtroPeritoAseguradora.asignarPeritos(this.siniestros());
-    this.filtroPeritoAseguradora.asignarAseguradoras(this.siniestros());
     this.spinnerService.ocultarSpinner();
   }
 
@@ -76,15 +74,10 @@ export class ListadoSiniestrosComponent implements OnInit {
   }
 
   public async filtrarSiniestros(datosFiltroPeritoYAseguradoraDTO: DatosFiltroPeritoYAseguradoraDTO): Promise<void> {
-    let {idPerito, idAseguradora, nombreDesplegable} = datosFiltroPeritoYAseguradoraDTO;
+    let {idPerito, idAseguradora} = datosFiltroPeritoYAseguradoraDTO;
     let siniestros: Siniestro[] = await this.obtenerSiniestros(idPerito, idAseguradora);
 
     this.siniestros.set(siniestros);
-
-    // Asignamos las aseguradoras obtenidas según el perito seleccionado.
-    if (nombreDesplegable !== NombreDesplegableFiltro.Aseguradora) {
-      this.filtroPeritoAseguradora.asignarAseguradoras(this.siniestros());
-    }
   }
 
   public editar(id: number): void {
