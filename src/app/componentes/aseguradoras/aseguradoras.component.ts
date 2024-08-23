@@ -1,5 +1,6 @@
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { Aseguradora } from 'src/app/interfaces/aseguradora';
+import { AseguradorasService } from 'src/app/servicios/aseguradoras.service';
 
 @Component({
   selector: 'app-aseguradoras',
@@ -9,8 +10,8 @@ import { Aseguradora } from 'src/app/interfaces/aseguradora';
 export class AseguradorasComponent implements OnInit {
   public aseguradoras: WritableSignal<Aseguradora[]>;
 
-  constructor() {
-
+  constructor(private aseguradorasService: AseguradorasService) {
+    
   }
 
   ngOnInit(): void {
@@ -19,5 +20,13 @@ export class AseguradorasComponent implements OnInit {
 
   public crear(): void {
 
+  }
+
+  public editar(idAseguradora: number): void {
+
+  }
+
+  public eliminar(idAseguradora: number): void {
+    
   }
 }
