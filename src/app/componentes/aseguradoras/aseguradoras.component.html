@@ -14,16 +14,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let aseguradora of aseguradoras()">
-                    <td class="align-middle">{{ aseguradora.id }}</td>
-                    <td class="align-middle">{{ aseguradora.nombre }}</td>
-                    <td class="align-middle">
-                        <i title="Editar" class="fas fa-pencil-alt me-3" (click)="editar(aseguradora.id)"></i>
-                    </td>
-                    <td class="align-middle">
-                        <i title="Eliminar" class="fas fa-trash-alt" (click)="eliminar(aseguradora.id)"></i>
-                    </td>
-                </tr>
+                @for (aseguradora of aseguradoras()(); track aseguradora.id) {
+                    <tr>
+                        <td class="align-middle">{{ aseguradora.id }}</td>
+                        <td class="align-middle">{{ aseguradora.nombre }}</td>
+                        <td class="align-middle">
+                            <i title="Editar" class="fas fa-pencil-alt me-3" (click)="editar(aseguradora.id)"></i>
+                        </td>
+                        <td class="align-middle">
+                            <i title="Eliminar" class="fas fa-trash-alt" (click)="eliminar(aseguradora.id)"></i>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>

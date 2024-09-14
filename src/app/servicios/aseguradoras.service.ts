@@ -14,4 +14,8 @@ export class AseguradorasService {
   public obtenerTodas(): Observable<Aseguradora[]> {
     return this.peticionHttp.get<Aseguradora[]>(`${environment.urlApi}/Aseguradoras`);
   }
+
+  public eliminar(id: number): Observable<boolean> {
+    return this.peticionHttp.delete<boolean>(`${environment.urlApi}/Aseguradoras/${id}`);
+  }
 }
