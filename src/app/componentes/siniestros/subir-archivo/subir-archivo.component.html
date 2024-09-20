@@ -1,6 +1,6 @@
 <h2 class="mb-4" *ngIf="tipoArchivo === tipoArchivoEnum.Documento">Subir Documento</h2>
 <h2 class="mb-4" *ngIf="tipoArchivo === tipoArchivoEnum.Imagen">Subir Imagen</h2>
-<form enctype="multipart/form-data" *ngIf="formSubirArchivo != undefined" [formGroup]="formSubirArchivo" (ngSubmit)="enviar()">
+<form enctype="multipart/form-data" *ngIf="formSubirArchivo != undefined" [formGroup]="formSubirArchivo" (ngSubmit)="enviar(archivo.files?.[0]!!)">
     <div class="row">
         <div class="col">
             <label class="form-label mt-4">Descripción</label>
@@ -8,7 +8,7 @@
             <div class="error" *ngIf="formSubirArchivo.get('descripcion')?.touched && !formSubirArchivo.get('descripcion')?.valid">La descripción es obligatoria</div>
 
             <label class="form-label mt-4">Archivo</label>
-            <input #archivo class="form-control anchuraMitad" type="file" [accept]="formatosArchivoASubir" (change)="comprobarArchivo()">
+            <input #archivo class="form-control anchuraMitad" type="file" [accept]="formatosArchivoSeleccionar">
             <div class="error" *ngIf="!hayArchivoSeleccionado">El archivo es obligatorio</div>
         </div>
     </div>

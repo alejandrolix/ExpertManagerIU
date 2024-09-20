@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
@@ -17,9 +17,8 @@ import { SpinnerService } from 'src/app/servicios/spinner.service';
 export class SubirArchivoComponent implements OnInit {
   public formSubirArchivo: FormGroup;
   public hayArchivoSeleccionado: boolean;
-  @ViewChild("archivo") archivo: ElementRef<HTMLInputElement>;
   private idSiniestro: number;
-  public formatosArchivoASubir: string;
+  public formatosArchivoSeleccionar: string;
   public tipoArchivoEnum: typeof TipoArchivo = TipoArchivo;
   public tipoArchivo: TipoArchivo;
 
@@ -55,10 +54,12 @@ export class SubirArchivoComponent implements OnInit {
       this.irAtras();
     }
 
-    if (this.tipoArchivo === TipoArchivo.Documento)
-      this.formatosArchivoASubir = "application/pdf";
-    else
-      this.formatosArchivoASubir = "image/png, image/jpeg, image/jpg";
+    if (this.tipoArchivo === TipoArchivo.Documento) {
+      this.formatosArchivoSeleccionar = "application/pdf";
+    }
+    else {
+      this.formatosArchivoSeleccionar = "image/png, image/jpeg, image/jpg";
+    }
 
     this.formSubirArchivo = new FormGroup({
       descripcion: new FormControl('', Validators.required)
@@ -72,63 +73,83 @@ export class SubirArchivoComponent implements OnInit {
     history.back();
   }
 
-  public async enviar(): Promise<void> {
-    if (!this.formSubirArchivo.valid)
-      return;
-
-    let descripcion: string = this.formSubirArchivo.get('descripcion')?.value;
-
-    if (descripcion == undefined) {
-      Alerta.mostrarError('La descripción está vacía');
+  public async enviar(archivo: File): Promise<void> {
+    this.hayArchivoSeleccionado = true;
+    
+    if (!this.formSubirArchivo.valid) {
       return;
     }
 
-    let nombreArchivoSeleccionado: string = this.archivo.nativeElement.value;
+    let esCorrecto: boolean = this.esValidoFormulario(archivo);
 
-    if (nombreArchivoSeleccionado.length === 0) {
-      this.hayArchivoSeleccionado = false;
+    if (!esCorrecto) {
       return;
     }
 
-    let archivo: any = this.archivo.nativeElement.files?.[0];
-    let archivoASubir = {
-      descripcion,
+    let datosParaSubir = {
+      descripcion: this.formSubirArchivo.get('descripcion')?.value,
       idSiniestro: this.idSiniestro,
       archivo
     };
     let respuesta: boolean = true;
 
-    if (this.tipoArchivo === TipoArchivo.Documento)
-      respuesta = await firstValueFrom(this.documentacionesService.subirDocumentacion(archivoASubir));
-    else
-      respuesta = await firstValueFrom(this.imagenesService.subirImagen(archivoASubir));
+    if (this.tipoArchivo === TipoArchivo.Documento) {
+      respuesta = await firstValueFrom(this.documentacionesService.subirDocumentacion(datosParaSubir));
+    }
+    else {
+      respuesta = await firstValueFrom(this.imagenesService.subirImagen(datosParaSubir));
+    }
 
     if (respuesta) {
-      await Alerta.mostrarOkAsincrono('Archivo subido correctamente');
-      this.router.navigate(['/siniestros/detalles', this.idSiniestro]);
+      let mensaje: string = '';
+
+      if (this.tipoArchivo === TipoArchivo.Documento) {
+        mensaje = 'Documento subido correctamente';
+      }
+      else {
+        mensaje = 'Imagen subida correctamente';
+      }
+
+      await Alerta.mostrarOkAsincrono(mensaje);
+      this.router.navigate(['siniestros', this.idSiniestro, 'detalles']);
     }
   }
 
-  public async comprobarArchivo(): Promise<void> {
-    if (!this.archivo.nativeElement.files) {
-      await Alerta.mostrarErrorAsincrono('Seleccione un archivo');
-      return;
+  private esValidoFormulario(archivo: File): boolean {
+    if (!archivo) {
+      this.hayArchivoSeleccionado = false;
+      return false;
     }
 
-    let formatosArchivos: string[] = ['pdf', 'jpg', 'jpeg', 'png'];
-    let nombreArchivo: string | undefined = this.archivo.nativeElement.files[0].name;
-    let partesNombreArchivo: string[] | undefined = nombreArchivo?.split('.');
-    let extensionArchivo: string | undefined = partesNombreArchivo?.[partesNombreArchivo.length - 1];
+    let extensionDocAdmitido = 'pdf';
+    let extensionesImagenAdmitidos: string[] = ['jpg', 'jpeg', 'png'];
+    let tamanioMaxArchivoBytes: number = 5000000;
 
-    if (extensionArchivo == undefined) {
-      await Alerta.mostrarErrorAsincrono('La extensión del archivo no es correcta');
-      return;
+    if (!this.formSubirArchivo.get('descripcion')?.value) {
+      Alerta.mostrarError('La descripción está vacía');
+      return false;
     }
 
-    if (!formatosArchivos.includes(extensionArchivo)) {
-      await Alerta.mostrarErrorAsincrono(`El archivo seleccionado tiene que ser ${formatosArchivos.join(', ')}`);
+    if (archivo.size!! > tamanioMaxArchivoBytes) {
+      Alerta.mostrarErrorAsincrono('El archivo supera 5 megabytes');
+      return false;
     }
-    else
-      this.hayArchivoSeleccionado = true;
+
+    let extensionArchivo: string = archivo.type.split('/')[1]!!;
+
+    if (this.tipoArchivo === TipoArchivo.Documento) {
+      if (extensionArchivo !== extensionDocAdmitido) {
+        Alerta.mostrarErrorAsincrono(`El archivo debe tener extensión ${extensionDocAdmitido}`);
+        return false;
+      }
+    }
+    else {
+      if (!extensionesImagenAdmitidos.includes(extensionArchivo)) {
+        Alerta.mostrarErrorAsincrono(`El archivo debe tener extensión ${extensionesImagenAdmitidos.join(', ')}`);
+        return false;
+      }
+    }
+
+    return true;
   }
 }
